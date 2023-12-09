@@ -1,6 +1,6 @@
 import * as S from './newProduct.styled';
 
-export const newProduct = () => {
+export const NewProduct = () => {
     return (
         <S.Wrapper>
             <S.ContainerBg>
@@ -11,7 +11,45 @@ export const newProduct = () => {
                             <S.ModalBtnCloseLine />
                         </S.ModalBtnClose>
                         <S.ModalFormNewArtFormNewArt>
-                            fg
+                            <S.FormNewArtBlock>
+                                <S.Label for="text">Название</S.Label>
+                                <S.FormNewArtInput type="text" placeholder="Введите название"/>
+                            </S.FormNewArtBlock>
+                            <S.FormNewArtBlock>
+                                <S.Label for="text">Описание</S.Label>
+                                <S.FormNewArtArea cols="auto" rows="10" placeholder="Введите описание"/>
+                            </S.FormNewArtBlock>
+                            <S.FormNewArtBlock>
+                                <S.FormNewArtP>Фотографии товара<S.Span>не более 5 фотографий</S.Span></S.FormNewArtP>
+                                <S.FormNewArtBarImg>
+                                    <S.FormNewArtImg>
+                                        <S.Img src="" alt=""/>
+                                        <S.FormNewArtImgCover/>
+                                    </S.FormNewArtImg>
+                                    <S.FormNewArtImg>
+                                        <S.Img src="" alt=""/>
+                                        <S.FormNewArtImgCover/>
+                                    </S.FormNewArtImg>
+                                    <S.FormNewArtImg>
+                                        <S.Img src="" alt=""/>
+                                        <S.FormNewArtImgCover/>
+                                    </S.FormNewArtImg>
+                                    <S.FormNewArtImg>
+                                        <S.Img src="" alt=""/>
+                                        <S.FormNewArtImgCover/>
+                                    </S.FormNewArtImg>
+                                    <S.FormNewArtImg>
+                                        <S.Img src="" alt=""/>
+                                        <S.FormNewArtImgCover/>
+                                    </S.FormNewArtImg>
+                                </S.FormNewArtBarImg>
+                            </S.FormNewArtBlock>
+                            <S.FormNewArtBlockBlockPrice>
+                                <S.Label for="price">Цена</S.Label>
+                                <S.FormNewArtInputPrice type="text"/>
+                                <S.FormNewArtInputPriceCover/>
+                            </S.FormNewArtBlockBlockPrice>
+                            <S.FormNewArtBtnPubBtnHov02>Опубликовать</S.FormNewArtBtnPubBtnHov02>
                         </S.ModalFormNewArtFormNewArt>
                     </S.ModalContent>
                 </S.ModalBlock>
