@@ -31,6 +31,7 @@ export const Profile = ({ setButtonsPage }) => {
                 <S.MenuForm action='#'>
                   <Link to='/'>
                     <S.MenuBtn onClick={() => setButtonsPage(true)}>
+                      
                       Вернуться на&nbsp;главную
                     </S.MenuBtn>
                   </Link>
