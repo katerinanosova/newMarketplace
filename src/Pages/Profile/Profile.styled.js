@@ -17,85 +17,87 @@ export const Container = styled.div`
   background-color: #ffffff;
 `;
 
-export const Header = styled.header`
-  background-color: #009ee4;
-  @media screen and (max-width: 620px) {
-    width: 100%;
-    height: 55px;
-    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.05);
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 3;
-  }
-`;
+// export const Header = styled.header`
+//   background-color: #009ee4;
+//   @media screen and (max-width: 620px) {
+//     width: 100%;
+//     height: 55px;
+//     box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.05);
+//     position: fixed;
+//     left: 0;
+//     top: 0;
+//     z-index: 3;
+//   }
+// `;
 
-export const HeaderNav = styled.div`
-  max-width: 1178px;
-  margin: 0 auto;
-  padding: 0 10px;
-  height: 79px;
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  @media screen and (max-width: 620px) {
-    height: 55px;
-    justify-content: start;
-    padding: 0 20px;
-  }
-`;
+// export const HeaderNav = styled.div`
+//   max-width: 1178px;
+//   margin: 0 auto;
+//   padding: 0 10px;
+//   height: 79px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: end;
+//   @media screen and (max-width: 620px) {
+//     height: 55px;
+//     justify-content: start;
+//     padding: 0 20px;
+//   }
+// `;
 
-export const HeaderLogo = styled.div`
-  display: none;
-  @media screen and (max-width: 620px) {
-    display: block;
-  }
-`;
+// export const HeaderLogo = styled.div`
+//   display: none;
+//   @media screen and (max-width: 620px) {
+//     display: block;
+//   }
+// `;
 
-export const LogoMobLink = styled.a`
-  @media screen and (max-width: 620px) {
-    display: block;
-    width: 32px;
-    height: 32px;
-  }
-`;
+// export const LogoMobLink = styled.a`
+//   @media screen and (max-width: 620px) {
+//     display: block;
+//     width: 32px;
+//     height: 32px;
+//   }
+// `;
 
-export const LogoMobImg = styled.img`
-  @media screen and (max-width: 620px) {
-    width: 32px;
-    height: auto;
-    display: block;
-    object-fit: cover;
-  }
-`;
+// export const LogoMobImg = styled.img`
+//   @media screen and (max-width: 620px) {
+//     width: 32px;
+//     height: auto;
+//     display: block;
+//     object-fit: cover;
+//   }
+// `;
 
-export const HeaderBtnPutAd = styled.button`
-  width: 232px;
-  height: 40px;
-  border: 1px solid #ffffff;
-  border-radius: 6px;
-  background-color: transparent;
-  color: #ffffff;
-  font-size: 16px;
-  line-height: 1;
-  @media screen and (max-width: 620px) {
-    display: none;
-  }
-  &: hover {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid #ffffff;
-  }
-`;
+// export const HeaderBtnPutAd = styled.button`
+//   width: 232px;
+//   height: 40px;
+//   border: 1px solid #ffffff;
+//   border-radius: 6px;
+//   background-color: transparent;
+//   color: #ffffff;
+//   font-size: 16px;
+//   line-height: 1;
+//   @media screen and (max-width: 620px) {
+//     display: none;
+//   }
+//   &: hover {
+//     background: rgba(255, 255, 255, 0.15);
+//     border: 1px solid #ffffff;
+//   }
+// `;
 
-export const HeaderButtonSecond = styled(HeaderBtnPutAd)`
-  width: 173px;
-  height: 40px;
-  margin-left: 10px;
-`;
+// export const HeaderButtonSecond = styled(HeaderBtnPutAd)`
+//   width: 173px;
+//   height: 40px;
+//   margin-left: 10px;
+// `;
 
 export const Main = styled.main``;
 
 export const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   max-width: 1178px;
   margin: 0 auto;
   padding: 0px 10px 79px;
@@ -113,54 +115,50 @@ export const MainCenterBlock = styled.div`
     margin: 0 auto;
     padding: 0 20px;
   }
-  @media screen and (max-width: 620px) {
-    margin: 0 auto;
-    padding: 0 20px;
-  }
 `;
 
-export const Menu = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  padding: 11px 0;
-  width: 100%;
-  padding: 31px 10px 64px;
-`;
+// export const Menu = styled.div`
+//   width: 100%;
+//   display: flex;
+//   align-items: center;
+//   justify-content: start;
+//   padding: 11px 0;
+//   width: 100%;
+//   padding: 31px 10px 64px;
+// `;
 
-export const MenuLogoLink = styled.a`
-  text-decoration: none;
-  font-family: 'StratosSkyeng', sans-serif;
-  cursor: pointer;
-  width: 54px;
-  height: 50px;
-`;
+// export const MenuLogoLink = styled.a`
+//   text-decoration: none;
+//   font-family: 'StratosSkyeng', sans-serif;
+//   cursor: pointer;
+//   width: 54px;
+//   height: 50px;
+// `;
 
-export const MenuLogoImg = styled.img`
-  width: 54px;
-  height: auto;
-`;
+// export const MenuLogoImg = styled.img`
+//   width: 54px;
+//   height: auto;
+// `;
 
-export const MenuForm = styled.form`
-  margin-left: 60px;
-  max-width: 1044px;
-  width: 100%;
-`;
+// export const MenuForm = styled.form`
+//   margin-left: 60px;
+//   max-width: 1044px;
+//   width: 100%;
+// `;
 
-export const MenuBtn = styled.button`
-  width: 241px;
-  height: 50px;
-  background-color: #009ee4;
-  border: 1px solid #009ee4;
-  border-radius: 6px;
-  font-size: 16px;
-  line-height: 1;
-  color: #ffffff;
-  &: hover {
-    background-color: #0080c1;
-  }
-`;
+// export const MenuBtn = styled.button`
+//   width: 241px;
+//   height: 50px;
+//   background-color: #009ee4;
+//   border: 1px solid #009ee4;
+//   border-radius: 6px;
+//   font-size: 16px;
+//   line-height: 1;
+//   color: #ffffff;
+//   &: hover {
+//     background-color: #0080c1;
+//   }
+// `;
 
 export const MainH2 = styled.h2`
   font-style: normal;
@@ -256,7 +254,7 @@ export const SettingsChangePhoto = styled.a`
 `;
 
 export const SettingsRight = styled.div`
-  width: 630px;
+  width: 564px;
   @media screen and (max-width: 620px) {
     width: 100%;
   }
@@ -270,8 +268,8 @@ export const SettingsDiv = styled.div`
   }
 `;
 
-export const SettingsForm = styled.form`
-  width: 630px;
+export const SettingsForm = styled.div`
+  width: 564px;
   display: flex;
   flex-wrap: wrap;
   @media screen and (max-width: 620px) {
@@ -327,7 +325,7 @@ export const SettingsCity = styled(SettingsInput)`
 `;
 
 export const SettingsPhone = styled(SettingsInput)`
-  width: 614px;
+  width: 570px;
   @media screen and (max-width: 620px) {
     width: 100%;
   }

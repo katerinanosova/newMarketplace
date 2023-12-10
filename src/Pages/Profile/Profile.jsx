@@ -1,41 +1,19 @@
+import { HeaderSecond } from '../../Components/HeaderSecond/HeaderSecond';
+import { ReturnToMain } from '../../Components/ReturnToMain.js/ReturnToMain';
 import { Card } from '../../Components/Card/Card';
 import { Footer } from '../../Components/Footer/Footer';
 import { Link } from 'react-router-dom';
 import * as S from './Profile.styled';
 
-export const Profile = ({ setButtonsPage }) => {
+export const Profile = () => {
   return (
     <S.Wrapper>
       <S.Container>
-        <S.Header>
-          <S.HeaderNav>
-            <S.HeaderLogo>
-              <S.LogoMobLink target='_blank'>
-                <S.LogoMobImg src='img/logo-mob.png' alt='logo' />
-              </S.LogoMobLink>
-            </S.HeaderLogo>
-            <S.HeaderBtnPutAd>Разместить объявление</S.HeaderBtnPutAd>
-            <S.HeaderButtonSecond>
-              Личный кабинет
-            </S.HeaderButtonSecond>
-          </S.HeaderNav>
-        </S.Header>
+        <HeaderSecond />
         <S.Main>
           <S.MainContainer>
             <S.MainCenterBlock>
-              <S.Menu>
-                <S.MenuLogoLink target='_blank'>
-                  <S.MenuLogoImg src='img/logo.png' alt='logo' />
-                </S.MenuLogoLink>
-                <S.MenuForm action='#'>
-                  <Link to='/'>
-                    <S.MenuBtn onClick={() => setButtonsPage(true)}>
-                      
-                      Вернуться на&nbsp;главную
-                    </S.MenuBtn>
-                  </Link>
-                </S.MenuForm>
-              </S.Menu>
+              <ReturnToMain/>
               <S.MainH2>Здравствуйте, Антон!</S.MainH2>
               <S.MainProfile>
                 <S.ProfileContent>
@@ -106,7 +84,7 @@ export const Profile = ({ setButtonsPage }) => {
                           />
                         </S.SettingsDiv>
 
-                        <S.SettingsButton id='settings-btn'>
+                        <S.SettingsButton>
                           Сохранить
                         </S.SettingsButton>
                       </S.SettingsForm>
