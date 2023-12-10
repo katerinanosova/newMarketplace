@@ -55,7 +55,7 @@ export const CardImage = styled.img`
 
 export const CardContent = styled.div``;
 
-export const CardContentLink = styled.a``;
+export const CardContentLink = styled.div``;
 
 export const CardTitle = styled.h3`
   height: 52px;

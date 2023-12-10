@@ -1,3 +1,4 @@
+
 import * as S from '../NewProductAdd/newProduct.styled';
 
 export const EditorAdv = () => {
@@ -12,11 +13,11 @@ export const EditorAdv = () => {
                         </S.ModalBtnClose>
                         <S.ModalFormNewArtFormNewArt>
                             <S.FormNewArtBlock>
-                                <S.Label for="text">Название</S.Label>
+                                <S.Label htmlFor="text">Название</S.Label>
                                 <S.FormNewArtInput type="text" placeholder="Введите название"/>
                             </S.FormNewArtBlock>
                             <S.FormNewArtBlock>
-                                <S.Label for="text">Описание</S.Label>
+                                <S.Label htmlFor="text">Описание</S.Label>
                                 <S.FormNewArtArea cols="auto" rows="10" placeholder="Введите описание">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</S.FormNewArtArea>
                             </S.FormNewArtBlock>
                             <S.FormNewArtBlock>
@@ -45,7 +46,7 @@ export const EditorAdv = () => {
                                 </S.FormNewArtBarImg>
                             </S.FormNewArtBlock>
                             <S.FormNewArtBlockBlockPrice>
-                                <S.Label for="price">Цена</S.Label>
+                                <S.Label htmlFor="price">Цена</S.Label>
                                 <S.FormNewArtInputPrice type="text"/>
                                 <S.FormNewArtInputPriceCover/>
                             </S.FormNewArtBlockBlockPrice>
@@ -56,4 +57,5 @@ export const EditorAdv = () => {
             </S.ContainerBg>
         </S.Wrapper>
     )
+
 }
