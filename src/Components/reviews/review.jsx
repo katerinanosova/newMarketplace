@@ -1,3 +1,4 @@
+
 import * as S from '../NewProductAdd/newProduct.styled';
 import * as SU from './review.styled';
 
@@ -98,5 +99,6 @@ export const Review = () => {
         </S.Wrapper>
     )
 }
+
 
 
