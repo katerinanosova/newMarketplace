@@ -5,7 +5,7 @@ export const Header = () => {
   return (
     <S.HeaderWrapper>
       <S.HeaderNav>
-        <Link to='/profile'>
+        <Link to='/reg'>
           <S.HeaderButton type='submit'>
             Вход в личный кабинет
           </S.HeaderButton>

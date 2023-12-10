@@ -12,11 +12,11 @@ export const NewProduct = () => {
                         </S.ModalBtnClose>
                         <S.ModalFormNewArtFormNewArt>
                             <S.FormNewArtBlock>
-                                <S.Label for="text">Название</S.Label>
+                                <S.Label htmlFor="text">Название</S.Label>
                                 <S.FormNewArtInput type="text" placeholder="Введите название"/>
                             </S.FormNewArtBlock>
                             <S.FormNewArtBlock>
-                                <S.Label for="text">Описание</S.Label>
+                                <S.Label htmlFor="text">Описание</S.Label>
                                 <S.FormNewArtArea cols="auto" rows="10" placeholder="Введите описание"/>
                             </S.FormNewArtBlock>
                             <S.FormNewArtBlock>
@@ -45,7 +45,7 @@ export const NewProduct = () => {
                                 </S.FormNewArtBarImg>
                             </S.FormNewArtBlock>
                             <S.FormNewArtBlockBlockPrice>
-                                <S.Label for="price">Цена</S.Label>
+                                <S.Label htmlFor="price">Цена</S.Label>
                                 <S.FormNewArtInputPrice type="text"/>
                                 <S.FormNewArtInputPriceCover/>
                             </S.FormNewArtBlockBlockPrice>
