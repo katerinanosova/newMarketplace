@@ -3,8 +3,6 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   width: 100%;
   background-color: #f1f1f1;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   flex-direction: column;
 `;
@@ -15,82 +13,6 @@ export const Container = styled.div`
   height: 100%;
   margin: 0 auto;
   background-color: #ffffff;
-`;
-
-export const Header = styled.header`
-  background-color: #009ee4;
-  @media screen and (max-width: 580px) {
-    width: 100%;
-    height: 55px;
-    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.05);
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 3;
-  }
-`;
-
-export const HeaderNav = styled.div`
-  max-width: 1178px;
-  margin: 0 auto;
-  padding: 0 10px;
-  height: 79px;
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  @media screen and (max-width: 890px) {
-    height: 55px;
-    justify-content: start;
-    padding: 0 20px;
-  }
-`;
-
-export const HeaderLogo = styled.div`
-  display: none;
-  @media screen and (max-width: 580px) {
-    display: block;
-  }
-`;
-
-export const LogoMobLink = styled.a`
-  @media screen and (max-width: 580px) {
-    display: block;
-    width: 32px;
-    height: 32px;
-  }
-`;
-
-export const LogoMobImg = styled.img`
-  @media screen and (max-width: 580px) {
-    width: 32px;
-    height: auto;
-    display: block;
-    object-fit: cover;
-  }
-`;
-
-export const HeaderBtnPutAd = styled.button`
-  width: 232px;
-  height: 40px;
-  border: 1px solid #ffffff;
-  border-radius: 6px;
-  background-color: transparent;
-  color: #ffffff;
-  font-size: 16px;
-  line-height: 1;
-  @media screen and (max-width: 580px) {
-    display: none;
-  }
-  &: hover {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid #ffffff;
-  }
-`;
-
-export const HeaderButtonSecond = styled(HeaderBtnPutAd)`
-  width: 173px;
-  height: 40px;
-  margin-left: 10px;
 `;
 
 export const Main = styled.main``;
@@ -112,49 +34,6 @@ export const MainCenterBlock = styled.div`
   }
 `;
 
-export const Menu = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  padding: 11px 0;
-  width: 100%;
-  padding: 31px 10px 64px;
-  @media screen and (max-width: 580px) {
-    display: none;
-  }
-`;
-
-export const MenuLogoLink = styled.a`
-  width: 54px;
-  height: 50px;
-`;
-
-export const MenuLogoImg = styled.img`
-  width: 54px;
-  height: auto;
-`;
-
-export const MenuForm = styled.form`
-  margin-left: 60px;
-  max-width: 1044px;
-  width: 100%;
-`;
-
-export const MenuBtn = styled.button`
-  width: 241px;
-  height: 50px;
-  background-color: #009ee4;
-  border: 1px solid #009ee4;
-  border-radius: 6px;
-  font-size: 16px;
-  line-height: 1;
-  color: #ffffff;
-  &: hover {
-    background-color: #0080c1;
-  }
-`;
-
 export const MainH2 = styled.h2`
   font-style: normal;
   font-weight: 500;
@@ -162,11 +41,6 @@ export const MainH2 = styled.h2`
   line-height: 42px;
   color: #000000;
   margin-bottom: 30px;
-
-  //   &:hover::after {
-  //     border-top: 2px solid #0080c1;
-  //     border-left: 2px solid #0080c1;
-  //   }
 
   @media screen and (max-width: 580px) {
     font-size: 24px;
@@ -176,21 +50,6 @@ export const MainH2 = styled.h2`
     margin-bottom: 20px;
     position: relative;
   }
-
-  //   &::before {
-  //     content: '';
-  //     display: block;
-  //     width: 12px;
-  //     height: 12px;
-  //     background-color: transparent;
-  //     border-top: 2px solid #000000;
-  //     border-left: 2px solid #000000;
-  //     transform: rotate(-45deg);
-  //     position: absolute;
-  //     top: 9px;
-  //     left: 0;
-  //     cursor: pointer;
-  //   }
 `;
 
 export const MainProfileSell = styled.div`
@@ -373,6 +232,8 @@ export const MainTitle = styled.h3`
 export const MainContent = styled.div`
   width: 100%;
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
   @media screen and (max-width: 580px) {
     width: 100%;
     margin: 0 auto;
@@ -384,7 +245,7 @@ export const Cards = styled.div`
   width: 100%;
   display: -ms-grid;
   display: grid;
-  grid-template-columns: repeat(4, 270px);
+  grid-template-columns: repeat(4, 260px);
   grid-auto-rows: 441px;
   grid-gap: 40px 26px;
   justify-content: center;
@@ -393,6 +254,14 @@ export const Cards = styled.div`
   scrollbar-width: thin;
   scrollbar-width: 0px;
   height: 441px;
+  &::-webkit-scrollbar {
+    width: 0px;
+    background-color: #009ee4;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #0080c1;
+    border-radius: 3px;
+  }
   @media screen and (max-width: 1158px) {
     display: grid;
     grid-template-columns: repeat(3, 270px);

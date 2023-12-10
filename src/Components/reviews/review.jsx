@@ -1,3 +1,4 @@
+
 import * as S from '../NewProductAdd/newProduct.styled';
 import * as SU from './review.styled';
 
@@ -14,7 +15,7 @@ export const Review = () => {
                         <SU.ModalScroll>
                             <S.ModalFormNewArtFormNewArt>
                                 <S.FormNewArtBlock>
-                                    <S.Label for="text">Добавить отзыв</S.Label>
+                                    <S.Label htmlFor="text">Добавить отзыв</S.Label>
                                     <S.FormNewArtArea cols="auto" rows="5" placeholder="Введите описание"/>
                                 </S.FormNewArtBlock>
                                 <S.FormNewArtBtnPubBtnHov02>Опубликовать</S.FormNewArtBtnPubBtnHov02>
@@ -98,5 +99,6 @@ export const Review = () => {
         </S.Wrapper>
     )
 }
+
 
 
