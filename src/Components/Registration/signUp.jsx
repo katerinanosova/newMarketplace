@@ -65,14 +65,12 @@ export const SignUp = ({ setChoiceReg }) => {
 
     if (password !== repeatPassword) {
       setErrorPass('Пароли не совпадают. Попробуйте еще раз');
-    } else {
-      setErrorPass('');
+      return;
     }
 
     if (errorPass) {
       setErrorPass('Пароль не соответствует требованиям');
-    } else {
-      setErrorPass('');
+      return;
     }
 
     registerUser(email, password, name, role, surname, city);
