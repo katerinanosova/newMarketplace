@@ -1,12 +1,15 @@
 
+import { useGetAllAdsQuery } from '../../Store/RTKQuery/getAds';
 import { Card } from '../../Components/Card/Card';
 import { Footer } from '../../Components/Footer/Footer';
 import { Header } from '../../Components/Header/Header';
 import { Search } from '../../Components/Search/Search';
 import * as S from './main.styled';
-
 export const Main = ({products}) => {
-  
+  const {data =[], isLoading} = useGetAllAdsQuery();
+  if(!isLoading) {
+    console.log(data);
+  }
 
   return (
     <S.Wrapper>

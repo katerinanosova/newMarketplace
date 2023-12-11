@@ -11,6 +11,7 @@ export const getAllAds = async () => {
 
 export const ads = createApi({
     reducerPath: 'ads',
+    tagTypes: ['dataAds'],
     baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:8090/'}),
     endpoints: (build) => ({
         getAllAds: build.query({
@@ -19,24 +20,17 @@ export const ads = createApi({
                 DATA_TAG,
             ],
         }),
-        postLike: build.mutation({
+        addAds: build.mutation({
             query: (access) => ({
-                url: `${access[1].id}/favorite/`,
+                url: `ads`,
                 method: 'POST',
-                headers: access[0],
+                headers: access,
             }),
             invalidatesTags: [DATA_TAG]
         }),
-        postDisLike: build.mutation({
-            query: (access) => ({
-
-                url: `${access[1].id}/favorite/`,
-                method: 'DELETE',
-                headers: access[0],
-            }),
-            invalidatesTags: [DATA_TAG]
-        })
     })
 })
+
+
 
 export const {useGetAllAdsQuery} = ads
