@@ -1,3 +1,4 @@
+
 import { Route, Routes } from 'react-router-dom';
 import { Main } from './Pages/Main/main';
 import { Profile } from './Pages/Profile/Profile';
@@ -51,3 +52,4 @@ export const AppRoutes = () => {
     </Routes>
   );
 };
+

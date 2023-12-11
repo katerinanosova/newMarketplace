@@ -1,3 +1,4 @@
+
 import * as S from '../NewProductAdd/newProduct.styled';
 
 export const EditorAdv = () => {
@@ -56,4 +57,5 @@ export const EditorAdv = () => {
             </S.ContainerBg>
         </S.Wrapper>
     )
+
 }
