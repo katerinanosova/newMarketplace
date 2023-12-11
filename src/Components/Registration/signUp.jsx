@@ -68,7 +68,8 @@ export const SignUp = ({ setChoiceReg }) => {
       return;
     }
 
-    if (errorPass) {
+    const passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
+    if (!passwordValidation.test(password)) {
       setErrorPass('Пароль не соответствует требованиям');
       return;
     }
@@ -95,14 +96,14 @@ export const SignUp = ({ setChoiceReg }) => {
             <S.ModalInputLogin
               value={password}
               onChange={handlePassword}
-              type='password'
+              type='text'
               placeholder='Пароль'
             />
             <S.ModalInputLoginRepeatPass
               $passEqual={passEqual}
               value={repeatPassword}
               onChange={handleRepeatPassword}
-              type='password'
+              type='text'
               placeholder='Повторите пароль'
             />
             <S.ModalInputLogin
