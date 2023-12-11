@@ -103,7 +103,7 @@ export const SignUp = ({ setChoiceReg }) => {
               $passEqual={passEqual}
               value={repeatPassword}
               onChange={handleRepeatPassword}
-              type='text'
+              type='password'
               placeholder='Повторите пароль'
             />
             <S.ModalInputLogin
