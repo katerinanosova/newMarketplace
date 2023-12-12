@@ -4,8 +4,10 @@ import styled from 'styled-components';
 export const CardItem = styled.div`
   margin: 0;
 
-  @media screen and (max-width: 590px) {
+  @media screen and (max-width: 620px) {
     margin: 0;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
   }
 `;
 
@@ -16,8 +18,8 @@ export const CardItemContainer = styled.div`
   flex-direction: column;
 
   @media screen and (max-width: 620px) {
-    width: 137px;
-    height: 293px;
+    width: 100%;
+    min-height: 293px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -31,8 +33,11 @@ export const CardImageWrapper = styled.div`
   background-color: #f0f0f0;
 
   @media screen and (max-width: 620px) {
-    width: 137px;
-    height: 132px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
     background-color: #d9d9d9;
   }
 `;
@@ -44,8 +49,11 @@ export const CardImage = styled.img`
   object-fit: cover;
 
   @media screen and (max-width: 620px) {
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     display: block;
     object-fit: cover;
     border-top-left-radius: 6px;
@@ -53,7 +61,14 @@ export const CardImage = styled.img`
   }
 `;
 
-export const CardContent = styled.div``;
+export const CardContent = styled.div`
+@media screen and (max-width: 620px) {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  min-height: 241px;
+}
+`;
 
 export const CardContentLink = styled.div``;
 

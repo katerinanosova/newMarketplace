@@ -102,10 +102,12 @@ export const MainContainer = styled.div`
   margin: 0 auto;
   padding: 0px 10px 79px;
   font-family: 'Roboto', sans-serif;
+
   @media screen and (max-width: 890px) {
     padding: 85px 0px 84px;
   }
-  @media screen and (max-width: 620px) {
+
+  @media screen and (max-width: 590px) {
     padding: 85px 0px 84px;
   }
 `;
@@ -255,6 +257,13 @@ export const SettingsChangePhoto = styled.a`
 
 export const SettingsRight = styled.div`
   width: 564px;
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (max-width: 620px) {
+    width: 100%;
+  }
+
   @media screen and (max-width: 620px) {
     width: 100%;
   }
@@ -263,15 +272,31 @@ export const SettingsRight = styled.div`
 export const SettingsDiv = styled.div`
   display: inline-block;
   margin: 0 7px 20px;
+
   @media screen and (max-width: 620px) {
     margin: 0 0px 18px;
   }
 `;
 
+export const SettingsNameBox = styled.div`
+  display: flex;
+
+  @media screen and (max-width: 890px) {
+    flex-direction: column;
+  }
+
+`
+
 export const SettingsForm = styled.div`
   width: 564px;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
+
+  @media screen and (max-width: 620px) {
+    width: 100%;
+  }
+  
   @media screen and (max-width: 620px) {
     width: 100%;
     flex-direction: column;
@@ -305,6 +330,11 @@ export const SettingsLabel = styled.label`
 
 export const SettingsFName = styled(SettingsInput)`
   width: 300px;
+
+  @media screen and (max-width: 890px) {
+    width: 500px;
+  }
+
   @media screen and (max-width: 620px) {
     width: 100%;
   }
@@ -312,6 +342,11 @@ export const SettingsFName = styled(SettingsInput)`
 
 export const SettingsLName = styled(SettingsInput)`
   width: 300px;
+
+  @media screen and (max-width: 890px) {
+    width: 500px;
+  }
+
   @media screen and (max-width: 620px) {
     width: 100%;
   }
@@ -319,13 +354,23 @@ export const SettingsLName = styled(SettingsInput)`
 
 export const SettingsCity = styled(SettingsInput)`
   width: 300px;
+
+  @media screen and (max-width: 890px) {
+    width: 500px;
+  }
+
   @media screen and (max-width: 620px) {
     width: 100%;
   }
 `;
 
 export const SettingsPhone = styled(SettingsInput)`
-  width: 570px;
+  width: 614px;
+
+  @media screen and (max-width: 890px) {
+    width: 500px;
+  }
+
   @media screen and (max-width: 620px) {
     width: 100%;
   }
@@ -366,6 +411,9 @@ export const MainTitle = styled.h3`
 export const MainContent = styled.div`
   width: 100%;
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
+
   @media screen and (max-width: 620px) {
     width: 100%;
     margin: 0 auto;
@@ -397,18 +445,21 @@ export const ContentCards = styled.div`
 
   @media screen and (max-width: 1158px) {
     display: grid;
-    grid-template-columns: repeat(3, 270px);
+    grid-template-columns: repeat(3, 1fr);
   }
 
   @media screen and (max-width: 890px) {
+    width: 600px;
     display: grid;
-    grid-template-columns: repeat(2, 270px);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   @media screen and (max-width: 620px) {
+    max-width: 550px;
+    padding-left: 16px;
+    padding-right: 16px;
     display: grid;
-    grid-template-columns: repeat(2, 137px);
-    grid-auto-rows: 293px;
+    grid-template-columns: repeat(2, 1fr);
     grid-gap: 10px 10px;
     justify-content: center;
     height: 596px;
