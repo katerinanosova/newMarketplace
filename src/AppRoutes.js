@@ -50,7 +50,7 @@ export const AppRoutes = () => {
       <Route path='/review' element={<Review />} />
       <Route path='/new-product' element={<NewProduct />} />
       <Route path='/reg' element={<Sign />} />
-      <Route path='/notfound' element={<NotFound />} />
+      <Route path='*' element={<NotFound />} />
     </Routes>
   );
 };
