@@ -50,5 +50,9 @@
     "stylelint": "^15.10.2",
     "stylelint-config-standard": "^34.0.0",
     "stylelint-prettier": "^4.0.2"
-  }
+  },
+  "description": "Введение в React - 1:00 ч\r JSX, компоненты и props - 3:00 ч\r Состояние и жизненный цикл компонента - 8:00 ч\r Стилизация. Styled Components - 3:00 ч\r Routing - 3:00 ч\r Работа с API - 6:00 ч \r React Refs - 6:00 ч\r Context - Расчетное время 2:00 ч / Фактическое время 4:00 ч",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC"
 }
