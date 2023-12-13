@@ -4,6 +4,7 @@ import * as SU from './signUp.styled';
 import { registerUser } from '../../Api/api';
 import { handleCity, handleEmail, handleName, handlePassword, handleRepeatPassword, handleSurname } from '../../helpers/sign';
 import { useDispatch, useSelector } from 'react-redux';
+import { saveUserAfterReg } from '../../Store/Slices/userSlice';
 
 export const SignUp = ({ setChoiceReg }) => {
   const dispatch = useDispatch()
@@ -14,7 +15,9 @@ export const SignUp = ({ setChoiceReg }) => {
   const [surname,setSurname] = useState('');
   const [city,setCity] = useState('');
   const role = 'user';
+
   const saveAndRegisterUser = async (email, password, name, role, surname, city) => {
+
     const data = await registerUser(email, password, name, role, surname, city);
     await dispatch(saveUserAfterReg({data}));
     const userEmail = localStorage.getItem('email')
