@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import * as S from './signIn.styled';
 import * as SU from './signUp.styled';
-import { registerUser } from '../../Api/api';
+import { registerUser } from '../../Api/userApi';
 import { handleCity, handleEmail, handleName, handlePassword, handleRepeatPassword, handleSignIn, handleSurname } from '../../helpers/sign';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveUserAfterReg } from '../../Store/Slices/userSlice';

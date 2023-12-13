@@ -1,15 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { saveTokenUserLocal, saveUserLocal } from "../../helpers/user";
+import { saveUserLocal } from "../../helpers/user";
+import { saveTokenUserLocal } from "../../helpers/token";
 const userSlice = createSlice({
     name: 'user',
     initialState: {
         email: null,
         nameUser: null,
         id: null,
-        token: null,
-        accessToken: null,
-        refreshToken: null,
-        typeToken: null
+        token: [],
     },
     reducers: {
         saveUserAfterReg(state, action) {
@@ -19,13 +17,8 @@ const userSlice = createSlice({
             saveUserLocal(state.email, state.nameUser, state.id)  
         },
         saveTokenUserAfterSignIn(state, action) {
-            state.accessToken = action.payload.data.access_token;
-            state.refreshToken = action.payload.data.refresh_token;
-            state.typeToken = action.payload.data.token_type;
-            const accessToken =  state.accessToken;
-            const refreshToken =  state.refreshToken;
-            const typeToken =  state.typeToken;
-            saveTokenUserLocal(accessToken, refreshToken, typeToken)  
+            state.token = action.payload.data;
+            saveTokenUserLocal(token)  
         }
     }
 })

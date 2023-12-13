@@ -1,4 +1,4 @@
-import { singIn } from "../Api/api";
+import { singIn } from "../Api/userApi";
 import { saveTokenUserAfterSignIn } from "../Store/Slices/userSlice";
 
 export const handleEmail = (setEmail, event) => {
