@@ -3,8 +3,10 @@ import * as S from './signIn.styled';
 import * as SU from './signUp.styled';
 import { registerUser } from '../../Api/api';
 import { handleCity, handleEmail, handleName, handlePassword, handleRepeatPassword, handleSurname } from '../../helpers/sign';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const SignUp = ({ setChoiceReg }) => {
+  const dispatch = useDispatch()
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
   const [repeatPassword,setRepeatPassword] = useState('');
@@ -12,6 +14,12 @@ export const SignUp = ({ setChoiceReg }) => {
   const [surname,setSurname] = useState('');
   const [city,setCity] = useState('');
   const role = 'user';
+  const saveAndRegisterUser = async (email, password, name, role, surname, city) => {
+    const data = await registerUser(email, password, name, role, surname, city);
+    await dispatch(saveUserAfterReg({data}));
+    const userEmail = localStorage.getItem('email')
+    console.log(userEmail);
+  }
   return (
     <S.Wrapper>
       <SU.ContainerSignup>
@@ -35,7 +43,7 @@ export const SignUp = ({ setChoiceReg }) => {
               placeholder='Город (необязательно)'
             />
             <SU.ModalBtnSignupEnt>
-              <S.ModalBtnEnterLink onClick={() => registerUser(email, password, name, role, surname, city)}>Зарегистрироваться</S.ModalBtnEnterLink>
+              <S.ModalBtnEnterLink onClick={() => saveAndRegisterUser(email, password, name, role, surname, city)}>Зарегистрироваться</S.ModalBtnEnterLink>
             </SU.ModalBtnSignupEnt>
             <SU.ModalBtnSignupEnt>
               <S.ModalBtnEnterLink to='/profile'>
