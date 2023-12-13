@@ -2,7 +2,7 @@ import { useState } from 'react';
 import * as S from './signIn.styled';
 import * as SU from './signUp.styled';
 import { registerUser } from '../../Api/api';
-import { handleCity, handleEmail, handleName, handlePassword, handleRepeatPassword, handleSurname } from '../../helpers/sign';
+import { handleCity, handleEmail, handleName, handlePassword, handleRepeatPassword, handleSignIn, handleSurname } from '../../helpers/sign';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveUserAfterReg } from '../../Store/Slices/userSlice';
 
@@ -16,12 +16,10 @@ export const SignUp = ({ setChoiceReg }) => {
   const [city,setCity] = useState('');
   const role = 'user';
 
-    const saveLocalUser = (data) => {
-      dispatch(saveUserAfterReg({data}))
-    }
     const saveAndRegisterUser = async (email, password, name, role, surname, city) => {
     const data = await registerUser(email, password, name, role, surname, city);
-    saveLocalUser(data)
+    dispatch(saveUserAfterReg({data}))
+    handleSignIn(email, password, dispatch);
   }
   return (
     <S.Wrapper>

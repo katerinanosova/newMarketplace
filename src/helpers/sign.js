@@ -1,3 +1,5 @@
+import { singIn } from "../Api/api";
+import { saveTokenUserAfterSignIn } from "../Store/Slices/userSlice";
 
 export const handleEmail = (setEmail, event) => {
     setEmail(event.target.value);
@@ -17,3 +19,7 @@ export const handleSurname = (setSurname, event) => {
 export const handleCity = (setCity, event) => {
     setCity(event.target.value)
 };
+export const handleSignIn = async (email, password, dispatch) => {
+    const data = await singIn(email, password);
+    dispatch(saveTokenUserAfterSignIn({data}))
+  }
