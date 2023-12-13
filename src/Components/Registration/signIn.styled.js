@@ -246,7 +246,7 @@ export const PassErrorMessage = styled(ErrorMessage)`
   font-size: 0.8rem;
   padding-right: 42px;
   padding-left: 42px;
-  top: 138px;
+  top: 130px;
   @media screen and (max-width: 768px) {
     font-size: 0.6rem;
     padding-right: 22px;

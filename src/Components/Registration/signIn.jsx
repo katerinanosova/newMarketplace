@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { handleEmail, handlePassword } from '../../helpers/sign';
+import { handleEmail, handlePassword, handleSignIn } from '../../helpers/sign';
 import * as S from './signIn.styled';
+import { useDispatch } from 'react-redux';
 
 export const SignIn = ({ setChoiceReg }) => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);

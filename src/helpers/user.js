@@ -10,11 +10,9 @@ export const deleteUserLocal = () => {
     localStorage.removeItem('email')
     localStorage.removeItem('name')
     localStorage.removeItem('id');
+    localStorage.removeItem('token')
     if(localStorage.getItem('avatar')){
         localStorage.removeItem('avatar')
     }
-    if(localStorage.getItem('token')){
-        deleteTokenLocal()
-    }
-
 }
+

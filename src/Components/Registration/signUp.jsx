@@ -1,20 +1,31 @@
 import { useState, useEffect } from 'react';
 import * as S from './signIn.styled';
 import * as SU from './signUp.styled';
-import { registerUser } from '../../Api/api';
-import { handleCity, handleName, handleSurname } from '../../helpers/sign';
+import { registerUser } from '../../Api/userApi';
+import {
+  handleCity,
+  handleEmail,
+  handleName,
+  handlePassword,
+  handleRepeatPassword,
+  handleSignIn,
+  handleSurname,
+} from '../../helpers/sign';
+import { useDispatch, useSelector } from 'react-redux';
+import { saveUserAfterReg } from '../../Store/Slices/userSlice';
 
 export const SignUp = ({ setChoiceReg }) => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
-  const [passEqual, setPassEqual] = useState(false);
-  const [error, setError] = useState(null);
-  const [errorPass, setErrorPass] = useState(null);
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [city, setCity] = useState('');
   const role = 'user';
+  const [passEqual, setPassEqual] = useState(false);
+  const [error, setError] = useState(null);
+  const [errorPass, setErrorPass] = useState(null);
 
   const handleEmail = (event) => {
     const trimmedValue = event.target.value.trim();
@@ -74,7 +85,7 @@ export const SignUp = ({ setChoiceReg }) => {
       return;
     }
 
-    registerUser(email, password, name, role, surname, city);
+    registerUser(email, password, name, role, surname, city, dispatch);
   };
 
   return (
@@ -130,7 +141,7 @@ export const SignUp = ({ setChoiceReg }) => {
               </S.ModalBtnEnterLink>
             </SU.ModalBtnSignupEnt>
             <SU.ModalBtnSignupEnt>
-              <S.ModalBtnEnterLink to='/profile'>
+              <S.ModalBtnEnterLink onClick={() => setChoiceReg(true)}>
                 Уже зарегистрирован
               </S.ModalBtnEnterLink>
             </SU.ModalBtnSignupEnt>
