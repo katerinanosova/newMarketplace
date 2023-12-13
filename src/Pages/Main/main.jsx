@@ -11,6 +11,7 @@ export const Main = ({products}) => {
     console.log(data);
   }
 
+  
   return (
     <S.Wrapper>
       <S.Container>
