@@ -3,8 +3,10 @@ import { ReturnToMain } from '../../Components/ReturnToMain.js/ReturnToMain';
 import { Card } from '../../Components/Card/Card';
 import { Footer } from '../../Components/Footer/Footer';
 import * as S from './Profile.styled';
+import { getUser } from '../../Api/api';
 
 export const Profile = ({ products }) => {
+  getUser()
   return (
     <S.Wrapper>
       <S.Container>
