@@ -30,7 +30,6 @@ export const registerUser = async (
       throw new Error("Сервер нихт арбайтен");
     }
     const data = await response.json();
-    dispatch(saveUserAfterReg({data}))
     return data;
   }
 

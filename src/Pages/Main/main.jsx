@@ -11,11 +11,12 @@ export const Main = ({products}) => {
     console.log(data);
   }
 
+  
   return (
     <S.Wrapper>
       <S.Container>
         <Header />
-        <main>
+        <S.Main>
           <Search />
           <S.MainContainer>
             <S.MainH2>Объявления</S.MainH2>
@@ -25,7 +26,7 @@ export const Main = ({products}) => {
               ))}
             </S.MainContent>
           </S.MainContainer>
-        </main>
+        </S.Main>
         <Footer />
       </S.Container>
     </S.Wrapper>

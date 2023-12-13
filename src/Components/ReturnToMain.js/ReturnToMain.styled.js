@@ -10,7 +10,7 @@ export const MainReturnToMain = styled.div`
   margin: 0 auto;
   padding: 43px 10px 43px;
 
-  @media screen and (max-width: 590px) {
+  @media screen and (max-width: 620px) {
     width: 100%;
     height: 55px;
     background-color: #009ee4;
@@ -38,7 +38,7 @@ export const ReturnToMainLogoDesktopIcon = styled.img`
 export const ReturnToMainLogoMobile = styled.div`
   display: none;
 
-  @media screen and (max-width: 590px) {
+  @media screen and (max-width: 620px) {
     display: block;
     width: 32px;
     height: 32px;
@@ -46,7 +46,7 @@ export const ReturnToMainLogoMobile = styled.div`
 `;
 
 export const ReturnToMainLogoMobileIcon = styled.img`
-  @media screen and (max-width: 590px) {
+  @media screen and (max-width: 620px) {
     width: 32px;
     height: auto;
     display: block;
@@ -72,5 +72,9 @@ export const ReturnToMainButton = styled.button`
 
   &:hover {
     background-color: #0080c1;
+  }
+
+  @media screen and (max-width: 620px) {
+    display: none;
   }
 `;
