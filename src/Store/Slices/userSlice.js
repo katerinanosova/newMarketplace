@@ -10,11 +10,11 @@ const userSlice = createSlice({
     },
     reducers: {
         saveUserAfterReg(state, action) {
-            console.log(data.email);
+            console.log(action.payload.data.email);
             state.email = action.payload.data.email;
             state.nameUser = action.payload.data.name;
             state.id = action.payload.data.id;
-            saveUserLocal(email, nameUser, id)  
+            saveUserLocal(state.email, state.nameUser, state.id)  
         }
     }
 })

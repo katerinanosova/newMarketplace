@@ -16,12 +16,12 @@ export const SignUp = ({ setChoiceReg }) => {
   const [city,setCity] = useState('');
   const role = 'user';
 
-  const saveAndRegisterUser = async (email, password, name, role, surname, city) => {
-
+    const saveLocalUser = (data) => {
+      dispatch(saveUserAfterReg({data}))
+    }
+    const saveAndRegisterUser = async (email, password, name, role, surname, city) => {
     const data = await registerUser(email, password, name, role, surname, city);
-    await dispatch(saveUserAfterReg({data}));
-    const userEmail = localStorage.getItem('email')
-    console.log(userEmail);
+    saveLocalUser(data)
   }
   return (
     <S.Wrapper>
