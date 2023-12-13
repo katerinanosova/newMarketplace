@@ -1,9 +1,10 @@
+import { useState } from 'react';
 import { handleEmail, handlePassword } from '../../helpers/sign';
 import * as S from './signIn.styled';
 
 export const SignIn = ({ setChoiceReg }) => {
-  const [email,setEmail] = useState('');
-  const [password,setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   return (
     <S.Wrapper>
       <S.ContainerEnter>
