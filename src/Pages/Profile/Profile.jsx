@@ -3,7 +3,7 @@ import { ReturnToMain } from '../../Components/ReturnToMain.js/ReturnToMain';
 import { Card } from '../../Components/Card/Card';
 import { Footer } from '../../Components/Footer/Footer';
 import * as S from './Profile.styled';
-import { getUser } from '../../Api/api';
+import { getUser } from '../../Api/userApi';
 
 export const Profile = ({ products }) => {
   getUser()
