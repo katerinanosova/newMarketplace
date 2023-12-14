@@ -138,7 +138,6 @@ export const ProductArticleFillImg = styled.div`
                 top: 100px;
             }
         }
-        
     }
 `
 

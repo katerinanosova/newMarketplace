@@ -284,9 +284,7 @@ export const SettingsNameBox = styled.div`
   @media screen and (max-width: 890px) {
     flex-direction: column;
   }
-
-`
-
+`;
 export const SettingsForm = styled.div`
   width: 564px;
   display: flex;
@@ -296,7 +294,6 @@ export const SettingsForm = styled.div`
   @media screen and (max-width: 620px) {
     width: 100%;
   }
-  
   @media screen and (max-width: 620px) {
     width: 100%;
     flex-direction: column;
@@ -461,7 +458,8 @@ export const ContentCards = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 10px 10px;
+    grid-auto-rows: auto;
     justify-content: center;
-    height: 596px;
+    height: 100%;
   }
 `;
