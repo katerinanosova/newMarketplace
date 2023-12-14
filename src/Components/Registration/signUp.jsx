@@ -16,11 +16,7 @@ export const SignUp = ({ setChoiceReg }) => {
   const [city,setCity] = useState('');
   const role = 'user';
 
-    const saveAndRegisterUser = async (email, password, name, role, surname, city) => {
-    const data = await registerUser(email, password, name, role, surname, city);
-    dispatch(saveUserAfterReg({data}))
-    handleSignIn(email, password, dispatch);
-  }
+
   return (
     <S.Wrapper>
       <SU.ContainerSignup>
@@ -44,7 +40,7 @@ export const SignUp = ({ setChoiceReg }) => {
               placeholder='Город (необязательно)'
             />
             <SU.ModalBtnSignupEnt>
-              <S.ModalBtnEnterLink onClick={() => saveAndRegisterUser(email, password, name, role, surname, city)}>Зарегистрироваться</S.ModalBtnEnterLink>
+              <S.ModalBtnEnterLink onClick={() => saveAndRegisterUser(email, password, name, role, surname, city, dispatch)}>Зарегистрироваться</S.ModalBtnEnterLink>
             </SU.ModalBtnSignupEnt>
             <SU.ModalBtnSignupEnt>
               <S.ModalBtnEnterLink to='/profile'>

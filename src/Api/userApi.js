@@ -1,6 +1,5 @@
-
-import { saveUserAfterReg } from "../Store/Slices/userSlice";
-import { getTokenLocal, saveTokenLocal } from "../helpers/token";
+import { saveTokenUserAfterSignIn } from "../Store/Slices/userSlice";
+import { getAccessTokenLocal, getRefreshTokenLocal, getTypeTokenLocal } from "../helpers/token";
 export const host = "http://127.0.0.1:8090";
 
   export const registerUser = async ( 
@@ -57,13 +56,17 @@ export const host = "http://127.0.0.1:8090";
     return data;
   }
 
-  export async function getUser() {
-    const token = localStorage.getItem('token');
+  export async function getUser(dispatch) {
+    const accesstoken = getAccessTokenLocal();
+    const refreshtoken = getRefreshTokenLocal();
+    console.log(accesstoken);
+    console.log(refreshtoken);
+    const type = getTypeTokenLocal();
     const response = await fetch(`${host}/user`, {
       method: "GET",
       headers: {
         "content-type": "application/json",
-        Authorization: `${token.token_type} ${token.access_token}`,
+        Authorization: `${type} ${accesstoken}`,
       },
     });
     if (response.status === 200) {
@@ -71,44 +74,43 @@ export const host = "http://127.0.0.1:8090";
       console.log(data);
       return  data;
     } else if (response.status === 401) {
-      console.log("need new token");
-      // updateToken();
-      // <Link to="login" />;
-      // return getUser(getTokenFromLocalStorage());
+      await updateToken(dispatch);
+      getUser(dispatch)
     }
     throw new Error("Нет авторизации");
   }
 
-  export const updateToken = async () => {
+  export const updateToken = async (dispatch) => {
     try {
-      const token = getTokenLocal();
-      const data = await getNewToken(token);
-      console.log(data);
-      // saveTokenLocal(data);
+      const data = await getNewToken();
+      dispatch(saveTokenUserAfterSignIn({data}))
     } catch (error) {
-      throw new Error(`Ошибка при обновлении токена:`);
+      throw new Error(`Ошибка при обновлении токена`);
     }
   };
 
-
-  export const getNewToken = async (token) => {
-    return fetch(`${host}/auth/login`, {
+  export const getNewToken = async () => {
+      const accesstoken = getAccessTokenLocal();
+      const refreshtoken = getRefreshTokenLocal();
+      console.log(accesstoken);
+      console.log(refreshtoken);
+      fetch(`${host}/auth/login`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        access_token: token.access_token,
-        refresh_token: token.refresh_token,
+        access_token: accesstoken,
+        refresh_token: refreshtoken,
       }),
     }).then((response) => {
+      console.log(response);
       if (response.status === 201) {
         return response.json();
       }
       if (response.status === 401) {
         throw new Error("Токен устарел");
       }
-  
       throw new Error("Неизвестная ошибка, попробуйте позже");
     });
   };

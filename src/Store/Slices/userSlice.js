@@ -7,7 +7,9 @@ const userSlice = createSlice({
         email: null,
         nameUser: null,
         id: null,
-        token: [],
+        accessToken: null,
+        refreshToken: null,
+        typeToken: null,
     },
     reducers: {
         saveUserAfterReg(state, action) {
@@ -17,8 +19,13 @@ const userSlice = createSlice({
             saveUserLocal(state.email, state.nameUser, state.id)  
         },
         saveTokenUserAfterSignIn(state, action) {
-            state.token = action.payload.data;
-            saveTokenUserLocal(token)  
+            state.accessToken = action.payload.data.access_token;
+            state.refreshToken = action.payload.data.refresh_token;
+            state.typeToken = action.payload.data.token_type
+            const access = state.accessToken;
+            const refresh = state.refreshToken;
+            const type = state.typeToken;
+            saveTokenUserLocal(access, refresh, type)
         }
     }
 })
