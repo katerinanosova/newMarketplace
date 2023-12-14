@@ -47,8 +47,8 @@ export const AppRoutes = () => {
       <Route path='/profile' element={<Profile products={products}/>} />
       <Route path='/seller-profile' element={<SellerProfile products={products}/>} />
       <Route path='/product/:id' element={<Product products={products}/>} />
-      <Route path='/review' element={<Review />} />
-      <Route path='/new-product' element={<NewProduct />} />
+      {/* <Route path='/review' element={<Review />} />
+      <Route path='/new-product' element={<NewProduct />} /> */}
       <Route path='/reg' element={<Sign />} />
       <Route path='*' element={<NotFound />} />
     </Routes>

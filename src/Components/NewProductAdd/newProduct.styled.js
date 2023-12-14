@@ -8,58 +8,56 @@ min-height: 100%;
 overflow: hidden;
 `
 export const ContainerBg = styled.div`
-max-width: 100%;
+position: fixed;
+left: 0px;
+top: 0px;
+z-index: 999;
+width: 100vw;
 height: 100vh;
-margin: 0 auto;
-position: relative;
-background-color: #F4F5F6;
+background-color: rgba(0, 0, 0, 0.5);
+display: flex;
+align-items: center;
+justify-content: center;
+
+@media screen and (max-width: 600px) {
+  background-color: transparent;
+}
 `
 export const ModalBlock = styled.div`
 position: absolute;
 z-index: 5;
 left: calc(50% - (600px/2));
-top: 60px;
 opacity: 1;
+
 @media screen and (max-width: 600px) {
     position: absolute;
     z-index: 5;
     left: 0px;
     top: 55px;
+    bottom: 54px;
     opacity: 1;
 }
 `
 export const ModalContent = styled.div`
-display: -webkit-box;
-display: -ms-flexbox;
 display: flex;
--webkit-box-orient: vertical;
--webkit-box-direction: normal;
-    -ms-flex-direction: column;
-        flex-direction: column;
--webkit-box-align: start;
-    -ms-flex-align: start;
-        align-items: flex-start;
+flex-direction: column;
+align-items: flex-start;
 width: 600px;
 height: auto;
 padding: 32px 50px 42px;
 background-color: #FFFFFF;
 border-radius: 12px;
 position: relative;
+
 @media screen and (max-width: 600px) {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-box-align: start;
-        -ms-flex-align: start;
-            align-items: flex-start;
-    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100vw;
     min-width: 320px;
-    height: auto;
+    height: 100%;
     padding: 30px 20px 30px;
+    border-radius: 0px;
 }
 `
 export const ModalTitle = styled.h3`
@@ -67,15 +65,18 @@ font-size: 32px;
 line-height: 46px;
 font-weight: 500;
 color: #000000;
-&:hover::before {
+
+  &:hover::before {
     border-top: 2px solid #0080C1;
     border-left: 2px solid #0080C1;
   }
+
   @media screen and (max-width: 600px) {
     font-size: 24px;
     line-height: 29px;
     padding: 0 0 0 26px;
     position: relative;
+
     &::before {
         content: "";
         display: block;
@@ -101,6 +102,7 @@ top: 47px;
 right: 50px;
 z-index: 3;
 cursor: pointer;
+
 @media screen and (max-width: 600px) {
     display: none;
 }
@@ -143,37 +145,32 @@ height: 100%;
 `
 export const ModalFormNewArtFormNewArt = styled.div`
 margin-top: 22px;
-display: -webkit-box;
-display: -ms-flexbox;
 display: flex;
--webkit-box-orient: vertical;
--webkit-box-direction: normal;
-    -ms-flex-direction: column;
-        flex-direction: column;
+flex-direction: column;
 width: 100%;
+
 @media screen and (max-width: 600px) {
     margin-top: 22px;
+    height: 100vw;
 }
+
+@media screen and (max-width: 600px) and (max-height: 740px) {
+  overflow-y: auto;
+  scrollbar-width: none; 
+}
+
+
 `
 export const FormNewArtBlock = styled.div`
 width: 100%;
-display: -webkit-box;
-display: -ms-flexbox;
 display: flex;
--webkit-box-orient: vertical;
--webkit-box-direction: normal;
-    -ms-flex-direction: column;
-        flex-direction: column;
+flex-direction: column;
 margin-bottom: 20px;
+
 @media screen and (max-width: 600px) {
     width: 100%;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
+    flex-direction: column;
     margin-bottom: 18px;
 }
 `
@@ -580,5 +577,6 @@ color: #FFFFFF;
     margin-top: 10px;
     width: 100%;
     height: 46px;
+    flex-shrink: 0;
   }
 `

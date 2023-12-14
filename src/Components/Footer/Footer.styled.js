@@ -7,7 +7,7 @@ export const FooterWrapper = styled.footer`
     position: fixed;
     bottom: 0;
     left: 0;
-    z-index: 3;
+    z-index: 999;
     display: flex;
     align-items: center;
     justify-content: center;

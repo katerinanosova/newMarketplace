@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { handleEmail, handlePassword, handleSignIn } from '../../helpers/sign';
+import { handleEmail, handlePassword, handleSignIn, validateFormLog } from '../../helpers/sign';
 import * as S from './signIn.styled';
 import { useDispatch } from 'react-redux';
 
@@ -8,26 +8,6 @@ export const SignIn = ({ setChoiceReg }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-
-  const handleEmail = (event) => {
-    const emailValidation = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-    setEmail(event.target.value.trim());
-    if (!emailValidation.test(event.target.value.trim())) {
-      setError('Проверяйте вводимые символы');
-    } else {
-      setError(null);
-    }
-  };
-
-  const handlePassword = (event) => {
-    const trimmedValue = event.target.value.trim();
-    if (trimmedValue.length < 6) {
-      setError('Пароль должен быть не менее 6 символов');
-    } else {
-      setError(null);
-    }
-    setPassword(trimmedValue);
-  };
 
   return (
     <S.Wrapper>
@@ -40,18 +20,40 @@ export const SignIn = ({ setChoiceReg }) => {
             {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
             <S.ModalInputLogin
               value={email}
-              onChange={handleEmail}
+              onChange={(event) => handleEmail(setEmail, setError, event)}
               type='text'
               placeholder='email'
             />
             <S.ModalInputPassword
               value={password}
-              onChange={handlePassword}
+              onChange={(event) =>
+                handlePassword(setPassword, setError, event)
+              }
               type='password'
               placeholder='Пароль'
             />
             <S.ModalBtnEnter>
-              <S.ModalBtnEnterLink>Войти</S.ModalBtnEnterLink>
+              <S.ModalBtnEnterLink
+                onClick={(event) => {
+                  if (
+                    validateFormLog(
+                      email,
+                      password,
+                      setError,
+                      event
+                    )
+                  ) {
+                    handleSignIn(
+                      email,
+                      password,
+                      setError,
+                      dispatch,
+                    );
+                  }
+                }}
+              >
+                Войти
+              </S.ModalBtnEnterLink>
             </S.ModalBtnEnter>
             <S.ModalBtnSignup>
               <S.ModalBtnSignupLink onClick={() => setChoiceReg(false)}>
