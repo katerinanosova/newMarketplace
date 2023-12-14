@@ -57,10 +57,9 @@ export const host = "http://127.0.0.1:8090";
   }
 
   export async function getUser(dispatch) {
+    console.log('done');
     const accesstoken = getAccessTokenLocal();
     const refreshtoken = getRefreshTokenLocal();
-    console.log(accesstoken);
-    console.log(refreshtoken);
     const type = getTypeTokenLocal();
     const response = await fetch(`${host}/user`, {
       method: "GET",
@@ -71,46 +70,35 @@ export const host = "http://127.0.0.1:8090";
     });
     if (response.status === 200) {
       const data = await response.json();
-      console.log(data);
       return  data;
     } else if (response.status === 401) {
-      await updateToken(dispatch);
-      getUser(dispatch)
+      await getNewToken(dispatch);
+      return
     }
     throw new Error("Нет авторизации");
   }
 
-  export const updateToken = async (dispatch) => {
-    try {
-      const data = await getNewToken();
-      dispatch(saveTokenUserAfterSignIn({data}))
-    } catch (error) {
-      throw new Error(`Ошибка при обновлении токена`);
-    }
-  };
 
-  export const getNewToken = async () => {
+  export const getNewToken = async (dispatch) => {
       const accesstoken = getAccessTokenLocal();
       const refreshtoken = getRefreshTokenLocal();
-      console.log(accesstoken);
-      console.log(refreshtoken);
-      fetch(`${host}/auth/login`, {
+      const type = getTypeTokenLocal();
+      await fetch(`http://localhost:8090/auth/login`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
+        Authorization: `${type} ${accesstoken}`,
       },
       body: JSON.stringify({
         access_token: accesstoken,
         refresh_token: refreshtoken,
       }),
-    }).then((response) => {
-      console.log(response);
-      if (response.status === 201) {
-        return response.json();
-      }
-      if (response.status === 401) {
-        throw new Error("Токен устарел");
-      }
-      throw new Error("Неизвестная ошибка, попробуйте позже");
-    });
+    }).then(res => res.json())
+      .then(res => {
+        const data = res;
+        dispatch(saveTokenUserAfterSignIn({data}))})
+        .then(getUser(dispatch))
+    .catch(
+      console.error
+      )
   };

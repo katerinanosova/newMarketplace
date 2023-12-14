@@ -11,7 +11,7 @@ export const Profile = ({ products }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     getUser(dispatch)
-  }, [])
+  }, [dispatch])
 
   return (
     <S.Wrapper>
