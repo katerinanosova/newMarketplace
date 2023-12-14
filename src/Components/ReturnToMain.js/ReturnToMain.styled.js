@@ -58,6 +58,10 @@ export const ReturnToMainForm = styled.div`
   max-width: 1044px;
   width: 100%;
   display: flex;
+
+  @media screen and (max-width: 620px) {
+  display: none;
+  }
 `;
 
 export const ReturnToMainButton = styled.button`

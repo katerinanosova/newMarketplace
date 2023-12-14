@@ -5,16 +5,30 @@ import { Header } from '../../Components/Header/Header';
 import { ReturnToMain } from '../../Components/ReturnToMain.js/ReturnToMain';
 import * as S from '../Main/main.styled';
 import * as St from './Product.styled';
+import { HeaderSecond } from '../../Components/HeaderSecond/HeaderSecond';
+import { useState } from 'react';
+import { NewProduct } from '../../Components/NewProductAdd/newProduct';
 
 export const Product = () => {
 
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const [addNewProductModal, setAddNewProductModal] = useState(false);
+  
+  const closeModal = () => {
+    setAddNewProductModal(false);
+  }
+
+  const openModal = () => {
+    setAddNewProductModal(true);
+  }
+
   return (
     <S.Wrapper>
       <S.Container>
-        <Header />
+        {/* <Header /> */}
+        <HeaderSecond openModal={openModal} />
         <main>
           <St.ProductContainer>
             <ReturnToMain />
@@ -92,7 +106,9 @@ export const Product = () => {
             </St.ProductDescriptionContent>
           </St.ProductDescription>
         </main>
-        <Footer />
+        {addNewProductModal ? 
+        <NewProduct closeModal={closeModal} /> : null}
+        <Footer openModal={openModal} />
       </S.Container>
     </S.Wrapper>
   );
