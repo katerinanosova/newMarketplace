@@ -31,28 +31,29 @@ export const Profile = ({ products }) => {
 
                     <S.SettingsRight>
                       <S.SettingsForm>
-                        <S.SettingsDiv>
-                          <S.SettingsLabel htmlFor='settings-fname'>
-                            Имя
-                          </S.SettingsLabel>
-                          <S.SettingsFName
-                            name='fname'
-                            type='text'
-                            placeholder=''
-                          />
-                        </S.SettingsDiv>
+                        <S.SettingsNameBox>
+                          <S.SettingsDiv>
+                            <S.SettingsLabel htmlFor='settings-fname'>
+                              Имя
+                            </S.SettingsLabel>
+                            <S.SettingsFName
+                              name='fname'
+                              type='text'
+                              placeholder=''
+                            />
+                          </S.SettingsDiv>
 
-                        <S.SettingsDiv>
-                          <S.SettingsLabel htmlFor='settings-lname'>
-                            Фамилия
-                          </S.SettingsLabel>
-                          <S.SettingsLName
-                            name='lname'
-                            type='text'
-                            placeholder=''
-                          />
-                        </S.SettingsDiv>
-
+                          <S.SettingsDiv>
+                            <S.SettingsLabel htmlFor='settings-lname'>
+                              Фамилия
+                            </S.SettingsLabel>
+                            <S.SettingsLName
+                              name='lname'
+                              type='text'
+                              placeholder=''
+                            />
+                          </S.SettingsDiv>
+                        </S.SettingsNameBox>
                         <S.SettingsDiv>
                           <S.SettingsLabel htmlFor='settings-city'>
                             Город
