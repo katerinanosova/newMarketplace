@@ -22,7 +22,8 @@ export const MainContainer = styled.div`
   padding: 52px 10px 37px;
   display: flex;
   flex-direction: column;
-  @media screen and (max-width: 590px) {
+  
+  @media screen and (max-width: 620px) {
     padding: 85px 10px 84px;
   }
 `;
@@ -40,7 +41,7 @@ export const MainH2 = styled.h2`
     border-left: 2px solid #0080c1;
   }
 
-  @media screen and (max-width: 590px) {
+  @media screen and (max-width: 620px) {
     font-size: 24px;
     line-height: 29px;
     color: #000000;
@@ -80,7 +81,7 @@ export const MainContent = styled.div`
     display: none;
   }
 
-  @media screen and (max-width: 590px) {
+  @media screen and (max-width: 620px) {
     width: 100%;
     height: 100%;
     margin: 0 auto;

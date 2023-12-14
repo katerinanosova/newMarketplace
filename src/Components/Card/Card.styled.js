@@ -19,9 +19,7 @@ export const CardItemContainer = styled.div`
 
   @media screen and (max-width: 620px) {
     width: 100%;
-    min-height: 293px;
-    display: -webkit-box;
-    display: -ms-flexbox;
+    height: auto;
     display: flex;
     flex-direction: column;
   }
@@ -36,6 +34,7 @@ export const CardImageWrapper = styled.div`
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     width: 100%;
+    height: auto;
     padding-top: 100%;
     position: relative;
     background-color: #d9d9d9;
@@ -66,7 +65,7 @@ export const CardContent = styled.div`
   padding: 10px;
   display: flex;
   flex-direction: column;
-  min-height: 241px;
+  min-height: 130px;
 }
 `;
 
