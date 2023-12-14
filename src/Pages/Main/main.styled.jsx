@@ -24,7 +24,6 @@ export const MainContainer = styled.div`
   padding: 52px 10px 37px;
   display: flex;
   flex-direction: column;
-
   @media screen and (max-width: 620px) {
     padding: 85px 10px 84px;
   }

@@ -78,3 +78,4 @@ export const ReturnToMainButton = styled.button`
     display: none;
   }
 `;
+

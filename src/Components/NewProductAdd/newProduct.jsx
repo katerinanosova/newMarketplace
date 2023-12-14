@@ -1,13 +1,16 @@
 import * as S from './newProduct.styled';
+import { HeaderSecond } from '../../Components/HeaderSecond/HeaderSecond';
+import { Footer } from '../../Components/Footer/Footer';
 
-export const NewProduct = () => {
+export const NewProduct = ({ closeModal }) => {
     return (
         <S.Wrapper>
             <S.ContainerBg>
+                {/* <HeaderSecond /> */}
                 <S.ModalBlock>
                     <S.ModalContent>
                         <S.ModalTitle>Новое объявление</S.ModalTitle>
-                        <S.ModalBtnClose>
+                        <S.ModalBtnClose onClick={closeModal}>
                             <S.ModalBtnCloseLine />
                         </S.ModalBtnClose>
                         <S.ModalFormNewArtFormNewArt>
@@ -53,6 +56,7 @@ export const NewProduct = () => {
                         </S.ModalFormNewArtFormNewArt>
                     </S.ModalContent>
                 </S.ModalBlock>
+                <Footer />
             </S.ContainerBg>
         </S.Wrapper>
     )

@@ -2,14 +2,14 @@
 import * as S from '../NewProductAdd/newProduct.styled';
 import * as SU from './review.styled';
 
-export const Review = () => {
+export const Review = ({ closeReviewsModal }) => {
     return (
         <S.Wrapper>
             <S.ContainerBg>
                 <S.ModalBlock>
                     <S.ModalContent>
                         <S.ModalTitle>Отзывы о товаре</S.ModalTitle>
-                        <S.ModalBtnClose>
+                        <S.ModalBtnClose onClick={closeReviewsModal}>
                             <S.ModalBtnCloseLine />
                         </S.ModalBtnClose>
                         <SU.ModalScroll>
