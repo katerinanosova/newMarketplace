@@ -6,13 +6,13 @@ export const Card = ({ product }) => {
     <S.CardItem>
       <S.CardItemContainer>
         <S.CardImageWrapper>
-          <Link to='/product' target='_blank'>
+          <Link to={`/product/${product.id}`} >
             <S.CardImage src='#' alt='picture' />
           </Link>
         </S.CardImageWrapper>
         <S.CardContent>
           <S.CardContentLink>
-            <Link to='/product' target='_blank'>
+            <Link to={`/product/${product.id}`} >
               <S.CardTitle>{product.goods}</S.CardTitle>
             </Link>
           </S.CardContentLink>
