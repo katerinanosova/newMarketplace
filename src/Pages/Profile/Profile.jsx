@@ -3,8 +3,16 @@ import { ReturnToMain } from '../../Components/ReturnToMain.js/ReturnToMain';
 import { Card } from '../../Components/Card/Card';
 import { Footer } from '../../Components/Footer/Footer';
 import * as S from './Profile.styled';
+import { getUser } from '../../Api/userApi';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
 export const Profile = ({ products }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    getUser(dispatch)
+  }, [dispatch])
+
   return (
     <S.Wrapper>
       <S.Container>

@@ -110,6 +110,8 @@ export const ProductArticleFillImg = styled.div`
         align-items: center;
         justify-content: center;
         position: relative;
+        
+
 
         &::before {
             content: "";
@@ -154,8 +156,6 @@ export const ProductArticleImage = styled.img`
 export const ProductImageBarDesktop = styled.div`
     margin-top: 30px;
     width: 490px;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
     flex-direction: row;
     align-items: center;

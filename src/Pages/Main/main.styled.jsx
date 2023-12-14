@@ -16,13 +16,14 @@ export const Container = styled.div`
   background-color: #ffffff;
 `;
 
+export const Main = styled.main``
+
 export const MainContainer = styled.div`
   max-width: 1178px;
   margin: 0 auto;
   padding: 52px 10px 37px;
   display: flex;
   flex-direction: column;
-  
   @media screen and (max-width: 620px) {
     padding: 85px 10px 84px;
   }

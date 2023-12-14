@@ -285,7 +285,6 @@ export const SettingsNameBox = styled.div`
     flex-direction: column;
   }
 `;
-
 export const SettingsForm = styled.div`
   width: 564px;
   display: flex;
@@ -295,7 +294,6 @@ export const SettingsForm = styled.div`
   @media screen and (max-width: 620px) {
     width: 100%;
   }
-
   @media screen and (max-width: 620px) {
     width: 100%;
     flex-direction: column;

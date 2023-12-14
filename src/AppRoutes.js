@@ -7,6 +7,7 @@ import { Sign } from './Pages/Registration/sign';
 import { Product } from './Pages/Product/Product';
 import { Review } from './Components/reviews/review';
 import { NewProduct } from './Components/NewProductAdd/newProduct';
+import { NotFound } from './Pages/NotFound/NotFound';
 
 const products = [
   {
@@ -49,6 +50,7 @@ export const AppRoutes = () => {
       {/* <Route path='/review' element={<Review />} />
       <Route path='/new-product' element={<NewProduct />} /> */}
       <Route path='/reg' element={<Sign />} />
+      <Route path='*' element={<NotFound />} />
     </Routes>
   );
 };

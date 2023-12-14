@@ -5,17 +5,20 @@ import { Footer } from '../../Components/Footer/Footer';
 import { Header } from '../../Components/Header/Header';
 import { Search } from '../../Components/Search/Search';
 import * as S from './main.styled';
+import { useDispatch } from 'react-redux';
+import { saveProducts } from '../../Store/Slices/dataProductsSlice';
 export const Main = ({products}) => {
+  const dispatch = useDispatch();
   const {data =[], isLoading} = useGetAllAdsQuery();
   if(!isLoading) {
-    console.log(data);
+    dispatch(saveProducts({data}))
   }
 
   return (
     <S.Wrapper>
       <S.Container>
         <Header />
-        <main>
+        <S.Main>
           <Search />
           <S.MainContainer>
             <S.MainH2>Объявления</S.MainH2>
@@ -25,7 +28,7 @@ export const Main = ({products}) => {
               ))}
             </S.MainContent>
           </S.MainContainer>
-        </main>
+        </S.Main>
         <Footer />
       </S.Container>
     </S.Wrapper>
