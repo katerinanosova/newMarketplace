@@ -8,6 +8,7 @@ import * as St from './Product.styled';
 import { HeaderSecond } from '../../Components/HeaderSecond/HeaderSecond';
 import { useState } from 'react';
 import { NewProduct } from '../../Components/NewProductAdd/newProduct';
+import { Review } from '../../Components/reviews/review';
 
 export const Product = () => {
 
@@ -15,13 +16,21 @@ export const Product = () => {
   const navigate = useNavigate();
 
   const [addNewProductModal, setAddNewProductModal] = useState(false);
-  
+    
   const closeModal = () => {
     setAddNewProductModal(false);
   }
 
   const openModal = () => {
     setAddNewProductModal(true);
+  }
+
+  const [openReviews, setOpenReviews] = useState(false);
+  const openReviewsModal = () => {
+    setOpenReviews(true);
+  }
+  const closeReviewsModal = () => {
+    setOpenReviews(false);
   }
 
   return (
@@ -63,7 +72,7 @@ export const Product = () => {
                   <St.ProductInfo>
                     <St.ProductDate>Сегодня в 10:45</St.ProductDate>
                     <St.ProductCity>Санкт-Петербург</St.ProductCity>
-                    <St.ProductReviews to='/review'>
+                    <St.ProductReviews onClick={openReviewsModal}>
                       23 отзыва
                     </St.ProductReviews>
                   </St.ProductInfo>
@@ -106,6 +115,8 @@ export const Product = () => {
             </St.ProductDescriptionContent>
           </St.ProductDescription>
         </main>
+        {openReviews ? 
+        <Review closeReviewsModal={closeReviewsModal} /> : null}
         {addNewProductModal ? 
         <NewProduct closeModal={closeModal} /> : null}
         <Footer openModal={openModal} />
