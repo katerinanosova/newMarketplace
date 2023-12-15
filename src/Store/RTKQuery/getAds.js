@@ -1,14 +1,6 @@
 
 import { createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
-const DATA_TAG = { type: "ads", id: "LIST" };
-
-
-
-export const getAllAds = async () => {
-    const response = await fetch('http://localhost:8090/ads')
-    const data = await response.json();
-    console.log(data);
-}
+const DATA_TAG = { type: "dataAds", id: "LIST" };
 
 export const ads = createApi({
     reducerPath: 'ads',

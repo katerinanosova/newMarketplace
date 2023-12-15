@@ -3,15 +3,38 @@ import { ReturnToMain } from '../../Components/ReturnToMain.js/ReturnToMain';
 import { Card } from '../../Components/Card/Card';
 import { Footer } from '../../Components/Footer/Footer';
 import * as S from './Profile.styled';
-import { getUser } from '../../Api/userApi';
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useGetMeQuery } from '../../Store/RTKQuery/getMe';
+import { useGetNewTokenMutation } from '../../Store/RTKQuery/getToken';
+import { handleRefreshToken } from '../../helpers/token';
+import { saveTokenUserAfterSignIn } from '../../Store/Slices/userSlice';
 
 export const Profile = ({ products }) => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    getUser(dispatch)
-  }, [dispatch])
+  const access = localStorage.getItem('access')
+  const refresh = localStorage.getItem('refresh')
+  const handleRefreshToken = async (getNewToken, dispatch) => {
+    const response = await getNewToken()
+    console.log(response);
+    dispatch(saveTokenUserAfterSignIn(response))
+    
+}
+  const {data =[], isLoading, isError, error, isSuccess, refetch} = useGetMeQuery(access);
+  const [getNewToken] = useGetNewTokenMutation();
+  if(isSuccess) {
+    const response = data
+    console.log(response);
+    console.log('done');
+    // console.log(data);
+  }
+  if(isError && error.status !== 401 ){
+    // console.log(error.data.detail);
+  }
+  if(isError && error.status === 401 && error.data.detail !== 'Refresh token is already used or invalid') {
+    console.log(error);
+    handleRefreshToken(getNewToken, dispatch)
+    refetch()
+  }
 
   return (
     <S.Wrapper>

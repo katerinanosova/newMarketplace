@@ -34,52 +34,6 @@ export const host = "http://127.0.0.1:8090";
     return data;
   }
 
-  export async function singIn(
-    email,
-    password,
-  ) {
-    const response = await fetch(`${host}/auth/login`, {
-      method: "POST",
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-      headers: {
-        "content-type": "application/json",
-      },
-    });
-    if (response.status === 422) {
-      throw new Error("Проверьте вводимые данные");
-    } else if (response.status === 500) {
-      throw new Error("Сервер нихт арбайтен");
-    }
-    const data = await response.json();
-    return data;
-  }
-
-  export async function getUser(dispatch) {
-    console.log('done');
-    const accesstoken = getAccessTokenLocal();
-    const refreshtoken = getRefreshTokenLocal();
-    const type = getTypeTokenLocal();
-    const response = await fetch(`${host}/user`, {
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-        Authorization: `${type} ${accesstoken}`,
-      },
-    });
-    if (response.status === 200) {
-      const data = await response.json();
-      return  data;
-    } else if (response.status === 401) {
-      await getNewToken(dispatch);
-      return
-    }
-    throw new Error("Нет авторизации");
-  }
-
-
   export const getNewToken = async (dispatch) => {
       const accesstoken = getAccessTokenLocal();
       const refreshtoken = getRefreshTokenLocal();

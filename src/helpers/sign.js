@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { registerUser, singIn } from '../Api/userApi';
 import {
   saveTokenUserAfterSignIn,
@@ -60,9 +59,9 @@ export const handleCity = (setCity, event) => {
 export const handleSignIn = async (email, password, setError, dispatch, navigate) => {
 
   try {
-    const data = await singIn(email, password);
-    await dispatch(saveTokenUserAfterSignIn({ data }));
-    navigate('/profile')
+    // const data = await singIn(email, password);
+    // await dispatch(saveTokenUserAfterSignIn({ data }));
+    // navigate('/profile')
   } catch (error) {
     console.error(error);
     setError('Неизвестная ошибка');
@@ -78,12 +77,10 @@ export const saveAndRegisterUser = async (
   city,
   setError,
   dispatch,
-  navigate
 ) => {
   try {
     const data = await registerUser(email, password, name, role, surname, city);
     dispatch(saveUserAfterReg({ data }));
-    await handleSignIn(email, password, setError, dispatch, navigate);
   } catch (error) {
     console.error(error);
     setError('Неизвестная ошибка');

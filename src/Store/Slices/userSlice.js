@@ -19,6 +19,7 @@ const userSlice = createSlice({
             saveUserLocal(state.email, state.nameUser, state.id)  
         },
         saveTokenUserAfterSignIn(state, action) {
+            console.log(action.payload.data);
             state.accessToken = action.payload.data.access_token;
             state.refreshToken = action.payload.data.refresh_token;
             state.typeToken = action.payload.data.token_type
