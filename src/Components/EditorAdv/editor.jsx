@@ -1,14 +1,14 @@
 
 import * as S from '../NewProductAdd/newProduct.styled';
 
-export const EditorAdv = () => {
+export const EditorAdv = ({ closeAdvEditor }) => {
     return (
         <S.Wrapper>
             <S.ContainerBg>
                 <S.ModalBlock>
                     <S.ModalContent>
                         <S.ModalTitle>Редактировать объявление</S.ModalTitle>
-                        <S.ModalBtnClose>
+                        <S.ModalBtnClose onClick={closeAdvEditor}>
                             <S.ModalBtnCloseLine />
                         </S.ModalBtnClose>
                         <S.ModalFormNewArtFormNewArt>
