@@ -13,9 +13,11 @@ import {
 } from '../../helpers/sign';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveUserAfterReg } from '../../Store/Slices/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 export const SignUp = ({ setChoiceReg }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
@@ -106,6 +108,7 @@ export const SignUp = ({ setChoiceReg }) => {
                       city,
                       setError,
                       dispatch,
+                      navigate
                     );
                   }
                 }}
