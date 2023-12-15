@@ -12,8 +12,9 @@ import {
   validateFormReg
 } from '../../helpers/sign';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveUserAfterReg } from '../../Store/Slices/userSlice';
+import { saveTokenUserAfterSignIn, saveUserAfterReg } from '../../Store/Slices/userSlice';
 import { useNavigate } from 'react-router-dom';
+import { useGetTokensQuery } from '../../Store/RTKQuery/getToken';
 
 export const SignUp = ({ setChoiceReg }) => {
   const dispatch = useDispatch();
@@ -28,7 +29,15 @@ export const SignUp = ({ setChoiceReg }) => {
   const [error, setError] = useState(null);
   const [errorPass, setErrorPass] = useState(null);
   const [passEqual, setPassEqual] = useState(true);
-
+  const [skip, setSkip] = useState(true)
+  const dataForGetTokens = {email: email, password: password}
+  const {data = [], isError, error: errorToken, isSuccess } = useGetTokensQuery(dataForGetTokens, { skip: skip });
+    if(isSuccess) {
+      console.log(data);
+      dispatch(saveTokenUserAfterSignIn({ data }));
+      navigate('/profile')
+  }
+    if(isError) console.log(errorToken);
   return (
     <S.Wrapper>
       <SU.ContainerSignup>
@@ -108,8 +117,8 @@ export const SignUp = ({ setChoiceReg }) => {
                       city,
                       setError,
                       dispatch,
-                      navigate
                     );
+                    setSkip(false)
                   }
                 }}
               >
