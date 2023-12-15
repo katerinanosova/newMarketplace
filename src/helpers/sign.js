@@ -79,7 +79,7 @@ export const saveAndRegisterUser = async (
   try {
     const data = await registerUser(email, password, name, role, surname, city);
     dispatch(saveUserAfterReg({ data }));
-    await handleSignIn(email, password, dispatch);
+    await handleSignIn(email, password, setError, dispatch);
   } catch (error) {
     console.error(error);
     setError('Неизвестная ошибка');
