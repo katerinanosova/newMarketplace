@@ -240,12 +240,12 @@ export const MainContent = styled.div`
   }
 `;
 
-export const Cards = styled.div`
+export const ContentCards = styled.div`
   max-width: 1158px;
   width: 100%;
   display: -ms-grid;
   display: grid;
-  grid-template-columns: repeat(4, 260px);
+  grid-template-columns: repeat(4, 270px);
   grid-auto-rows: 441px;
   grid-gap: 40px 26px;
   justify-content: center;
@@ -262,20 +262,27 @@ export const Cards = styled.div`
     background-color: #0080c1;
     border-radius: 3px;
   }
+
   @media screen and (max-width: 1158px) {
     display: grid;
-    grid-template-columns: repeat(3, 270px);
+    grid-template-columns: repeat(3, 1fr);
   }
+
   @media screen and (max-width: 890px) {
+    width: 600px;
     display: grid;
-    grid-template-columns: repeat(2, 270px);
+    grid-template-columns: repeat(2, 1fr);
   }
-  @media screen and (max-width: 580px) {
+
+  @media screen and (max-width: 620px) {
+    max-width: 550px;
+    padding-left: 16px;
+    padding-right: 16px;
     display: grid;
-    grid-template-columns: repeat(2, 137px);
-    grid-auto-rows: 293px;
+    grid-template-columns: repeat(2, 1fr);
     grid-gap: 10px 10px;
+    grid-auto-rows: auto;
     justify-content: center;
-    height: 596px;
+    height: 100%;
   }
 `;
