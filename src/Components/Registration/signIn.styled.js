@@ -55,7 +55,7 @@ export const ModalFormLogin = styled.div`
 export const ModalLogo = styled.div`
   width: 140px;
   height: 21px;
-  margin-bottom: 34px;
+  margin-bottom: 44px;
   background-color: transparent;
   @media screen and (max-width: 768px) {
     width: 120px;
@@ -104,6 +104,11 @@ export const ModalInputLogin = styled.input`
     margin-bottom: 14px;
   }
 `;
+
+export const ModalInputLoginRepeatPass = styled(ModalInputLogin)`
+  color: ${(props) => (props.$passEqual ? '#1bc61b' : 'red')};
+`;
+
 export const ModalInputPassword = styled.input`
   width: 100%;
   border-top: none;
@@ -219,5 +224,33 @@ export const ModalBtnSignupLink = styled(Link)`
   @media screen and (max-width: 768px) {
     font-size: 16px;
     line-height: 24px;
+  }
+`;
+
+export const ErrorMessage = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  color: rgb(255, 128, 113);
+  font-size: 1rem;
+  font-weight: 400;
+  position: absolute;
+  top: 70px;
+  left: 5px;
+  text-align: center;
+  margin-top: 10px;
+`;
+
+export const PassErrorMessage = styled(ErrorMessage)`
+  font-size: 0.8rem;
+  padding-right: 42px;
+  padding-left: 42px;
+  top: 130px;
+  @media screen and (max-width: 768px) {
+    font-size: 0.6rem;
+    padding-right: 22px;
+    padding-left: 22px;
+    top: 115px;
   }
 `;

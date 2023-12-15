@@ -13,6 +13,6 @@ export const Sign = () => {
   return choiceReg ? (
     <SignIn setChoiceReg={setChoiceReg} />
   ) : (
-    <SignUp/>
+    <SignUp setChoiceReg={setChoiceReg}/>
   );
 };

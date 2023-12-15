@@ -1,3 +1,4 @@
+
 import { createSlice } from "@reduxjs/toolkit";
 const productsSlice = createSlice({
     name: 'products',
@@ -13,5 +14,4 @@ const productsSlice = createSlice({
 })
 
 export const {saveProducts} = productsSlice.actions
-
 export default productsSlice.reducer

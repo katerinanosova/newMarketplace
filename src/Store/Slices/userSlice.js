@@ -31,5 +31,4 @@ const userSlice = createSlice({
 })
 
 export const {saveUserAfterReg, saveTokenUserAfterSignIn} = userSlice.actions
-
 export default userSlice.reducer

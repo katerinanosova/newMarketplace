@@ -1,21 +1,31 @@
 import { useState } from 'react';
 import * as S from './signIn.styled';
 import * as SU from './signUp.styled';
-import { registerUser } from '../../Api/userApi';
-import { handleCity, handleEmail, handleName, handlePassword, handleRepeatPassword, handleSignIn, handleSurname } from '../../helpers/sign';
+import {
+  handleCity,
+  handleEmail,
+  handleName,
+  handlePassword,
+  handleRepeatPassword,
+  saveAndRegisterUser,
+  handleSurname,
+  validateFormReg
+} from '../../helpers/sign';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveUserAfterReg } from '../../Store/Slices/userSlice';
 
 export const SignUp = ({ setChoiceReg }) => {
-  const dispatch = useDispatch()
-  const [email,setEmail] = useState('');
-  const [password,setPassword] = useState('');
-  const [repeatPassword,setRepeatPassword] = useState('');
-  const [name,setName] = useState('');
-  const [surname,setSurname] = useState('');
-  const [city,setCity] = useState('');
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
+  const [city, setCity] = useState('');
   const role = 'user';
-
+  const [error, setError] = useState(null);
+  const [errorPass, setErrorPass] = useState(null);
+  const [passEqual, setPassEqual] = useState(true);
 
   return (
     <S.Wrapper>
@@ -25,25 +35,86 @@ export const SignUp = ({ setChoiceReg }) => {
             <S.ModalLogo>
               <S.ModalLogoImg src='img/logo_modal.png' alt='' />
             </S.ModalLogo>
-            <S.ModalInputLogin value={email} onChange={() => handleEmail(setEmail, event)} type='text' placeholder='email' />
-            <S.ModalInputLogin value={password} onChange={() => handlePassword(setPassword, event)} type='password' placeholder='Пароль' />
-            <S.ModalInputLogin value={repeatPassword} onChange={() => handleRepeatPassword(setRepeatPassword, event)} type='password' placeholder='Повторите пароль' />
-            <S.ModalInputLogin value={name} onChange={() => handleName(setName, event)} type='text' placeholder='Имя (необязательно)' />
+            {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
             <S.ModalInputLogin
-            value={surname} onChange={() => handleSurname(setSurname, event)}
+              value={email}
+              onChange={(event) => handleEmail(setEmail, setError, event)}
+              type='text'
+              placeholder='email'
+            />
+            {errorPass && <S.PassErrorMessage>{errorPass}</S.PassErrorMessage>}
+            <S.ModalInputLogin
+              value={password}
+              onChange={(event) =>
+                handlePassword(setPassword, setErrorPass, event)
+              }
+              type='password'
+              placeholder='Пароль'
+            />
+            <S.ModalInputLoginRepeatPass
+              value={repeatPassword}
+              onChange={(event) =>
+                handleRepeatPassword(
+                  setRepeatPassword,
+                  password,
+                  setErrorPass,
+                  setPassEqual,
+                  event,
+                )
+              }
+              type='password'
+              placeholder='Повторите пароль'
+              $passEqual={passEqual}
+            />
+
+            <S.ModalInputLogin
+              value={name}
+              onChange={(event) => handleName(setName, event)}
+              type='text'
+              placeholder='Имя (необязательно)'
+            />
+            <S.ModalInputLogin
+              value={surname}
+              onChange={(event) => handleSurname(setSurname, event)}
               type='text'
               placeholder='Фамилия (необязательно)'
             />
             <S.ModalInputLogin
-            value={city} onChange={() => handleCity(setCity, event)}
+              value={city}
+              onChange={(event) => handleCity(setCity, event)}
               type='text'
               placeholder='Город (необязательно)'
             />
             <SU.ModalBtnSignupEnt>
-              <S.ModalBtnEnterLink onClick={() => saveAndRegisterUser(email, password, name, role, surname, city, dispatch)}>Зарегистрироваться</S.ModalBtnEnterLink>
+              <S.ModalBtnEnterLink
+                onClick={() => {
+                  if (
+                    validateFormReg(
+                      email,
+                      password,
+                      repeatPassword,
+                      setError,
+                      setErrorPass,
+                    )
+                  ) {
+                    saveAndRegisterUser(
+                      email,
+                      password,
+                      name,
+                      role,
+                      surname,
+                      city,
+                      setError,
+                      dispatch,
+                    );
+                  }
+                }}
+              >
+                Зарегистрироваться
+              </S.ModalBtnEnterLink>
             </SU.ModalBtnSignupEnt>
             <SU.ModalBtnSignupEnt>
-              <S.ModalBtnEnterLink to='/profile'>
+              <S.ModalBtnEnterLink onClick={() => setChoiceReg(true)}>
                 Уже зарегистрирован
               </S.ModalBtnEnterLink>
             </SU.ModalBtnSignupEnt>

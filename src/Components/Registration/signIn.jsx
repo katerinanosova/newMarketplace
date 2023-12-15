@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { handleEmail, handlePassword, handleSignIn } from '../../helpers/sign';
+import { handleEmail, handlePassword, handleSignIn, validateFormLog } from '../../helpers/sign';
 import * as S from './signIn.styled';
 import { useDispatch } from 'react-redux';
 
 export const SignIn = ({ setChoiceReg }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
 
   return (
     <S.Wrapper>
@@ -16,10 +17,43 @@ export const SignIn = ({ setChoiceReg }) => {
             <S.ModalLogo>
               <S.ModalLogoImg src='img/logo_modal.png' alt='' />
             </S.ModalLogo>
-            <S.ModalInputLogin value={email} onChange={() => handleEmail(setEmail, event)} type='text' id='formlogin' placeholder='email' />
-            <S.ModalInputPassword value={password} onChange={() => handlePassword(setPassword, event)} type='password' placeholder='Пароль' />
+            {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
+            <S.ModalInputLogin
+              value={email}
+              onChange={(event) => handleEmail(setEmail, setError, event)}
+              type='text'
+              placeholder='email'
+            />
+            <S.ModalInputPassword
+              value={password}
+              onChange={(event) =>
+                handlePassword(setPassword, setError, event)
+              }
+              type='password'
+              placeholder='Пароль'
+            />
             <S.ModalBtnEnter>
-              <S.ModalBtnEnterLink onClick={() => handleSignIn(email, password, dispatch)}>Войти</S.ModalBtnEnterLink>
+              <S.ModalBtnEnterLink
+                onClick={(event) => {
+                  if (
+                    validateFormLog(
+                      email,
+                      password,
+                      setError,
+                      event
+                    )
+                  ) {
+                    handleSignIn(
+                      email,
+                      password,
+                      setError,
+                      dispatch,
+                    );
+                  }
+                }}
+              >
+                Войти
+              </S.ModalBtnEnterLink>
             </S.ModalBtnEnter>
             <S.ModalBtnSignup>
               <S.ModalBtnSignupLink onClick={() => setChoiceReg(false)}>
