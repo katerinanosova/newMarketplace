@@ -1,3 +1,4 @@
+
 import { createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 const DATA_TAG = { type: "ads", id: "LIST" };
 
@@ -30,7 +31,4 @@ export const ads = createApi({
         }),
     })
 })
-
-
-
 export const {useGetAllAdsQuery} = ads
