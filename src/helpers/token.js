@@ -13,10 +13,11 @@ export const getTypeTokenLocal = () => {
     return token ? token : null
 }
 
-export const saveTokenUserLocal = (access, refresh, type) => {
-    localStorage.setItem("access", access);
-    localStorage.setItem("refresh", refresh);
-    localStorage.setItem("type", type);
+export const saveTokenUserLocal = (data) => {
+    console.log('save to local');
+    localStorage.setItem("access", data.access_token);
+    localStorage.setItem("refresh", data.refresh_token);
+    localStorage.setItem("type", data.token_type);
 }
 
 export const handleRefreshToken = async (getNewToken, dispatch) => {

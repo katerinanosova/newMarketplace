@@ -34,26 +34,20 @@ export const host = "http://127.0.0.1:8090";
     return data;
   }
 
-  export const getNewToken = async (dispatch) => {
-      const accesstoken = getAccessTokenLocal();
-      const refreshtoken = getRefreshTokenLocal();
-      const type = getTypeTokenLocal();
-      await fetch(`http://localhost:8090/auth/login`, {
-      method: "PUT",
+  export async function loginUser(email, password) {
+    const response = await fetch(`${host}/auth/login`, {
+      method: "POST",
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
       headers: {
         "content-type": "application/json",
-        Authorization: `${type} ${accesstoken}`,
       },
-      body: JSON.stringify({
-        access_token: accesstoken,
-        refresh_token: refreshtoken,
-      }),
-    }).then(res => res.json())
-      .then(res => {
-        const data = res;
-        dispatch(saveTokenUserAfterSignIn({data}))})
-        .then(getUser(dispatch))
-    .catch(
-      console.error
-      )
-  };
+    });
+    if (response.status === 401 || response.status === 422) {
+      throw new Error("Пользователь не авторизован");
+    }
+    const data = response.json();
+    return data;
+  }

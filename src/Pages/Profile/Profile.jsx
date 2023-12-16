@@ -8,6 +8,7 @@ import { useGetMeQuery } from '../../Store/RTKQuery/getMe';
 import { useGetNewTokenMutation } from '../../Store/RTKQuery/getToken';
 import { handleRefreshToken } from '../../helpers/token';
 import { saveTokenUserAfterSignIn } from '../../Store/Slices/userSlice';
+import { updateToken } from '../../Api/tokenApi';
 
 export const Profile = ({ products }) => {
   const dispatch = useDispatch();
@@ -20,6 +21,11 @@ export const Profile = ({ products }) => {
     
 }
   const {data =[], isLoading, isError, error, isSuccess, refetch} = useGetMeQuery(access);
+  const asyncUpgate = async () => {
+    await updateToken()
+    await refetch()
+    return
+  }
   const [getNewToken] = useGetNewTokenMutation();
   if(isSuccess) {
     const response = data
@@ -28,12 +34,15 @@ export const Profile = ({ products }) => {
     // console.log(data);
   }
   if(isError && error.status !== 401 ){
-    // console.log(error.data.detail);
-  }
-  if(isError && error.status === 401 && error.data.detail !== 'Refresh token is already used or invalid') {
+    console.log(error.data.detail);
     console.log(error);
-    handleRefreshToken(getNewToken, dispatch)
-    refetch()
+  }
+  if(isError && error.status === 401 && error.data.detail === 'Could not validate credentials: Signature has expired') {
+    console.log(error);
+    asyncUpgate()
+    return
+    // handleRefreshToken(getNewToken, dispatch)
+    
   }
 
   return (

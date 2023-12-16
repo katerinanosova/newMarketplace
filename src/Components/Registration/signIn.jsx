@@ -13,14 +13,15 @@ export const SignIn = ({ setChoiceReg }) => {
   const [error, setError] = useState(null);
   const [skip, setSkip] = useState(true)
   const navigate = useNavigate()
-  const dataForGetTokens = {email: email, password: password}
-  const {data = [], isError, error: errorToken, isSuccess } = useGetTokensQuery(dataForGetTokens, { skip: skip });
-    if(isSuccess) {
-      dispatch(saveTokenUserAfterSignIn({ data }));
-      navigate('/profile')
-  }
-    if(isError) console.log(errorToken);
+  // const dataForGetTokens = {email: email, password: password}
+  // const {data = [], isError, error: errorToken, isSuccess } = useGetTokensQuery(dataForGetTokens, { skip: skip });
+  //   if(isSuccess) {
+  //     dispatch(saveTokenUserAfterSignIn({ data }));
+  //     navigate('/profile')
+  // }
+  //   if(isError) console.log(errorToken);
 
+  
 
   return (
     <S.Wrapper>

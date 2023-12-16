@@ -1,8 +1,9 @@
-import { registerUser, singIn } from '../Api/userApi';
+import { loginUser, registerUser, singIn } from '../Api/userApi';
 import {
   saveTokenUserAfterSignIn,
   saveUserAfterReg,
 } from '../Store/Slices/userSlice';
+import { saveTokenUserLocal } from './token';
 
 export const handleEmail = (setEmail, setError, event) => {
   const trimmedValue = event.target.value.trim();
@@ -59,9 +60,10 @@ export const handleCity = (setCity, event) => {
 export const handleSignIn = async (email, password, setError, dispatch, navigate) => {
 
   try {
-    // const data = await singIn(email, password);
+    const data = await loginUser(email, password);
     // await dispatch(saveTokenUserAfterSignIn({ data }));
-    // navigate('/profile')
+    saveTokenUserLocal(data)
+    navigate('/profile')
   } catch (error) {
     console.error(error);
     setError('Неизвестная ошибка');
