@@ -305,6 +305,11 @@ export const ProductPrice = styled.p`
     }
 `
 
+export const ProductButtonBox = styled.div`
+    display: flex;
+    gap: 10px;
+`
+
 export const ProductButton = styled.button`
     background-color: #009EE4;
     border-radius: 6px;

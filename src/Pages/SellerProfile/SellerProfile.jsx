@@ -4,7 +4,7 @@ import { Card } from '../../Components/Card/Card';
 import { Footer } from '../../Components/Footer/Footer';
 import * as S from './SellerProfile.styled';
 
-export const SellerProfile = () => {
+export const SellerProfile = ({ products }) => {
   return (
     <S.Wrapper>
       <S.Container>
@@ -51,14 +51,11 @@ export const SellerProfile = () => {
             </S.MainCenterBlock>
 
             <S.MainContent>
-              <S.Cards>
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-              </S.Cards>
+              <S.ContentCards>
+              {products.map((product) => (
+                <Card key={product.id} product={product} />
+              ))}
+              </S.ContentCards>
             </S.MainContent>
           </S.MainContainer>
         </S.Main>
