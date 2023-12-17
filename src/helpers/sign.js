@@ -1,8 +1,4 @@
 import { loginUser, registerUser, singIn } from '../Api/userApi';
-import {
-  saveTokenUserAfterSignIn,
-  saveUserAfterReg,
-} from '../Store/Slices/userSlice';
 import { saveTokenUserLocal } from './token';
 
 export const handleEmail = (setEmail, setError, event) => {
@@ -57,11 +53,9 @@ export const handleCity = (setCity, event) => {
   setCity(event.target.value);
 };
 
-export const handleSignIn = async (email, password, setError, dispatch, navigate) => {
-
+export const handleSignIn = async (email, password, setError, navigate) => {
   try {
     const data = await loginUser(email, password);
-    // await dispatch(saveTokenUserAfterSignIn({ data }));
     saveTokenUserLocal(data)
     navigate('/profile')
   } catch (error) {
@@ -78,11 +72,11 @@ export const saveAndRegisterUser = async (
   surname,
   city,
   setError,
-  dispatch,
+  navigate,
 ) => {
   try {
-    const data = await registerUser(email, password, name, role, surname, city);
-    dispatch(saveUserAfterReg({ data }));
+    await registerUser(email, password, name, role, surname, city);
+    handleSignIn(email, password, setError, navigate)
   } catch (error) {
     console.error(error);
     setError('Неизвестная ошибка');

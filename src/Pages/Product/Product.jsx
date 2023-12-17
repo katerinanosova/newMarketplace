@@ -9,6 +9,7 @@ import { HeaderSecond } from '../../Components/HeaderSecond/HeaderSecond';
 import { useState } from 'react';
 import { NewProduct } from '../../Components/NewProductAdd/newProduct';
 import { Review } from '../../Components/reviews/review';
+import { EditorAdv } from '../../Components/EditorAdv/editor';
 
 export const Product = () => {
 
@@ -16,11 +17,9 @@ export const Product = () => {
   const navigate = useNavigate();
 
   const [addNewProductModal, setAddNewProductModal] = useState(false);
-    
   const closeModal = () => {
     setAddNewProductModal(false);
   }
-
   const openModal = () => {
     setAddNewProductModal(true);
   }
@@ -33,11 +32,22 @@ export const Product = () => {
     setOpenReviews(false);
   }
 
+  // заглушка на залогиненного юзера
+  const userLoggedIn = true;
+  const [showAdvEdit, setShowAdvEdit] = useState(false);
+  const openAdvEditor = () => {
+    setShowAdvEdit(true);
+  }
+  const closeAdvEditor = () => {
+    setShowAdvEdit(false)
+  }
+
   return (
     <S.Wrapper>
       <S.Container>
-        {/* <Header /> */}
-        <HeaderSecond openModal={openModal} />
+      {userLoggedIn ?
+        <HeaderSecond openModal={openModal} /> :
+        <Header /> }
         <main>
           <St.ProductContainer>
             <ReturnToMain />
@@ -77,12 +87,17 @@ export const Product = () => {
                     </St.ProductReviews>
                   </St.ProductInfo>
                   <St.ProductPrice>2 200 ₽</St.ProductPrice>
+                  {userLoggedIn ? 
+                  <St.ProductButtonBox>
+                    <St.ProductButton onClick={openAdvEditor}>Редактировать</St.ProductButton>
+                    <St.ProductButton>Снять с публикации</St.ProductButton>
+                  </St.ProductButtonBox> : 
                   <St.ProductButton>
                     Показать&nbsp;телефон
                     <St.ProductButtonSpan>
                       8&nbsp;905&nbsp;ХХХ&nbsp;ХХ&nbsp;ХХ
                     </St.ProductButtonSpan>
-                  </St.ProductButton>
+                  </St.ProductButton>}
                   <St.ProductAuthor>
                     <St.ProductAuthorImage src='' alt='' />
                     <St.ProductAuthorContent>
@@ -119,6 +134,8 @@ export const Product = () => {
         <Review closeReviewsModal={closeReviewsModal} /> : null}
         {addNewProductModal ? 
         <NewProduct closeModal={closeModal} /> : null}
+        {showAdvEdit ? 
+        <EditorAdv closeAdvEditor={closeAdvEditor} /> : null}
         <Footer openModal={openModal} />
       </S.Container>
     </S.Wrapper>
