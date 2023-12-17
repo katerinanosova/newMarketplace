@@ -16,7 +16,10 @@ export const Container = styled.div`
   margin: 0 auto;
   background-color: #ffffff;
 `;
-
+export const SettingsImgInput = styled.input`
+  display: none;
+  cursor: pointer;
+`;
 // export const Header = styled.header`
 //   background-color: #009ee4;
 //   @media screen and (max-width: 620px) {
@@ -238,9 +241,10 @@ export const SettingsImg = styled.div`
 
 export const SettingsImgLink = styled.a``;
 
-export const SettingsImgImg = styled.svg`
-  width: 100%;
-  height: auto;
+export const SettingsImgImg = styled.img`
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
   display: block;
   -o-object-fit: cover;
   object-fit: cover;

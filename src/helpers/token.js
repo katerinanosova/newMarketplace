@@ -14,7 +14,6 @@ export const getTypeTokenLocal = () => {
 }
 
 export const saveTokenUserLocal = (data) => {
-    console.log(data);
     localStorage.setItem("access", data.access_token);
     localStorage.setItem("refresh", data.refresh_token);
     localStorage.setItem("type", data.token_type);

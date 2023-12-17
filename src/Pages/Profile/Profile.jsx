@@ -7,7 +7,8 @@ import { useChangeMeMutation, useGetMeQuery } from '../../Store/RTKQuery/getMe';
 import { getAccessTokenLocal } from '../../helpers/token';
 import { updateToken } from '../../Api/tokenApi';
 import { useEffect, useState } from 'react';
-import { handleChangeMe, profileUserData, saveUserLocal } from '../../helpers/user';
+import { handleAvatarClick, handleAvatarUpload, handleChangeMe, profileUserData, saveUserLocal } from '../../helpers/user';
+import { uploadUserAvatar } from '../../Api/userApi';
 
 export const Profile = ({ products }) => {
   const [city, setCity] = useState('')
@@ -15,33 +16,27 @@ export const Profile = ({ products }) => {
   const [userName, setUserName] = useState('')
   const [phone, setPhone] = useState('')
   const [surname, setSurname] = useState('')
+  const [img, setImg] = useState(null);
   const access = getAccessTokenLocal()
+  const fileUpload = document.getElementById("file-upload");
   const {data =[], isError, error, isSuccess, refetch} = useGetMeQuery(access);
   const [changeMe, {isError: isErrorChangeMe, error: errorChangeMe}] = useChangeMeMutation()
   const asyncUpgate = async () => {
-    console.log('begin update');
     await updateToken()
     await refetch()
-    console.log('refetch');
     return
   }
   useEffect(() => {
     if(isSuccess) {
       const response = data
-      console.log(response);
-      console.log(localStorage.getItem('access'));
       saveUserLocal(response.email, response.name, response.id)
       profileUserData(data, setUserName, setSurname, setCity, setPhone, setAvatar)
-      
     }
     if(isError && error.status === 401 && error.data.detail === "Could not validate credentials: Not enough segments") {
-      console.log(localStorage.getItem('access'));
-      console.log(error);
       asyncUpgate()
       return
     }
     if(isError && error.status === 401 && error.data.detail === 'Could not validate credentials: Signature has expired') {
-      console.log('update');
       asyncUpgate()
       return
     }
@@ -64,11 +59,24 @@ export const Profile = ({ products }) => {
                   <S.ProfileSettings>
                     <S.SettingsLeft>
                       <S.SettingsImg>
-                        <S.SettingsImgLink href='#' target='_self'>
-                          <S.SettingsImgImg src={avatar === null ? 'img/empty-profile.svg' : `${avatar}`} />
+                        <S.SettingsImgLink >
+                          <S.SettingsImgImg src={avatar === null ? 'img/empty-profile.svg' : `http://localhost:8090/${avatar}`} />
                         </S.SettingsImgLink>
                       </S.SettingsImg>
-                      <S.SettingsChangePhoto href='#' target='_self'>
+                      <S.SettingsImgInput
+                        id="file-upload"
+                        type="file"
+                        accept="image/*"
+                        onChange={(event) => {
+                          event.preventDefault();
+                          const file = event.target.files?.[0];
+                          if (file) {
+                            setImg(file);
+                            handleAvatarUpload(file, setAvatar, refetch);
+                          }
+                        }}
+                      ></S.SettingsImgInput>
+                      <S.SettingsChangePhoto onClick={() => handleAvatarClick(event, fileUpload, setAvatar)}>
                         Заменить
                       </S.SettingsChangePhoto>
                     </S.SettingsLeft>
