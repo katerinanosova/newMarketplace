@@ -4,8 +4,6 @@ export const updateToken = async () => {
     try {
       const access = await getAccessTokenLocal();
       const refresh = await getRefreshTokenLocal()
-      console.log(access);
-      console.log(refresh);
       await getToken(access, refresh);
       return
     } catch (error) {
