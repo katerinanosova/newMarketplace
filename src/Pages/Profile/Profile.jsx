@@ -3,47 +3,51 @@ import { ReturnToMain } from '../../Components/ReturnToMain.js/ReturnToMain';
 import { Card } from '../../Components/Card/Card';
 import { Footer } from '../../Components/Footer/Footer';
 import * as S from './Profile.styled';
-import { useDispatch } from 'react-redux';
-import { useGetMeQuery } from '../../Store/RTKQuery/getMe';
-import { useGetNewTokenMutation } from '../../Store/RTKQuery/getToken';
-import { handleRefreshToken } from '../../helpers/token';
-import { saveTokenUserAfterSignIn } from '../../Store/Slices/userSlice';
+import { useChangeMeMutation, useGetMeQuery } from '../../Store/RTKQuery/getMe';
+import { getAccessTokenLocal } from '../../helpers/token';
 import { updateToken } from '../../Api/tokenApi';
+import { useEffect, useState } from 'react';
+import { handleChangeMe, profileUserData, saveUserLocal } from '../../helpers/user';
 
 export const Profile = ({ products }) => {
-  const dispatch = useDispatch();
-  const access = localStorage.getItem('access')
-  const refresh = localStorage.getItem('refresh')
-  const handleRefreshToken = async (getNewToken, dispatch) => {
-    const response = await getNewToken()
-    console.log(response);
-    dispatch(saveTokenUserAfterSignIn(response))
-    
-}
-  const {data =[], isLoading, isError, error, isSuccess, refetch} = useGetMeQuery(access);
+  const [city, setCity] = useState('')
+  const [avatar, setAvatar] = useState(null)
+  const [userName, setUserName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [surname, setSurname] = useState('')
+  const access = getAccessTokenLocal()
+  const {data =[], isError, error, isSuccess, refetch} = useGetMeQuery(access);
+  const [changeMe, {isError: isErrorChangeMe, error: errorChangeMe}] = useChangeMeMutation()
   const asyncUpgate = async () => {
+    console.log('begin update');
     await updateToken()
     await refetch()
+    console.log('refetch');
     return
   }
-  const [getNewToken] = useGetNewTokenMutation();
-  if(isSuccess) {
-    const response = data
-    console.log(response);
-    console.log('done');
-    // console.log(data);
-  }
-  if(isError && error.status !== 401 ){
-    console.log(error.data.detail);
-    console.log(error);
-  }
-  if(isError && error.status === 401 && error.data.detail === 'Could not validate credentials: Signature has expired') {
-    console.log(error);
-    asyncUpgate()
-    return
-    // handleRefreshToken(getNewToken, dispatch)
-    
-  }
+  useEffect(() => {
+    if(isSuccess) {
+      const response = data
+      console.log(response);
+      console.log(localStorage.getItem('access'));
+      saveUserLocal(response.email, response.name, response.id)
+      profileUserData(data, setUserName, setSurname, setCity, setPhone, setAvatar)
+      
+    }
+    if(isError && error.status === 401 && error.data.detail === "Could not validate credentials: Not enough segments") {
+      console.log(localStorage.getItem('access'));
+      console.log(error);
+      asyncUpgate()
+      return
+    }
+    if(isError && error.status === 401 && error.data.detail === 'Could not validate credentials: Signature has expired') {
+      console.log('update');
+      asyncUpgate()
+      return
+    }
+  }, [isSuccess, isError])
+
+
 
   return (
     <S.Wrapper>
@@ -53,7 +57,7 @@ export const Profile = ({ products }) => {
           <S.MainContainer>
             <S.MainCenterBlock>
               <ReturnToMain />
-              <S.MainH2>Здравствуйте, Антон!</S.MainH2>
+              <S.MainH2>{userName === '' ? "Здравствуйте, Неизвестный!" : `Здравствуйте, ${userName}!`}</S.MainH2>
               <S.MainProfile>
                 <S.ProfileContent>
                   <S.ProfileTitle>Настройки профиля</S.ProfileTitle>
@@ -61,7 +65,7 @@ export const Profile = ({ products }) => {
                     <S.SettingsLeft>
                       <S.SettingsImg>
                         <S.SettingsImgLink href='#' target='_self'>
-                          <S.SettingsImgImg src='img/empty-profile.svg' />
+                          <S.SettingsImgImg src={avatar === null ? 'img/empty-profile.svg' : `${avatar}`} />
                         </S.SettingsImgLink>
                       </S.SettingsImg>
                       <S.SettingsChangePhoto href='#' target='_self'>
@@ -80,6 +84,8 @@ export const Profile = ({ products }) => {
                               name='fname'
                               type='text'
                               placeholder=''
+                              value={userName}
+                              onChange={e => setUserName(e.target.value)}
                             />
                           </S.SettingsDiv>
 
@@ -91,6 +97,8 @@ export const Profile = ({ products }) => {
                               name='lname'
                               type='text'
                               placeholder=''
+                              value={surname}
+                              onChange={e => setSurname(e.target.value)}
                             />
                           </S.SettingsDiv>
                         </S.SettingsNameBox>
@@ -102,6 +110,8 @@ export const Profile = ({ products }) => {
                             name='city'
                             type='text'
                             placeholder=''
+                            value={city}
+                            onChange={e => setCity(e.target.value)}
                           />
                         </S.SettingsDiv>
 
@@ -113,10 +123,12 @@ export const Profile = ({ products }) => {
                             name='phone'
                             type='tel'
                             placeholder='+...'
+                            value={phone}
+                            onChange={e => setPhone(e.target.value)}
                           />
                         </S.SettingsDiv>
 
-                        <S.SettingsButton>Сохранить</S.SettingsButton>
+                        <S.SettingsButton onClick={() => handleChangeMe(access, userName, surname, phone, city, changeMe)}>Сохранить</S.SettingsButton>
                       </S.SettingsForm>
                     </S.SettingsRight>
                   </S.ProfileSettings>
