@@ -11,11 +11,10 @@ import {
   handleSurname,
   validateFormReg
 } from '../../helpers/sign';
-import { useDispatch, useSelector } from 'react-redux';
-import { saveUserAfterReg } from '../../Store/Slices/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 export const SignUp = ({ setChoiceReg }) => {
-  const dispatch = useDispatch();
+  const navigate = useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
@@ -26,7 +25,6 @@ export const SignUp = ({ setChoiceReg }) => {
   const [error, setError] = useState(null);
   const [errorPass, setErrorPass] = useState(null);
   const [passEqual, setPassEqual] = useState(true);
-
   return (
     <S.Wrapper>
       <SU.ContainerSignup>
@@ -105,7 +103,7 @@ export const SignUp = ({ setChoiceReg }) => {
                       surname,
                       city,
                       setError,
-                      dispatch,
+                      navigate,
                     );
                   }
                 }}

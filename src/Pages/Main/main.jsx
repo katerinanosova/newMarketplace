@@ -7,7 +7,9 @@ import { Search } from '../../Components/Search/Search';
 import * as S from './main.styled';
 import { useDispatch } from 'react-redux';
 import { saveProducts } from '../../Store/Slices/dataProductsSlice';
+
 export const Main = ({products}) => {
+  
   const dispatch = useDispatch();
   const {data =[], isLoading} = useGetAllAdsQuery();
   if(!isLoading) {

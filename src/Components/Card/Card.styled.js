@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const CardItem = styled.div`
   margin: 0;
 
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 600px) {
     margin: 0;
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
     border-radius: 6px;
@@ -17,7 +17,7 @@ export const CardItemContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 600px) {
     width: 100%;
     height: auto;
     display: flex;
@@ -30,7 +30,7 @@ export const CardImageWrapper = styled.div`
   height: 270px;
   background-color: #f0f0f0;
 
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 600px) {
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     width: 100%;
@@ -47,7 +47,7 @@ export const CardImage = styled.img`
   display: block;
   object-fit: cover;
 
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 600px) {
     position: absolute;
     top: 0;
     left: 0;
@@ -61,7 +61,7 @@ export const CardImage = styled.img`
 `;
 
 export const CardContent = styled.div`
-@media screen and (max-width: 620px) {
+@media screen and (max-width: 600px) {
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -82,7 +82,7 @@ export const CardTitle = styled.h3`
   overflow: hidden;
   text-overflow: ellipsis;
 
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 600px) {
     height: 51px;
     font-size: 14px;
     line-height: 17px;
@@ -99,7 +99,7 @@ export const CardPrice = styled.p`
   line-height: 33px;
   margin-bottom: 10px;
 
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 600px) {
     font-size: 16px;
     line-height: 24px;
   }
@@ -111,7 +111,7 @@ export const CardPlace = styled.p`
   color: #5f5f5f;
   margin-bottom: 4px;
 
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 600px) {
     font-size: 12px;
     line-height: 16px;
     color: #5f5f5f;
@@ -123,7 +123,7 @@ export const CardDate = styled.p`
   line-height: 21px;
   color: #5f5f5f;
 
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 600px) {
     font-size: 12px;
     line-height: 16px;
     color: #5f5f5f;

@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { handleEmail, handlePassword, handleSignIn, validateFormLog } from '../../helpers/sign';
 import * as S from './signIn.styled';
-import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export const SignIn = ({ setChoiceReg }) => {
-  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const navigate = useNavigate()
 
   return (
     <S.Wrapper>
@@ -47,7 +47,7 @@ export const SignIn = ({ setChoiceReg }) => {
                       email,
                       password,
                       setError,
-                      dispatch,
+                      navigate
                     );
                   }
                 }}

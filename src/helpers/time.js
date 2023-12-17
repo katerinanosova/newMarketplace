@@ -1,4 +1,3 @@
-
 export const getTime = () => {
     const now = new Date();
     const day = now.getDate();
