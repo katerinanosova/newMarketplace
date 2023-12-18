@@ -1,4 +1,5 @@
-
+import { HeaderSecond } from '../HeaderSecond/HeaderSecond';
+import { Footer } from '../Footer/Footer';
 import * as S from '../NewProductAdd/newProduct.styled';
 import * as SU from './review.styled';
 
@@ -6,6 +7,7 @@ export const Review = ({ closeReviewsModal }) => {
     return (
         <S.Wrapper>
             <S.ContainerBg>
+            <HeaderSecond />
                 <S.ModalBlock>
                     <S.ModalContent>
                         <S.ModalTitle>Отзывы о товаре</S.ModalTitle>
@@ -95,6 +97,7 @@ export const Review = ({ closeReviewsModal }) => {
                         </SU.ModalScroll>
                     </S.ModalContent>
                 </S.ModalBlock>
+                <Footer />
             </S.ContainerBg>
         </S.Wrapper>
     )

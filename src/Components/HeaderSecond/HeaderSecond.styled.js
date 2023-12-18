@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Header = styled.header`
   background-color: #009ee4;
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 600px) {
     width: 100%;
     height: 55px;
     box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.05);
@@ -30,13 +30,13 @@ export const HeaderNav = styled.div`
 
 export const HeaderLogo = styled.div`
   display: none;
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 600px) {
     display: block;
   }
 `;
 
 export const LogoMobLink = styled.a`
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 600px) {
     display: block;
     width: 32px;
     height: 32px;
@@ -44,7 +44,7 @@ export const LogoMobLink = styled.a`
 `;
 
 export const LogoMobImg = styled.img`
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 600px) {
     width: 32px;
     height: auto;
     display: block;
@@ -61,7 +61,7 @@ export const HeaderBtnPutAd = styled.button`
   color: #ffffff;
   font-size: 16px;
   line-height: 1;
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 600px) {
     display: none;
   }
   &: hover {

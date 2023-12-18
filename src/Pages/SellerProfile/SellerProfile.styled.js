@@ -274,7 +274,8 @@ export const ContentCards = styled.div`
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media screen and (max-width: 620px) {
+
+  @media screen and (max-width: 600px) {
     max-width: 550px;
     padding-left: 16px;
     padding-right: 16px;
