@@ -58,7 +58,7 @@ export const Profile = ({ products }) => {
                     <S.SettingsLeft>
                       <S.SettingsImg>
                         <S.SettingsImgLink >
-                          <S.SettingsImgImg src={avatar === null ? 'img/empty-profile.svg' : `http://localhost:8090/${avatar}`} />
+                          <S.SettingsImgImg src={avatar === null ? 'img/empty-profile.svg' : `http://localhost:8090/${avatar}`} alt='first_photo'/>
                         </S.SettingsImgLink>
                       </S.SettingsImg>
                       <S.SettingsImgInput
