@@ -14,13 +14,21 @@ export const ads = createApi({
             ],
         }),
         addAds: build.mutation({
-            query: (access) => ({
+            query: (dataNewAdv) => ({
                 url: `ads`,
                 method: 'POST',
-                headers: access,
+                headers: {
+                    'content-type': 'application/json',
+                    Authorization: `bearer ${dataNewAdv.access}`,
+                  },
+                  body: JSON.stringify({
+                    
+                }),
             }),
             invalidatesTags: [DATA_TAG]
         }),
     })
 })
-export const {useGetAllAdsQuery} = ads
+
+export const {useGetAllAdsQuery, useAddAdsMutation} = ads
+

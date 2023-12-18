@@ -14,6 +14,7 @@ export const Main = ({products}) => {
   const {data =[], isLoading} = useGetAllAdsQuery();
   if(!isLoading) {
     dispatch(saveProducts({data}))
+    console.log(data);
   }
 
   return (

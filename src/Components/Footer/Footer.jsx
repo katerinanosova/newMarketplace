@@ -7,12 +7,12 @@ export const Footer = ({ openModal }) => {
     return (
         <S.FooterWrapper>
             <S.FooterContainer>
-                <Link to='/main'>
-                    <S.FooterImg src="img/icon_01.png" alt="main" />
+                <Link to='/'>
+                    <S.FooterImg src="/img/icon_01.png" alt="main" />
                 </Link>
-                    <S.FooterImg onClick={openModal} src="img/icon_02.png" alt="new_add" />
+                    <S.FooterImg onClick={openModal} src="/img/icon_02.png" alt="new_add" />
                 <Link to='/profile'>
-                    <S.FooterImg src="img/icon_03.png" alt="new_add" />
+                    <S.FooterImg src="/img/icon_03.png" alt="new_add" />
                 </Link>
             </S.FooterContainer>
         </S.FooterWrapper>

@@ -1,36 +1,77 @@
 import { Link } from 'react-router-dom';
-import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Footer } from '../../Components/Footer/Footer';
 import { Header } from '../../Components/Header/Header';
 import { ReturnToMain } from '../../Components/ReturnToMain.js/ReturnToMain';
 import * as S from '../Main/main.styled';
 import * as St from './Product.styled';
 import { HeaderSecond } from '../../Components/HeaderSecond/HeaderSecond';
-import { useState } from 'react';
 import { NewProduct } from '../../Components/NewProductAdd/newProduct';
 import { Review } from '../../Components/reviews/review';
 import { EditorAdv } from '../../Components/EditorAdv/editor';
 
 export const Product = () => {
-
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  // useEffect(() => {
+  //   if (isOpen) {
+  //     navigate(`/product/${id}`);
+  //   }
+  // }, [isModalOpen, id, navigate]);
 
   const [addNewProductModal, setAddNewProductModal] = useState(false);
   const closeModal = () => {
     setAddNewProductModal(false);
-  }
+
+  };
   const openModal = () => {
     setAddNewProductModal(true);
-  }
+  };
 
   const [openReviews, setOpenReviews] = useState(false);
   const openReviewsModal = () => {
     setOpenReviews(true);
-  }
+  };
   const closeReviewsModal = () => {
     setOpenReviews(false);
-  }
+  };
+
+  // заглушка на залогиненного юзера
+  const userLoggedIn = true;
+  const [showAdvEdit, setShowAdvEdit] = useState(false);
+  const openAdvEditor = () => {
+    setShowAdvEdit(true);
+  };
+  const closeAdvEditor = () => {
+    setShowAdvEdit(false);
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const handleOpenModal = () => {
+    if (windowWidth <= 600) {
+      setIsModalOpen(true);
+      setIsReviewModalOpen(true);
+    }
+  };
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   // заглушка на залогиненного юзера
   const userLoggedIn = true;
@@ -45,9 +86,7 @@ export const Product = () => {
   return (
     <S.Wrapper>
       <S.Container>
-      {userLoggedIn ?
-        <HeaderSecond openModal={openModal} /> :
-        <Header /> }
+        {userLoggedIn ? <HeaderSecond openModal={openModal} /> : <Header />}
         <main>
           <St.ProductContainer>
             <ReturnToMain />
@@ -82,22 +121,26 @@ export const Product = () => {
                   <St.ProductInfo>
                     <St.ProductDate>Сегодня в 10:45</St.ProductDate>
                     <St.ProductCity>Санкт-Петербург</St.ProductCity>
-                    <St.ProductReviews onClick={openReviewsModal}>
+                    <St.ProductReviews to='/review'>
                       23 отзыва
                     </St.ProductReviews>
                   </St.ProductInfo>
                   <St.ProductPrice>2 200 ₽</St.ProductPrice>
-                  {userLoggedIn ? 
-                  <St.ProductButtonBox>
-                    <St.ProductButton onClick={openAdvEditor}>Редактировать</St.ProductButton>
-                    <St.ProductButton>Снять с публикации</St.ProductButton>
-                  </St.ProductButtonBox> : 
-                  <St.ProductButton>
-                    Показать&nbsp;телефон
-                    <St.ProductButtonSpan>
-                      8&nbsp;905&nbsp;ХХХ&nbsp;ХХ&nbsp;ХХ
-                    </St.ProductButtonSpan>
-                  </St.ProductButton>}
+                  {userLoggedIn ? (
+                    <St.ProductButtonBox>
+                      <St.ProductButton>
+                        <Link to='/editor-adv'>Редактировать</Link>
+                      </St.ProductButton>
+                      <St.ProductButton>Снять с публикации</St.ProductButton>
+                    </St.ProductButtonBox>
+                  ) : (
+                    <St.ProductButton>
+                      Показать&nbsp;телефон
+                      <St.ProductButtonSpan>
+                        8&nbsp;905&nbsp;ХХХ&nbsp;ХХ&nbsp;ХХ
+                      </St.ProductButtonSpan>
+                    </St.ProductButton>
+                  )}
                   <St.ProductAuthor>
                     <St.ProductAuthorImage src='' alt='' />
                     <St.ProductAuthorContent>
@@ -129,13 +172,9 @@ export const Product = () => {
               </St.ProductDescriptionText>
             </St.ProductDescriptionContent>
           </St.ProductDescription>
+          {isModalOpen && <EditorAdv closeModal={handleCloseModal} />}
+          {isReviewModalOpen && <Review closeModal={handleCloseModal} />}
         </main>
-        {openReviews ? 
-        <Review closeReviewsModal={closeReviewsModal} /> : null}
-        {addNewProductModal ? 
-        <NewProduct closeModal={closeModal} /> : null}
-        {showAdvEdit ? 
-        <EditorAdv closeAdvEditor={closeAdvEditor} /> : null}
         <Footer openModal={openModal} />
       </S.Container>
     </S.Wrapper>

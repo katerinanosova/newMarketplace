@@ -42,8 +42,6 @@ export const Profile = ({ products }) => {
     }
   }, [isSuccess, isError])
 
-
-
   return (
     <S.Wrapper>
       <S.Container>

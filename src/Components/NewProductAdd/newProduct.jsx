@@ -1,8 +1,44 @@
 import * as S from './newProduct.styled';
 import { HeaderSecond } from '../../Components/HeaderSecond/HeaderSecond';
 import { Footer } from '../../Components/Footer/Footer';
+import { useState } from 'react';
+import { getAccessTokenLocal } from '../../helpers/token';
+import { useAddAdsMutation } from '../../Store/RTKQuery/getAds';
 
 export const NewProduct = ({ closeModal }) => {
+    const [images, setImages] = useState(null);
+    const [saveButtonActive, setSaveButtonActive] = useState(true);
+    const [addAds, {isError}] = useAddAdsMutation();
+    const [avatar, setAvatar] = useState(null)
+    const fileUpload = document.getElementById("upload-photo");
+    const handleImgUpload = async (file) => {
+        const formData = new FormData();
+        if (file) {
+          formData.append("file", file);
+          postAdsImage({
+            access: getAccessTokenLocal(),
+            image: formData,
+          });
+          setSaveButtonActive(true);
+          setImages(images);
+        } else {
+          console.log("Файл не найден");
+        }
+      };
+
+      const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (images.length < 5) {
+          setImages([...images, file]);
+          console.log(images);
+        } else {
+          alert('Можно загрузить не более пяти изображений.');
+        }
+      };
+    //   const handleAvatarClick = () => {
+    //     // fileUpload.click();
+    //     setAvatar(event.target.value);
+    //   };
     return (
         <S.Wrapper>
             <S.ContainerBg>
@@ -15,7 +51,7 @@ export const NewProduct = ({ closeModal }) => {
                         </S.ModalBtnClose>
                         <S.ModalFormNewArtFormNewArt>
                             <S.FormNewArtBlock>
-                                <S.Label htmlFor="text">Название</S.Label>
+                                <S.Label htmlFor="text" name="name" id="formName" placeholder="Введите название">Название</S.Label>
                                 <S.FormNewArtInput type="text" placeholder="Введите название"/>
                             </S.FormNewArtBlock>
                             <S.FormNewArtBlock>
@@ -27,7 +63,18 @@ export const NewProduct = ({ closeModal }) => {
                                 <S.FormNewArtBarImg>
                                     <S.FormNewArtImg>
                                         <S.Img src="" alt=""/>
-                                        <S.FormNewArtImgCover/>
+                                        <S.FormNewArtImgCover
+                                            id="upload-photo"
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={(event) => {
+                                                const file = event.target.files?.[0];
+                                                if (file) {
+                                                setImages(file);
+                                                handleImgUpload(file);
+                                                }
+                                            }}
+                                            ></S.FormNewArtImgCover>
                                     </S.FormNewArtImg>
                                     <S.FormNewArtImg>
                                         <S.Img src="" alt=""/>
@@ -52,7 +99,7 @@ export const NewProduct = ({ closeModal }) => {
                                 <S.FormNewArtInputPrice type="text"/>
                                 <S.FormNewArtInputPriceCover/>
                             </S.FormNewArtBlockBlockPrice>
-                            <S.FormNewArtBtnPubBtnHov02>Опубликовать</S.FormNewArtBtnPubBtnHov02>
+                            <S.FormNewArtBtnPubBtnHov02 disabled={!saveButtonActive}>Опубликовать</S.FormNewArtBtnPubBtnHov02>
                         </S.ModalFormNewArtFormNewArt>
                     </S.ModalContent>
                 </S.ModalBlock>
