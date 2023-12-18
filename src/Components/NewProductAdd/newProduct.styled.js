@@ -402,7 +402,8 @@ export const Img = styled.img`
     object-fit: cover;
   }
 `;
-export const FormNewArtImgCover = styled.div`
+export const FormNewArtImgCover = styled.input`
+cursor: pointer;
   position: absolute;
   width: 100%;
   height: 100%;

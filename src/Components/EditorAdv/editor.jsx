@@ -37,7 +37,6 @@ export const EditorAdv = ({ setIsOpen }) => {
                 </S.ModalBtnClose>
               </Link>
             )}
-
             <S.ModalFormNewArtFormNewArt>
               <S.FormNewArtBlock>
                 <S.LabelDescription htmlFor='text'>Название</S.LabelDescription>

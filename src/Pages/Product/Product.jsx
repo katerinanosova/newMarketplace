@@ -27,6 +27,7 @@ export const Product = () => {
   const [addNewProductModal, setAddNewProductModal] = useState(false);
   const closeModal = () => {
     setAddNewProductModal(false);
+
   };
   const openModal = () => {
     setAddNewProductModal(true);
@@ -71,6 +72,16 @@ export const Product = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
+  // заглушка на залогиненного юзера
+  const userLoggedIn = true;
+  const [showAdvEdit, setShowAdvEdit] = useState(false);
+  const openAdvEditor = () => {
+    setShowAdvEdit(true);
+  }
+  const closeAdvEditor = () => {
+    setShowAdvEdit(false)
+  }
 
   return (
     <S.Wrapper>
