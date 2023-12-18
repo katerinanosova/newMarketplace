@@ -41,16 +41,6 @@ export const Product = () => {
     setOpenReviews(false);
   };
 
-  // заглушка на залогиненного юзера
-  const userLoggedIn = true;
-  const [showAdvEdit, setShowAdvEdit] = useState(false);
-  const openAdvEditor = () => {
-    setShowAdvEdit(true);
-  };
-  const closeAdvEditor = () => {
-    setShowAdvEdit(false);
-  };
-
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);

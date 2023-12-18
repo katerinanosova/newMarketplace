@@ -403,6 +403,9 @@ export const Img = styled.img`
   }
 `;
 export const FormNewArtImgCover = styled.input`
+&::-webkit-file-upload-button {
+  visibility: hidden;
+}
 cursor: pointer;
   position: absolute;
   width: 100%;
