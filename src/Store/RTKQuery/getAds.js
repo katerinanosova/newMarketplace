@@ -1,7 +1,6 @@
 
 import { createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
-import { getAccessTokenLocal } from '../../helpers/token';
-const DATA_TAG = { type: "dataAds", id: "LIST" };
+const DATA_TAG = { type: "Advs", id: "LIST" };
 export const ads = createApi({
     reducerPath: 'ads',
     tagTypes: ['dataAds'],
@@ -14,14 +13,14 @@ export const ads = createApi({
             ],
         }),
         addAds: build.mutation({
-            query: (data) => ({
+            query: ({access, formData}) => ({
                 url: `ads`,
                 method: 'POST',
                 headers: {
-                    'content-type': 'application/json',
-                    Authorization: `bearer ${data.access}`,
+                    'content-type': 'multipart/form-data',
+                    Authorization: `bearer ${access}`,
                 },
-                body: data.formData,
+                body: formData,
             }),
             invalidatesTags: [DATA_TAG]
         }),

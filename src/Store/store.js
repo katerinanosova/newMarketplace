@@ -5,6 +5,7 @@ import { userToken } from "./RTKQuery/getToken";
 import userReducer from "./Slices/userSlice";
 import  productsReducer  from "./Slices/dataProductsSlice";
 import photoReducer from "./Slices/photoSlice";
+import { advId } from "./RTKQuery/getAdvId";
 export const store = configureStore({
     reducer: {
         products: productsReducer,
@@ -13,6 +14,7 @@ export const store = configureStore({
         [me.reducerPath]: me.reducer,
         [userToken.reducerPath]: userToken.reducer,
         photo: photoReducer,
+        [advId.reducerPath]: advId.reducer
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false}).concat(ads.middleware).concat(me.middleware).concat(userToken.middleware)
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false}).concat(ads.middleware).concat(me.middleware).concat(userToken.middleware).concat(advId.middleware)
 })
