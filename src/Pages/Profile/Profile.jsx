@@ -9,6 +9,7 @@ import { updateToken } from '../../Api/tokenApi';
 import { useEffect, useState } from 'react';
 import { handleAvatarClick, handleAvatarUpload, handleChangeMe, profileUserData, saveUserLocal } from '../../helpers/user';
 import { uploadUserAvatar } from '../../Api/userApi';
+import { useGetMyProfile } from '../../hooks/useGetMyProfile';
 
 export const Profile = ({ products }) => {
   const [city, setCity] = useState('')
@@ -17,33 +18,28 @@ export const Profile = ({ products }) => {
   const [phone, setPhone] = useState('')
   const [surname, setSurname] = useState('')
   const [img, setImg] = useState(null);
-  const access = getAccessTokenLocal()
+
   const fileUpload = document.getElementById("file-upload");
-  const {data =[], isError, error, isSuccess, refetch} = useGetMeQuery(access);
+
   const [changeMe, {isError: isErrorChangeMe, error: errorChangeMe}] = useChangeMeMutation()
+  const access = getAccessTokenLocal()
+  const {data =[], isError, error, isSuccess, refetch} = useGetMeQuery(access);
   const asyncUpgate = async () => {
-    await updateToken()
-    await refetch()
-    return
-  }
+      await updateToken()
+      await refetch()
+      return
+    }
   useEffect(() => {
     if(isSuccess) {
       const response = data
       saveUserLocal(response.email, response.name, response.id)
       profileUserData(data, setUserName, setSurname, setCity, setPhone, setAvatar)
     }
-    if(isError && error.status === 401 && error.data.detail === "Could not validate credentials: Not enough segments") {
-      asyncUpgate()
-      return
-    }
-    if(isError && error.status === 401 && error.data.detail === 'Could not validate credentials: Signature has expired') {
+    if(isError && error.status === 401) {
       asyncUpgate()
       return
     }
   }, [isSuccess, isError])
-
-
-
   return (
     <S.Wrapper>
       <S.Container>
