@@ -6,8 +6,9 @@ import { getAccessTokenLocal } from '../../helpers/token';
 import { useDispatch, useSelector } from 'react-redux';
 import { savePhoto } from '../../Store/Slices/photoSlice';
 import { useAddAdsWithoutImgMutation } from '../../Store/RTKQuery/getAds';
+import { useNavigate } from 'react-router-dom';
 
-export const NewProduct = ({ closeModal }) => {
+export const NewProduct = ({}) => {
     const [images, setImages] = useState([]);
     const [saveButtonActive, setSaveButtonActive] = useState(true);
     const [addAdsWithoutImg, {isError, error}] = useAddAdsWithoutImgMutation()
@@ -18,6 +19,10 @@ export const NewProduct = ({ closeModal }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('')
+
+    const navigate = useNavigate();
+
+
 if(isError) console.log(error);
 
     const handleImgUpload = async (file) => {
@@ -63,13 +68,22 @@ if(isError) console.log(error);
     //     // fileUpload.click();
     //     setAvatar(event.target.value);
     //   };
+
+      const closeModal = () => {
+        navigate(-1);
+      }
+      
     return (
         <S.Wrapper>
+            <HeaderSecond  />
             <S.ContainerBg>
-                <HeaderSecond />
                 <S.ModalBlock>
                     <S.ModalContent>
-                        <S.ModalTitle>Новое объявление</S.ModalTitle>
+                        <S.ModalTitle>
+                            <S.ModalBtnReturnMobile onClick={closeModal}>
+                                <S.ModalBtnReturnImgMobile src="/img/return.png" />
+                            </S.ModalBtnReturnMobile>
+                        Новое объявление</S.ModalTitle>
                         <S.ModalBtnClose onClick={closeModal}>
                             <S.ModalBtnCloseLine />
                         </S.ModalBtnClose>
