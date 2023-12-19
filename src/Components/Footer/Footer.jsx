@@ -2,7 +2,11 @@ import { Link } from "react-router-dom";
 import * as S from "./Footer.styled";
 
 
-export const Footer = ({ openModal }) => {
+export const Footer = ({ setNewProductModal }) => {
+
+    const openModal = () => {
+        setNewProductModal(true);
+    }
 
     return (
         <S.FooterWrapper>
@@ -10,7 +14,9 @@ export const Footer = ({ openModal }) => {
                 <Link to='/'>
                     <S.FooterImg src="/img/icon_01.png" alt="main" />
                 </Link>
-                    <S.FooterImg onClick={openModal} src="/img/icon_02.png" alt="new_add" />
+                <Link to='/new-product' replace>
+                    <S.FooterImg src="/img/icon_02.png" alt="new_add" />
+                </Link>
                 <Link to='/profile'>
                     <S.FooterImg src="/img/icon_03.png" alt="new_add" />
                 </Link>

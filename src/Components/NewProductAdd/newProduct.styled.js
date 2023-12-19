@@ -9,7 +9,7 @@ export const ContainerBg = styled.div`
   position: fixed;
   left: 0px;
   top: 0px;
-  z-index: 999;
+  z-index: 3;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
@@ -59,6 +59,8 @@ export const ModalContent = styled.div`
     position: relative;
   }
 `;
+
+
 export const ModalTitle = styled.h3`
   font-size: 32px;
   line-height: 46px;
@@ -71,9 +73,11 @@ export const ModalTitle = styled.h3`
   }
 
   @media screen and (max-width: 600px) {
+    display: flex;
+    gap: 26px;
     font-size: 24px;
     line-height: 29px;
-    padding: 0 0 0 26px;
+    // padding: 0 0 0 26px;
     position: relative;
   }
 `;
@@ -83,6 +87,24 @@ export const ModalBtnCloseSvg = styled.img`
   position: absolute;
   top: 35px;
 `;
+
+export const ModalBtnReturnMobile = styled.div`
+display: none;
+
+  @media screen and (max-width: 600px) {
+    display: flex;
+    align-items: center;
+  }
+`
+
+export const ModalBtnReturnImgMobile = styled.img`
+
+  @media screen and (max-width: 600px) {
+  width: 9px;
+  height: 18px;
+  }
+
+`
 
 export const ModalBtnClose = styled.button`
   width: 23px;
@@ -402,7 +424,11 @@ export const Img = styled.img`
     object-fit: cover;
   }
 `;
-export const FormNewArtImgCover = styled.div`
+export const FormNewArtImgCover = styled.input`
+&::-webkit-file-upload-button {
+  visibility: hidden;
+}
+cursor: pointer;
   position: absolute;
   width: 100%;
   height: 100%;
