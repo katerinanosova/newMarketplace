@@ -10,7 +10,11 @@ export const Review = ({ closeModal }) => {
             <HeaderSecond />
                 <S.ModalBlock>
                     <S.ModalContent>
-                        <S.ModalTitle>Отзывы о товаре</S.ModalTitle>
+                        <S.ModalTitle>
+                            <S.ModalBtnReturnMobile onClick={closeModal}>
+                                <S.ModalBtnReturnImgMobile src="/img/return.png" />
+                            </S.ModalBtnReturnMobile>
+                            Отзывы о товаре</S.ModalTitle>
                         <S.ModalBtnClose onClick={closeModal}>
                             <S.ModalBtnCloseLine />
                         </S.ModalBtnClose>

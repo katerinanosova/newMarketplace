@@ -24,17 +24,14 @@ export const EditorAdv = ({ closeModal }) => {
         <HeaderSecond />
         <S.ModalBlock>
           <S.ModalContent>
-            <S.ModalTitle>Редактировать объявление</S.ModalTitle>
-            {windowWidth <= 600 ? (
-              <S.ModalBtnCloseSvg
-                src='/img/closer.svg'
-                onClick={closeModal}
-              />
-            ) : (
+            <S.ModalTitle>
+              <S.ModalBtnReturnMobile onClick={closeModal}>
+                <S.ModalBtnReturnImgMobile src="/img/return.png" />
+              </S.ModalBtnReturnMobile>
+              Редактировать объявление</S.ModalTitle>
                 <S.ModalBtnClose onClick={closeModal}>
                   <S.ModalBtnCloseLine />
                 </S.ModalBtnClose>
-            )}
             <S.ModalFormNewArtFormNewArt>
               <S.FormNewArtBlock>
                 <S.LabelDescription htmlFor='text'>Название</S.LabelDescription>
