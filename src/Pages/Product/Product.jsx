@@ -12,35 +12,29 @@ import { Review } from '../../Components/reviews/review';
 import { EditorAdv } from '../../Components/EditorAdv/editor';
 import { useGetAdvIDQuery } from '../../Store/RTKQuery/getAdvId';
 
-export const Product = () => {
+export const Product = ({ }) => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  // useEffect(() => {
-  //   if (isOpen) {
-  //     navigate(`/product/${id}`);
-  //   }
-  // }, [isModalOpen, id, navigate]);
 
-  const [addNewProductModal, setAddNewProductModal] = useState(false);
-  const closeModal = () => {
-    setAddNewProductModal(false);
 
-  };
-  const openModal = () => {
-    setAddNewProductModal(true);
-  };
+
+
+  // const [addNewProductModal, setAddNewProductModal] = useState(false);
+  
+  // const openModal = () => {
+  //   setAddNewProductModal(true);
+  // };
+
 
   const [openReviews, setOpenReviews] = useState(false);
   const openReviewsModal = () => {
     setOpenReviews(true);
   };
-  const closeReviewsModal = () => {
-    setOpenReviews(false);
-  };
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -60,26 +54,26 @@ export const Product = () => {
       setIsReviewModalOpen(true);
     }
   };
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
+
 
   // заглушка на залогиненного юзера
   const userLoggedIn = true;
+
   const [showAdvEdit, setShowAdvEdit] = useState(false);
   const openAdvEditor = () => {
     setShowAdvEdit(true);
   }
-  const closeAdvEditor = () => {
-    setShowAdvEdit(false)
-  }
+  const handleCloseAllModals = () => {
+    setOpenReviews(false);
+    setShowAdvEdit(false);
+  };
   const {data =[], isError, error, isSuccess, refetch} = useGetAdvIDQuery(1);
   if(isSuccess)  console.log(data);
 
   return (
     <S.Wrapper>
       <S.Container>
-        {userLoggedIn ? <HeaderSecond openModal={openModal} /> : <Header />}
+        {userLoggedIn ? <HeaderSecond /> : <Header />}
         <main>
           <St.ProductContainer>
             <ReturnToMain />
@@ -114,16 +108,14 @@ export const Product = () => {
                   <St.ProductInfo>
                     <St.ProductDate>Сегодня в 10:45</St.ProductDate>
                     <St.ProductCity>Санкт-Петербург</St.ProductCity>
-                    <St.ProductReviews to='/review'>
+                    <St.ProductReviews onClick={openReviewsModal}>
                       23 отзыва
                     </St.ProductReviews>
                   </St.ProductInfo>
                   <St.ProductPrice>2 200 ₽</St.ProductPrice>
                   {userLoggedIn ? (
                     <St.ProductButtonBox>
-                      <St.ProductButton>
-                        <Link to='/editor-adv'>Редактировать</Link>
-                      </St.ProductButton>
+                      <St.ProductButton onClick={openAdvEditor}>Редактировать</St.ProductButton>
                       <St.ProductButton>Снять с публикации</St.ProductButton>
                     </St.ProductButtonBox>
                   ) : (
@@ -165,10 +157,17 @@ export const Product = () => {
               </St.ProductDescriptionText>
             </St.ProductDescriptionContent>
           </St.ProductDescription>
-          {isModalOpen && <EditorAdv closeModal={handleCloseModal} />}
-          {isReviewModalOpen && <Review closeModal={handleCloseModal} />}
+          {/* {isModalOpen && <EditorAdv closeModal={handleCloseModal} />}
+          {isReviewModalOpen && <Review closeModal={handleCloseModal} />} */}
+
+          {openReviews ? 
+             <Review closeModal={handleCloseAllModals} /> : null}
+          {/* {newProductModal ? 
+             <NewProduct setNewProductModal={setNewProductModal} /> : null} */}
+          {showAdvEdit ? 
+             <EditorAdv closeModal={handleCloseAllModals} /> : null}
         </main>
-        <Footer openModal={openModal} />
+        <Footer />
       </S.Container>
     </S.Wrapper>
   );

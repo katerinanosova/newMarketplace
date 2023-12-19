@@ -7,6 +7,8 @@ import { Search } from '../../Components/Search/Search';
 import * as S from './main.styled';
 import { useDispatch } from 'react-redux';
 import { saveProducts } from '../../Store/Slices/dataProductsSlice';
+import { HeaderSecond } from '../../Components/HeaderSecond/HeaderSecond';
+import { NewProduct } from '../../Components/NewProductAdd/newProduct';
 
 export const Main = ({products}) => {
   
@@ -17,10 +19,13 @@ export const Main = ({products}) => {
     console.log(data);
   }
 
+   // заглушка на залогиненного юзера
+  const userLoggedIn = true;
+
   return (
     <S.Wrapper>
       <S.Container>
-        <Header />
+      {userLoggedIn ? <HeaderSecond /> : <Header />}
         <S.Main>
           <Search />
           <S.MainContainer>
@@ -32,6 +37,8 @@ export const Main = ({products}) => {
             </S.MainContent>
           </S.MainContainer>
         </S.Main>
+        {/* {newProductModal ? 
+             <NewProduct setNewProductModal={setNewProductModal} /> : null} */}
         <Footer />
       </S.Container>
     </S.Wrapper>

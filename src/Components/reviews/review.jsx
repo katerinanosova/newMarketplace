@@ -3,15 +3,19 @@ import { Footer } from '../Footer/Footer';
 import * as S from '../NewProductAdd/newProduct.styled';
 import * as SU from './review.styled';
 
-export const Review = ({ closeReviewsModal }) => {
+export const Review = ({ closeModal }) => {
     return (
         <S.Wrapper>
             <S.ContainerBg>
             <HeaderSecond />
                 <S.ModalBlock>
                     <S.ModalContent>
-                        <S.ModalTitle>Отзывы о товаре</S.ModalTitle>
-                        <S.ModalBtnClose onClick={closeReviewsModal}>
+                        <S.ModalTitle>
+                            <S.ModalBtnReturnMobile onClick={closeModal}>
+                                <S.ModalBtnReturnImgMobile src="/img/return.png" />
+                            </S.ModalBtnReturnMobile>
+                            Отзывы о товаре</S.ModalTitle>
+                        <S.ModalBtnClose onClick={closeModal}>
                             <S.ModalBtnCloseLine />
                         </S.ModalBtnClose>
                         <SU.ModalScroll>

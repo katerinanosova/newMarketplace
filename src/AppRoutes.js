@@ -43,27 +43,18 @@ const products = [
 
 export const AppRoutes = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+
   return (
     <Routes>
       <Route path='/' element={<Main products={products} />} />
       <Route path='/profile' element={<Profile products={products} />} />
-      <Route
-        path='/seller-profile'
-        element={<SellerProfile products={products} />}
-      />
-      <Route
-        path='/product/'
-        element={
-          <Product products={products} isOpen={isOpen} />
-        }
-      />
-      <Route path='/review' element={<Review />} />
+      <Route path='/seller-profile' element={<SellerProfile products={products} />} />
+      <Route path='/product/:id' element={<Product products={products} /> } />
+      {/* <Route path='/review' element={<Review />} /> */}
       <Route path='/new-product' element={<NewProduct />} />
       <Route path='/reg' element={<Sign />} />
-      <Route
-        path='/editor-adv'
-        element={<EditorAdv setIsOpen={setIsOpen} />}
-      />
+      {/* <Route path='/editor-adv' element={<EditorAdv setIsOpen={setIsOpen} />} /> */}
       <Route path='*' element={<NotFound />} />
     </Routes>
   );
