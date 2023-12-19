@@ -311,6 +311,7 @@ export const ProductButtonBox = styled.div`
 `;
 
 export const ProductButton = styled.div`
+  cursor: pointer;
   background-color: #009ee4;
   border-radius: 6px;
   border: 1px solid #009ee4;

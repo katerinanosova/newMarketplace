@@ -9,6 +9,8 @@ import { updateToken } from '../../Api/tokenApi';
 import { useEffect, useState } from 'react';
 import { handleAvatarClick, handleAvatarUpload, handleChangeMe, profileUserData, saveUserLocal } from '../../helpers/user';
 import { uploadUserAvatar } from '../../Api/userApi';
+import { NewProduct } from '../../Components/NewProductAdd/newProduct';
+import { useGetAllMyAdsQuery } from '../../Store/RTKQuery/getMyAds';
 
 export const Profile = ({ products }) => {
   const [city, setCity] = useState('')
@@ -21,6 +23,9 @@ export const Profile = ({ products }) => {
   const fileUpload = document.getElementById("file-upload");
   const {data =[], isError, error, isSuccess, refetch} = useGetMeQuery(access);
   const [changeMe, {isError: isErrorChangeMe, error: errorChangeMe}] = useChangeMeMutation()
+  const {data: dataMyAds=[]} = useGetAllMyAdsQuery(access)
+  console.log(dataMyAds);
+  console.log(access);
   const asyncUpgate = async () => {
     await updateToken()
     await refetch()
@@ -144,7 +149,7 @@ export const Profile = ({ products }) => {
             </S.MainCenterBlock>
             <S.MainContent>
               <S.ContentCards>
-                {products.map((product) => (
+                {dataMyAds.map((product) => (
                   <Card key={product.id} product={product} />
                 ))}
               </S.ContentCards>

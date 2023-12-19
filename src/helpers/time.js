@@ -1,8 +1,16 @@
-export const getTime = () => {
-    const now = new Date();
+export const getTime = (adsDate) => {
+    const adsY = adsDate.substr(0, 4)
+    const adsTime = adsDate.substr(11, 5)
+    const adsM = adsDate.substr(5, 2)
+    const adsD = adsDate.substr(8, 2)
+    const now = new Date()
     const day = now.getDate();
-    const month = now.getMonth();
+    const month = now.getMonth() + 1;
     const year = now.getFullYear()
-    const date = `${day}:${month + 1}:${year}`
-    return date
+    if(adsY == year && adsM == month && adsD == day) {
+        return `Сегодня в ${adsTime}`
+    } else {
+        return `${adsD}.${adsM}.${adsY}`
+    }
+    
 }

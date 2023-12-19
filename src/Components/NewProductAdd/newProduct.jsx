@@ -3,22 +3,25 @@ import { HeaderSecond } from '../../Components/HeaderSecond/HeaderSecond';
 import { Footer } from '../../Components/Footer/Footer';
 import { useState } from 'react';
 import { getAccessTokenLocal } from '../../helpers/token';
-import { useAddAdsMutation } from '../../Store/RTKQuery/getAds';
 import { useDispatch, useSelector } from 'react-redux';
 import { savePhoto } from '../../Store/Slices/photoSlice';
+import { useAddAdsWithoutImgMutation, useAddImgsMutation } from '../../Store/RTKQuery/getAds';
+import { useNavigate } from 'react-router-dom';
+import { updateToken } from '../../Api/tokenApi';
+import { uploadImage } from '../../Api/adsApi';
 
-export const NewProduct = ({ closeModal }) => {
+
+
+export const NewProduct = ({}) => {
     const [images, setImages] = useState([]);
     const [saveButtonActive, setSaveButtonActive] = useState(true);
-    const [addAds, {isError, error}] = useAddAdsMutation();
-    const [avatar, setAvatar] = useState(null)
-    const fileUpload = document.getElementById("upload-photo");
+    const [addAdsWithoutImg, {isError, error}] = useAddAdsWithoutImgMutation()
+    const [addImgs] = useAddImgsMutation();
     const photo = useSelector(state => state.photo)
-    const dispatch = useDispatch();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('')
-if(isError) console.log(error);
+    const navigate = useNavigate();
 
     const handleImgUpload = async (file) => {
         const formData = new FormData();
@@ -45,32 +48,64 @@ if(isError) console.log(error);
         }
       };
 
-      const handlePostNewAdv = () => {
-        // const dataAddAdv = {title: title, description: description, body: images, access: access, price: price}
+      const handlePostNewAdv = async () => {
         const access = getAccessTokenLocal()
-        const formData = new FormData();
-      images.forEach((image, index) => {
-        formData.append(`image[${index + 1}]`, image);
-      });
-      formData.append('title', title);
-      formData.append('description', description);
-      formData.append('price', price);
-      console.log(formData);
-      console.log({access, formData});
-        addAds({access, formData})
+        try{
+            const dataAdv = await addAdsWithoutImg({access, title, description, price}).unwrap()
+            console.log(dataAdv);
+            if(images.length > 0) {
+                const advID = dataAdv.id
+                console.log(advID);
+                images.forEach((image) => {
+                    const formData = new FormData();
+                    formData.append(`file`, image);
+                    console.log(image);
+                    const response = uploadImage({advID, image})
+                    console.log(response);
+                    // addImgs({access, advID, formData})
+                    });
+                
+
+
+            }
+        } catch(error) {
+            if(error.status === 401) {
+                await updateToken();
+                handlePostNewAdv()
+                return
+            }
+        }
+        
+    //     const formData = new FormData();
+    //   images.forEach((image, index) => {
+    //     formData.append(`[${index + 1}]`, image);
+    //   });
+    //   formData.append('title', title);
+    //   formData.append('description', description);
+    //   formData.append('price', price);
+      
 
       }
     //   const handleAvatarClick = () => {
     //     // fileUpload.click();
     //     setAvatar(event.target.value);
     //   };
+
+      const closeModal = () => {
+        navigate(-1);
+      }
+      
     return (
         <S.Wrapper>
+            <HeaderSecond  />
             <S.ContainerBg>
-                <HeaderSecond />
                 <S.ModalBlock>
                     <S.ModalContent>
-                        <S.ModalTitle>Новое объявление</S.ModalTitle>
+                        <S.ModalTitle>
+                            <S.ModalBtnReturnMobile onClick={closeModal}>
+                                <S.ModalBtnReturnImgMobile src="/img/return.png" />
+                            </S.ModalBtnReturnMobile>
+                        Новое объявление</S.ModalTitle>
                         <S.ModalBtnClose onClick={closeModal}>
                             <S.ModalBtnCloseLine />
                         </S.ModalBtnClose>
@@ -93,12 +128,7 @@ if(isError) console.log(error);
                                             type="file"
                                             accept="image/*"
                                             onChange={(e) => {
-                                                // const file = event.target.files?.[0];
                                                 handleImageChange(e)
-                                                // if (file) {
-                                                // // setImages(file);
-                                                // // handleImgUpload(file);
-                                                // }
                                             }}
                                             ></S.FormNewArtImgCover>
                                     </S.FormNewArtImg>

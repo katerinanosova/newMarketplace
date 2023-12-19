@@ -4,7 +4,7 @@ import { HeaderSecond } from '../HeaderSecond/HeaderSecond';
 import * as S from '../NewProductAdd/newProduct.styled';
 import { Footer } from '../Footer/Footer';
 
-export const EditorAdv = ({ setIsOpen }) => {
+export const EditorAdv = ({ closeModal }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   useEffect(() => {
     const handleResize = () => {
@@ -24,19 +24,14 @@ export const EditorAdv = ({ setIsOpen }) => {
         <HeaderSecond />
         <S.ModalBlock>
           <S.ModalContent>
-            <S.ModalTitle>Редактировать объявление</S.ModalTitle>
-            {windowWidth <= 600 ? (
-              <S.ModalBtnCloseSvg
-                src='/img/closer.svg'
-                onClick={() => setIsOpen(true)}
-              />
-            ) : (
-              <Link to='/product/:id'>
-                <S.ModalBtnClose>
+            <S.ModalTitle>
+              <S.ModalBtnReturnMobile onClick={closeModal}>
+                <S.ModalBtnReturnImgMobile src="/img/return.png" />
+              </S.ModalBtnReturnMobile>
+              Редактировать объявление</S.ModalTitle>
+                <S.ModalBtnClose onClick={closeModal}>
                   <S.ModalBtnCloseLine />
                 </S.ModalBtnClose>
-              </Link>
-            )}
             <S.ModalFormNewArtFormNewArt>
               <S.FormNewArtBlock>
                 <S.LabelDescription htmlFor='text'>Название</S.LabelDescription>
