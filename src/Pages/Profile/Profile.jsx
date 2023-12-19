@@ -25,6 +25,7 @@ export const Profile = ({ products }) => {
   const [changeMe, {isError: isErrorChangeMe, error: errorChangeMe}] = useChangeMeMutation()
   const {data: dataMyAds=[]} = useGetAllMyAdsQuery(access)
   console.log(dataMyAds);
+  console.log(access);
   const asyncUpgate = async () => {
     await updateToken()
     await refetch()
@@ -148,7 +149,7 @@ export const Profile = ({ products }) => {
             </S.MainCenterBlock>
             <S.MainContent>
               <S.ContentCards>
-                {products.map((product) => (
+                {dataMyAds.map((product) => (
                   <Card key={product.id} product={product} />
                 ))}
               </S.ContentCards>

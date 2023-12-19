@@ -57,7 +57,7 @@ export const Product = ({ }) => {
 
 
   // заглушка на залогиненного юзера
-  const userLoggedIn = true;
+  const userLoggedIn = false;
 
   const [showAdvEdit, setShowAdvEdit] = useState(false);
   const openAdvEditor = () => {
