@@ -11,18 +11,41 @@ import { NewProduct } from '../../Components/NewProductAdd/newProduct';
 import { Review } from '../../Components/reviews/review';
 import { EditorAdv } from '../../Components/EditorAdv/editor';
 import { useGetAdvIDQuery } from '../../Store/RTKQuery/getAdvId';
+import { getTime } from '../../helpers/time';
+import { useGetCommentsQuery } from '../../Store/RTKQuery/getComments';
+import { updateToken } from '../../Api/tokenApi';
+import { getSeller } from '../../Api/sellerApi';
 
 export const Product = ({ }) => {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const [show, setShow] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-
-
-
+  const {data: dataComments=[]} = useGetCommentsQuery(id)
+  const {data =[], isError, error, isSuccess, refetch} = useGetAdvIDQuery(id);
+  let timeResult = '00.00.00'
+  useEffect(() => {
+    if (isSuccess) {
+      timeResult = getTime(data.created_on)
+      console.log(data);
+      setShow(true)
+    }
+    },[isSuccess]);
+    useEffect(() => {
+      const seller = getSeller(data.user.id)
+      console.log(seller);
+      },[isSuccess]);
+    if(isError && error.status == 401 ) {
+      asyncUpgate()
+    }
+    const asyncUpgate = async () => {
+      await updateToken()
+      await refetch()
+      return
+    }
+  // 
   // const [addNewProductModal, setAddNewProductModal] = useState(false);
   
   // const openModal = () => {
@@ -67,108 +90,97 @@ export const Product = ({ }) => {
     setOpenReviews(false);
     setShowAdvEdit(false);
   };
-  const {data =[], isError, error, isSuccess, refetch} = useGetAdvIDQuery(1);
-  if(isSuccess)  console.log(data);
+
 
   return (
-    <S.Wrapper>
-      <S.Container>
-        {userLoggedIn ? <HeaderSecond /> : <Header />}
-        <main>
-          <St.ProductContainer>
-            <ReturnToMain />
-          </St.ProductContainer>
-          <St.ProductArticle>
-            <St.ProductArticleContent>
-              <St.ProductArticleLeft>
-                <St.ProductArticleFillImg>
-                  <St.ProductArticleImage src='' alt='' />
-                  <St.ProductImageBarDesktop>
-                    <St.ProductImageBarDiv src='' alt='' />
-                    <St.ProductImageBarDiv src='' alt='' />
-                    <St.ProductImageBarDiv src='' alt='' />
-                    <St.ProductImageBarDiv src='' alt='' />
-                    <St.ProductImageBarDiv src='' alt='' />
-                    <St.ProductImageBarDiv src='' alt='' />
-                  </St.ProductImageBarDesktop>
-                  <St.ProductImageBarMobile>
-                    <St.ProductImageBarMobileCircle />
-                    <St.ProductImageBarMobileCircle />
-                    <St.ProductImageBarMobileCircle />
-                    <St.ProductImageBarMobileCircle />
-                    <St.ProductImageBarMobileCircle />
-                  </St.ProductImageBarMobile>
-                </St.ProductArticleFillImg>
-              </St.ProductArticleLeft>
-              <St.ProductArticleRight>
-                <St.ProductArticleRightBlock>
-                  <St.ProductTitle>
-                    Ракетка для большого тенниса Triumph Pro STС Б/У
-                  </St.ProductTitle>
-                  <St.ProductInfo>
-                    <St.ProductDate>Сегодня в 10:45</St.ProductDate>
-                    <St.ProductCity>Санкт-Петербург</St.ProductCity>
-                    <St.ProductReviews onClick={openReviewsModal}>
-                      23 отзыва
-                    </St.ProductReviews>
-                  </St.ProductInfo>
-                  <St.ProductPrice>2 200 ₽</St.ProductPrice>
-                  {userLoggedIn ? (
-                    <St.ProductButtonBox>
-                      <St.ProductButton onClick={openAdvEditor}>Редактировать</St.ProductButton>
-                      <St.ProductButton>Снять с публикации</St.ProductButton>
-                    </St.ProductButtonBox>
-                  ) : (
-                    <St.ProductButton>
-                      Показать&nbsp;телефон
-                      <St.ProductButtonSpan>
-                        8&nbsp;905&nbsp;ХХХ&nbsp;ХХ&nbsp;ХХ
-                      </St.ProductButtonSpan>
-                    </St.ProductButton>
-                  )}
-                  <St.ProductAuthor>
-                    <St.ProductAuthorImage src='' alt='' />
-                    <St.ProductAuthorContent>
-                      <Link to='/seller-profile'>
-                        <St.ProductAuthorName>Кирилл</St.ProductAuthorName>
-                      </Link>
-                      <St.ProductAuthorAbout>
-                        Продает товары с августа 2021
-                      </St.ProductAuthorAbout>
-                    </St.ProductAuthorContent>
-                  </St.ProductAuthor>
-                </St.ProductArticleRightBlock>
-              </St.ProductArticleRight>
-            </St.ProductArticleContent>
-          </St.ProductArticle>
-          <St.ProductDescription>
-            <St.ProductDescriptionTitle>
-              Описание товара
-            </St.ProductDescriptionTitle>
-            <St.ProductDescriptionContent>
-              <St.ProductDescriptionText>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </St.ProductDescriptionText>
-            </St.ProductDescriptionContent>
-          </St.ProductDescription>
-          {/* {isModalOpen && <EditorAdv closeModal={handleCloseModal} />}
-          {isReviewModalOpen && <Review closeModal={handleCloseModal} />} */}
-
-          {openReviews ? 
-             <Review closeModal={handleCloseAllModals} /> : null}
-          {/* {newProductModal ? 
-             <NewProduct setNewProductModal={setNewProductModal} /> : null} */}
-          {showAdvEdit ? 
-             <EditorAdv closeModal={handleCloseAllModals} /> : null}
-        </main>
-        <Footer />
-      </S.Container>
-    </S.Wrapper>
+    show ?     <S.Wrapper>
+    <S.Container>
+      {userLoggedIn ? <HeaderSecond /> : <Header />}
+      <main>
+        <St.ProductContainer>
+          <ReturnToMain />
+        </St.ProductContainer>
+        <St.ProductArticle>
+          <St.ProductArticleContent>
+            <St.ProductArticleLeft>
+              <St.ProductArticleFillImg>
+                <St.ProductArticleImage src={data.images.length > 0 ? `http://localhost:8090/${data.images[0].url}` : '/img/noFoto.jpeg'} alt='' />
+                <St.ProductImageBarDesktop>
+                {data.images.map((image) => (
+                 <St.ProductImageBarDiv key={image.id} src={`http://localhost:8090/${image.url}`} alt='img' />
+              ))}
+                </St.ProductImageBarDesktop>
+                <St.ProductImageBarMobile>
+                  <St.ProductImageBarMobileCircle />
+                  <St.ProductImageBarMobileCircle />
+                  <St.ProductImageBarMobileCircle />
+                  <St.ProductImageBarMobileCircle />
+                  <St.ProductImageBarMobileCircle />
+                </St.ProductImageBarMobile>
+              </St.ProductArticleFillImg>
+            </St.ProductArticleLeft>
+            <St.ProductArticleRight>
+              <St.ProductArticleRightBlock>
+                <St.ProductTitle>
+                  {data.title}
+                </St.ProductTitle>
+                <St.ProductInfo>
+                  <St.ProductDate>{timeResult}</St.ProductDate>
+                  <St.ProductCity>{Boolean(data.user.city) ? data.user.city : "что нам город? Перед нами весь мир...не указан короче"}</St.ProductCity>
+                  <St.ProductReviews onClick={openReviewsModal}>
+                    {dataComments.length === 0 ? `еще нет отзывов, но вы можете сделать первый` : `${dataComments.length} отзыва`}
+                  </St.ProductReviews>
+                </St.ProductInfo>
+                <St.ProductPrice>{data.price}</St.ProductPrice>
+                {userLoggedIn ? (
+                  <St.ProductButtonBox>
+                    <St.ProductButton onClick={openAdvEditor}>Редактировать</St.ProductButton>
+                    <St.ProductButton>Снять с публикации</St.ProductButton>
+                  </St.ProductButtonBox>
+                ) : (
+                  <St.ProductButton>
+                    Показать&nbsp;телефон&nbsp;
+                    <St.ProductButtonSpan>
+                      8&nbsp;905&nbsp;ХХХ&nbsp;ХХ&nbsp;ХХ
+                    </St.ProductButtonSpan>
+                  </St.ProductButton>
+                )}
+                <St.ProductAuthor>
+                  <St.ProductAuthorImage src='' alt='' />
+                  <St.ProductAuthorContent>
+                    <Link to='/seller-profile'>
+                      <St.ProductAuthorName>Кирилл</St.ProductAuthorName>
+                    </Link>
+                    <St.ProductAuthorAbout>
+                      Продает товары с августа 2021
+                    </St.ProductAuthorAbout>
+                  </St.ProductAuthorContent>
+                </St.ProductAuthor>
+              </St.ProductArticleRightBlock>
+            </St.ProductArticleRight>
+          </St.ProductArticleContent>
+        </St.ProductArticle>
+        <St.ProductDescription>
+          <St.ProductDescriptionTitle>
+            Описание товара
+          </St.ProductDescriptionTitle>
+          <St.ProductDescriptionContent>
+            <St.ProductDescriptionText>
+                  {data.description ? data.description : 'Продавец не описал товар'}
+            </St.ProductDescriptionText>
+          </St.ProductDescriptionContent>
+        </St.ProductDescription>
+        {/* {isModalOpen && <EditorAdv closeModal={handleCloseModal} />}
+        {isReviewModalOpen && <Review closeModal={handleCloseModal} />} */}
+        {openReviews ? 
+           <Review closeModal={handleCloseAllModals} /> : null}
+        {/* {newProductModal ? 
+           <NewProduct setNewProductModal={setNewProductModal} /> : null} */}
+        {showAdvEdit ? 
+           <EditorAdv closeModal={handleCloseAllModals} /> : null}
+      </main>
+      <Footer />
+    </S.Container>
+  </S.Wrapper> : null
   );
 };
