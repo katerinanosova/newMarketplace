@@ -4,7 +4,7 @@ import { HeaderSecond } from '../HeaderSecond/HeaderSecond';
 import * as S from '../NewProductAdd/newProduct.styled';
 import { Footer } from '../Footer/Footer';
 
-export const EditorAdv = ({ setIsOpen }) => {
+export const EditorAdv = ({ closeModal }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   useEffect(() => {
     const handleResize = () => {
@@ -28,14 +28,12 @@ export const EditorAdv = ({ setIsOpen }) => {
             {windowWidth <= 600 ? (
               <S.ModalBtnCloseSvg
                 src='/img/closer.svg'
-                onClick={() => setIsOpen(true)}
+                onClick={closeModal}
               />
             ) : (
-              <Link to='/product/:id'>
-                <S.ModalBtnClose>
+                <S.ModalBtnClose onClick={closeModal}>
                   <S.ModalBtnCloseLine />
                 </S.ModalBtnClose>
-              </Link>
             )}
             <S.ModalFormNewArtFormNewArt>
               <S.FormNewArtBlock>

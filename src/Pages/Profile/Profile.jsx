@@ -9,6 +9,7 @@ import { updateToken } from '../../Api/tokenApi';
 import { useEffect, useState } from 'react';
 import { handleAvatarClick, handleAvatarUpload, handleChangeMe, profileUserData, saveUserLocal } from '../../helpers/user';
 import { uploadUserAvatar } from '../../Api/userApi';
+import { NewProduct } from '../../Components/NewProductAdd/newProduct';
 
 export const Profile = ({ products }) => {
   const [city, setCity] = useState('')

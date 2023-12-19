@@ -3,7 +3,7 @@ import { Footer } from '../Footer/Footer';
 import * as S from '../NewProductAdd/newProduct.styled';
 import * as SU from './review.styled';
 
-export const Review = ({ closeReviewsModal }) => {
+export const Review = ({ closeModal }) => {
     return (
         <S.Wrapper>
             <S.ContainerBg>
@@ -11,7 +11,7 @@ export const Review = ({ closeReviewsModal }) => {
                 <S.ModalBlock>
                     <S.ModalContent>
                         <S.ModalTitle>Отзывы о товаре</S.ModalTitle>
-                        <S.ModalBtnClose onClick={closeReviewsModal}>
+                        <S.ModalBtnClose onClick={closeModal}>
                             <S.ModalBtnCloseLine />
                         </S.ModalBtnClose>
                         <SU.ModalScroll>

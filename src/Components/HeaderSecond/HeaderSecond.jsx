@@ -1,9 +1,12 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as S from './HeaderSecond.styled';
 import { useState, useEffect } from 'react';
 import { NewProduct } from '../NewProductAdd/newProduct';
 
-export const HeaderSecond = () => {
+export const HeaderSecond = ({setNewProductModal}) => {
+
+  const navigate = useNavigate();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -20,13 +23,11 @@ export const HeaderSecond = () => {
   }, []);
 
   const handleOpenModal = () => {
-    if (windowWidth <= 600) {
-      setIsModalOpen(true);
-    }
+    navigate('/new-product');
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+    navigate('/profile');
   };
 
   return (
@@ -37,11 +38,9 @@ export const HeaderSecond = () => {
             <S.LogoMobImg src='/img/logo-mob.png' alt='logo' />
           </S.LogoMobLink>
         </S.HeaderLogo>
-        <Link to='/new-product'>
-          <S.HeaderBtnPutAd onClick={handleOpenModal}>
+        <S.HeaderBtnPutAd onClick={handleOpenModal}>
             Разместить объявление
-          </S.HeaderBtnPutAd>
-        </Link>
+        </S.HeaderBtnPutAd>
         <S.HeaderButtonSecond>Личный кабинет</S.HeaderButtonSecond>
       </S.HeaderNav>
       {isModalOpen && <NewProduct closeModal={handleCloseModal} />}

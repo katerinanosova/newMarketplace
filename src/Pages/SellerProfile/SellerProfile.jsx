@@ -3,6 +3,7 @@ import { ReturnToMain } from '../../Components/ReturnToMain.js/ReturnToMain';
 import { Card } from '../../Components/Card/Card';
 import { Footer } from '../../Components/Footer/Footer';
 import * as S from './SellerProfile.styled';
+import { NewProduct } from '../../Components/NewProductAdd/newProduct';
 
 export const SellerProfile = ({ products }) => {
   return (
