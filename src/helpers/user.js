@@ -37,6 +37,8 @@ export const handleAvatarUpload = (file, setAvatar, refetch) => {
     const formData = new FormData();
     if (file) {
       formData.append("file", file);
+      console.log(file);
+      console.log(formData);
       uploadUserAvatar(formData)
         .then((data) => {
           setAvatar(data.avatar);

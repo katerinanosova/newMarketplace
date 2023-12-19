@@ -3,14 +3,14 @@ import { HeaderSecond } from '../../Components/HeaderSecond/HeaderSecond';
 import { Footer } from '../../Components/Footer/Footer';
 import { useState } from 'react';
 import { getAccessTokenLocal } from '../../helpers/token';
-import { useAddAdsMutation } from '../../Store/RTKQuery/getAds';
 import { useDispatch, useSelector } from 'react-redux';
 import { savePhoto } from '../../Store/Slices/photoSlice';
+import { useAddAdsWithoutImgMutation } from '../../Store/RTKQuery/getAds';
 
 export const NewProduct = ({ closeModal }) => {
     const [images, setImages] = useState([]);
     const [saveButtonActive, setSaveButtonActive] = useState(true);
-    const [addAds, {isError, error}] = useAddAdsMutation();
+    const [addAdsWithoutImg, {isError, error}] = useAddAdsWithoutImgMutation()
     const [avatar, setAvatar] = useState(null)
     const fileUpload = document.getElementById("upload-photo");
     const photo = useSelector(state => state.photo)
@@ -46,18 +46,17 @@ if(isError) console.log(error);
       };
 
       const handlePostNewAdv = () => {
-        // const dataAddAdv = {title: title, description: description, body: images, access: access, price: price}
         const access = getAccessTokenLocal()
+        const dataAdv = addAdsWithoutImg({access, title, description, price})
+        console.log(dataAdv);
         const formData = new FormData();
       images.forEach((image, index) => {
-        formData.append(`image[${index + 1}]`, image);
+        formData.append(`[${index + 1}]`, image);
       });
-      formData.append('title', title);
-      formData.append('description', description);
-      formData.append('price', price);
-      console.log(formData);
-      console.log({access, formData});
-        addAds({access, formData})
+    //   formData.append('title', title);
+    //   formData.append('description', description);
+    //   formData.append('price', price);
+      
 
       }
     //   const handleAvatarClick = () => {

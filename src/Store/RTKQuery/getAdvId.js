@@ -3,8 +3,8 @@ const DATA_TAG = { type: 'Adv', id: 'LIST'}
 
 
 export const advId = createApi({
-    reducerPath: 'adID',
-    tagTypes: ['dataAdvID'],
+    reducerPath: 'adv',
+    tagTypes: ['AdvId'],
     baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:8090/'}),
     endpoints: (build) => ({
         getAdvID: build.query({
