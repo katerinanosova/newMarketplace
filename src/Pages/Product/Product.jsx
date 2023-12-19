@@ -10,6 +10,7 @@ import { HeaderSecond } from '../../Components/HeaderSecond/HeaderSecond';
 import { NewProduct } from '../../Components/NewProductAdd/newProduct';
 import { Review } from '../../Components/reviews/review';
 import { EditorAdv } from '../../Components/EditorAdv/editor';
+import { useGetAdvIDQuery } from '../../Store/RTKQuery/getAdvId';
 
 export const Product = ({ }) => {
   const { id } = useParams();
@@ -62,12 +63,12 @@ export const Product = ({ }) => {
   const openAdvEditor = () => {
     setShowAdvEdit(true);
   }
-
   const handleCloseAllModals = () => {
     setOpenReviews(false);
     setShowAdvEdit(false);
   };
-
+  const {data =[], isError, error, isSuccess, refetch} = useGetAdvIDQuery(1);
+  if(isSuccess)  console.log(data);
 
   return (
     <S.Wrapper>

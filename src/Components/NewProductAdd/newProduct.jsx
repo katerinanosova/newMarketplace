@@ -55,13 +55,15 @@ if(isError) console.log(error);
         const access = getAccessTokenLocal()
         const formData = new FormData();
       images.forEach((image, index) => {
-        formData.append(`files${index + 1}`, image);
+        formData.append(`image[${index + 1}]`, image);
       });
       formData.append('title', title);
       formData.append('description', description);
+      formData.append('price', price);
       console.log(formData);
-      const data = {access: access, formData: formData}
-        addAds(data)
+      console.log({access, formData});
+        addAds({access, formData})
+
       }
     //   const handleAvatarClick = () => {
     //     // fileUpload.click();
