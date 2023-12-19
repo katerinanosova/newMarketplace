@@ -34,8 +34,8 @@ export const Product = ({ }) => {
     }
     },[isSuccess]);
     useEffect(() => {
-      const seller = getSeller(data.user.id)
-      console.log(seller);
+      // const id = data.user.id
+       getSeller()
       },[isSuccess]);
     if(isError && error.status == 401 ) {
       asyncUpgate()

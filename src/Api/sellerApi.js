@@ -1,6 +1,6 @@
 export const host = "http://127.0.0.1:8090";
 
-export async function getSeller(id) {
+export async function getSeller() {
      ( fetch(`${host}/user/all`, {
       method: "GET",
       headers: {
@@ -8,8 +8,6 @@ export async function getSeller(id) {
       },
     }))
     .then(response => response.json())
-    .then(response =>
-        response.filter((seller) => { seller.id === id})
-        )
-    
+    .then(response => console.log(response))
+
   }
