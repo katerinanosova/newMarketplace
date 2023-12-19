@@ -29,9 +29,20 @@ export const ads = createApi({
             }),
             invalidatesTags: [DATA_TAG]
         }),
+        addImgs: build.mutation({
+            query: ({access, advID, FormData}) => ({
+                url: `ads/${advID}/image`,
+                method: 'POST',
+                headers: {
+                    'Content-type': 'multipart/form-data',
+                    Authorization: `bearer ${access}`,
+                },
+                body: FormData,
+            })
+        })
     })
 })
 
-export const {useGetAllAdsQuery, useAddAdsWithoutImgMutation} = ads
+export const {useGetAllAdsQuery, useAddAdsWithoutImgMutation, useAddImgsMutation} = ads
 
 // 'content-type': 'multipart/form-data',

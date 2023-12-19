@@ -1,24 +1,26 @@
 import { Link } from 'react-router-dom';
 import * as S from './Card.styled';
+import { getTime } from '../../helpers/time';
 
 export const Card = ({ product }) => {
+  const timeResult = getTime(product.created_on)
   return (
     <S.CardItem>
       <S.CardItemContainer>
         <S.CardImageWrapper>
           <Link to={`/product/${product.id}`} >
-            <S.CardImage src='#' alt='picture' />
+            <S.CardImage src={product.images.length > 0 ? `http://localhost:8090/${product.images[0].url}` : '/img/noFoto.jpeg'} alt='picture' />
           </Link>
         </S.CardImageWrapper>
         <S.CardContent>
           <S.CardContentLink>
             <Link to={`/product/${product.id}`} >
-              <S.CardTitle>{product.goods}</S.CardTitle>
+              <S.CardTitle>{product.title}</S.CardTitle>
             </Link>
           </S.CardContentLink>
-          <S.CardPrice>{product.price}</S.CardPrice>
-          <S.CardPlace>{product.place}</S.CardPlace>
-          <S.CardDate>{product.time}</S.CardDate>
+          <S.CardPrice>{product.price ? product.price : `цена не указана`}</S.CardPrice>
+          <S.CardPlace>{product.user.city ? product.user.city : 'на планете Земля'}</S.CardPlace>
+          <S.CardDate>{timeResult}</S.CardDate>
         </S.CardContent>
       </S.CardItemContainer>
     </S.CardItem>

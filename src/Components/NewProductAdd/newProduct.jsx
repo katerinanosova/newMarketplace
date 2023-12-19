@@ -5,25 +5,23 @@ import { useState } from 'react';
 import { getAccessTokenLocal } from '../../helpers/token';
 import { useDispatch, useSelector } from 'react-redux';
 import { savePhoto } from '../../Store/Slices/photoSlice';
-import { useAddAdsWithoutImgMutation } from '../../Store/RTKQuery/getAds';
+import { useAddAdsWithoutImgMutation, useAddImgsMutation } from '../../Store/RTKQuery/getAds';
 import { useNavigate } from 'react-router-dom';
+import { updateToken } from '../../Api/tokenApi';
+import { uploadImage } from '../../Api/adsApi';
+
+
 
 export const NewProduct = ({}) => {
     const [images, setImages] = useState([]);
     const [saveButtonActive, setSaveButtonActive] = useState(true);
     const [addAdsWithoutImg, {isError, error}] = useAddAdsWithoutImgMutation()
-    const [avatar, setAvatar] = useState(null)
-    const fileUpload = document.getElementById("upload-photo");
+    const [addImgs] = useAddImgsMutation();
     const photo = useSelector(state => state.photo)
-    const dispatch = useDispatch();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('')
-
     const navigate = useNavigate();
-
-
-if(isError) console.log(error);
 
     const handleImgUpload = async (file) => {
         const formData = new FormData();
@@ -50,14 +48,38 @@ if(isError) console.log(error);
         }
       };
 
-      const handlePostNewAdv = () => {
+      const handlePostNewAdv = async () => {
         const access = getAccessTokenLocal()
-        const dataAdv = addAdsWithoutImg({access, title, description, price})
-        console.log(dataAdv);
-        const formData = new FormData();
-      images.forEach((image, index) => {
-        formData.append(`[${index + 1}]`, image);
-      });
+        try{
+            const dataAdv = await addAdsWithoutImg({access, title, description, price}).unwrap()
+            console.log(dataAdv);
+            if(images.length > 0) {
+                const advID = dataAdv.id
+                console.log(advID);
+                images.forEach((image) => {
+                    const formData = new FormData();
+                    formData.append(`file`, image);
+                    console.log(image);
+                    const response = uploadImage({advID, image})
+                    console.log(response);
+                    // addImgs({access, advID, formData})
+                    });
+                
+
+
+            }
+        } catch(error) {
+            if(error.status === 401) {
+                await updateToken();
+                handlePostNewAdv()
+                return
+            }
+        }
+        
+    //     const formData = new FormData();
+    //   images.forEach((image, index) => {
+    //     formData.append(`[${index + 1}]`, image);
+    //   });
     //   formData.append('title', title);
     //   formData.append('description', description);
     //   formData.append('price', price);
@@ -106,12 +128,7 @@ if(isError) console.log(error);
                                             type="file"
                                             accept="image/*"
                                             onChange={(e) => {
-                                                // const file = event.target.files?.[0];
                                                 handleImageChange(e)
-                                                // if (file) {
-                                                // // setImages(file);
-                                                // // handleImgUpload(file);
-                                                // }
                                             }}
                                             ></S.FormNewArtImgCover>
                                     </S.FormNewArtImg>

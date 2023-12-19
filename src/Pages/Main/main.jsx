@@ -13,8 +13,8 @@ import { NewProduct } from '../../Components/NewProductAdd/newProduct';
 export const Main = ({products}) => {
   
   const dispatch = useDispatch();
-  const {data =[], isLoading} = useGetAllAdsQuery();
-  if(!isLoading) {
+  const {data =[], isSuccess} = useGetAllAdsQuery();
+  if(isSuccess) {
     dispatch(saveProducts({data}))
     console.log(data);
   }
@@ -31,7 +31,7 @@ export const Main = ({products}) => {
           <S.MainContainer>
             <S.MainH2>Объявления</S.MainH2>
             <S.MainContent>
-              {products.map((product) => (
+              {data.map((product) => (
                 <Card key={product.id} product={product} />
               ))}
             </S.MainContent>
