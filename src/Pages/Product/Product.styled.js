@@ -170,11 +170,6 @@ export const ProductImageBarDesktop = styled.div`
   }
 `;
 
-export const RenderImg = styled.div`
-height: ${(props) => (props.$isExpanded ? '300px' : '88px')};
-
-`
-
 export const ProductImageBarDiv = styled.img`
   width: 88px;
   height: 88px;
@@ -186,8 +181,8 @@ export const ProductImageBarDiv = styled.img`
     object-fit: cover;
     transition: all 0.7s ease;
     &:hover {
-      width: 200px;
-      height: 200px;
+      width: 95px;
+      height: 95px;
       z-index: 1;
     }
 `;

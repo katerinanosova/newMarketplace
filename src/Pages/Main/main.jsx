@@ -14,6 +14,7 @@ export const Main = ({ products }) => {
   // заглушка на залогиненного юзера
   const userLoggedIn = true;
 
+
   const dispatch = useDispatch();
   const { data = [], isSuccess } = useGetAllAdsQuery();
   if (isSuccess) {
@@ -36,8 +37,8 @@ export const Main = ({ products }) => {
     } else {
       setError(null);
     }
-  }, [data, searchAdv]);
-
+  }, [isSuccess, searchAdv]);
+  
   return (
     <S.Wrapper>
       <S.Container>
@@ -64,3 +65,4 @@ export const Main = ({ products }) => {
     </S.Wrapper>
   );
 };
+
