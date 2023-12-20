@@ -22,19 +22,27 @@ export const Main = ({ products }) => {
     console.log(data);
   }
 
+  const [searchAdv, setSearchAdv] = useState('');
+  const [filteredData, setFilteredData] = useState([]);
+  const [error, setError] = useState(null);
 
-  const userLoggedIn = window.localStorage.getItem('access');
+  useEffect(() => {
+    const filtered = data.filter((product) =>
+      product.title.toLowerCase().includes(searchAdv.toLowerCase()),
+    );
+    setFilteredData(filtered);
+
     if (filtered.length === 0) {
       setError('Объявление с указанным заголовком не найдено');
     } else {
       setError(null);
     }
-  }, [data, searchAdv]);
+  }, [isSuccess, searchAdv]);
+  
   return (
     <S.Wrapper>
       <S.Container>
-
-      {(userLoggedIn && (userLoggedIn !== 'undefined')) ? <HeaderSecond /> : <Header />}
+        {userLoggedIn ? <HeaderSecond /> : <Header />}
         <S.Main>
           <Search setSearchAdv={setSearchAdv} />
           <S.MainContainer>
@@ -50,6 +58,8 @@ export const Main = ({ products }) => {
             )}
           </S.MainContainer>
         </S.Main>
+        {/* {newProductModal ? 
+             <NewProduct setNewProductModal={setNewProductModal} /> : null} */}
         <Footer />
       </S.Container>
     </S.Wrapper>
