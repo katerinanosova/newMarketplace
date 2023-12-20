@@ -220,9 +220,11 @@ export const Product = ({}) => {
                       alt={dataUsers[userId].name}
                     />
                     <St.ProductAuthorContent>
-                      <Link to='/seller-profile'>
+                      <Link to={`/seller-profile/${dataUsers[userId].id}`}>
                         <St.ProductAuthorName>
-                          {dataUsers[userId].name}
+                          {dataUsers[userId].name
+                          ? dataUsers[userId].name
+                          : 'Продавец решил остаться безымянным'}
                         </St.ProductAuthorName>
                       </Link>
                       <St.ProductAuthorAbout>
