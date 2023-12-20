@@ -4,7 +4,7 @@ export const ProtectedRoute = ({ redirectPath = "/reg" }) => {
 
     const access = window.localStorage.getItem('access');
 
-    if (!access) {
+    if (!access || access === undefined) {
         return <Navigate to={redirectPath} replace />;
     }
 

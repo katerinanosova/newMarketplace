@@ -24,7 +24,7 @@ export const Main = ({products}) => {
   return (
     <S.Wrapper>
       <S.Container>
-      {userLoggedIn ? <HeaderSecond /> : <Header />}
+      {(userLoggedIn && (userLoggedIn !== 'undefined')) ? <HeaderSecond /> : <Header />}
         <S.Main>
           <Search />
           <S.MainContainer>
