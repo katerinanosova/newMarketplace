@@ -5,41 +5,33 @@ import { useState } from 'react';
 import { getAccessTokenLocal } from '../../helpers/token';
 import { useDispatch, useSelector } from 'react-redux';
 import { savePhoto } from '../../Store/Slices/photoSlice';
-import { useAddAdsWithoutImgMutation, useAddImgsMutation } from '../../Store/RTKQuery/getAds';
 import { useNavigate } from 'react-router-dom';
 import { updateToken } from '../../Api/tokenApi';
 import { uploadImage } from '../../Api/adsApi';
+import { useAddAdsWithoutImgMutation, useAddImgsMutation } from '../../Store/RTKQuery/getMyAds';
 
 
 
 export const NewProduct = ({}) => {
     const [images, setImages] = useState([]);
     const [saveButtonActive, setSaveButtonActive] = useState(true);
-    const [addAdsWithoutImg, {isError, error}] = useAddAdsWithoutImgMutation()
+    const [addAdsWithoutImg, {isSuccess: isSuccess2, isError, error}] = useAddAdsWithoutImgMutation();
     const [addImgs] = useAddImgsMutation();
     const photo = useSelector(state => state.photo)
+    const [imgShow, setImgShow] = useState([])
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('')
     const navigate = useNavigate();
-
-    const handleImgUpload = async (file) => {
-        const formData = new FormData();
-        if (file) {
-          formData.append("file", file);
-          postAdsImage({
-            access: getAccessTokenLocal(),
-            image: formData,
-          });
-          setSaveButtonActive(true);
-          setImages(images);
-        } else {
-          console.log("Файл не найден");
-        }
-      };
-
       const handleImageChange = (e) => {
         const file = e.target.files[0];
+        // if (file) {
+        //   const reader = new FileReader();
+        //   reader.onload = () => {
+        //     setSelectedImage(reader.result);
+        //   };
+        //   reader.readAsDataURL(file);
+        // }
         console.log(file);
         if (images.length < 5) {
           setImages([...images, file]);
@@ -53,20 +45,15 @@ export const NewProduct = ({}) => {
         const access = getAccessTokenLocal()
         try{
             const dataAdv = await addAdsWithoutImg({access, title, description, price}).unwrap()
-            console.log(dataAdv);
             if(images.length > 0) {
                 const advID = dataAdv.id
                 images.forEach((image) => {
-                    const formData = new FormData();
-                    formData.append('file', image);
-                    console.log(formData);
-                    const response = uploadImage({advID, formData})
-                    console.log(response);
+                    const formDataFile = new FormData();
+                    formDataFile.append('file', image);
+                    addImgs({access, advID, formDataFile})
+                    // const response = uploadImage({advID, formData})
                     // addImgs({access, advID, formData})
                     });
-                
-
-
             }
         } catch(error) {
             if(error.status === 401) {
@@ -75,26 +62,12 @@ export const NewProduct = ({}) => {
                 return
             }
         }
-        
-    //     const formData = new FormData();
-    //   images.forEach((image, index) => {
-    //     formData.append(`[${index + 1}]`, image);
-    //   });
-    //   formData.append('title', title);
-    //   formData.append('description', description);
-    //   formData.append('price', price);
-      
-
       }
-    //   const handleAvatarClick = () => {
-    //     // fileUpload.click();
-    //     setAvatar(event.target.value);
-    //   };
 
       const closeModal = () => {
         navigate(-1);
       }
-      
+
     return (
         <S.Wrapper>
             <HeaderSecond  />
