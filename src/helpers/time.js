@@ -14,3 +14,17 @@ export const getTime = (adsDate) => {
     }
     
 }
+
+export function formatDate(dateString) {
+    const months = [
+      'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+      'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
+    ];
+  
+    const date = new Date(dateString);
+    const monthIndex = date.getMonth();
+    const year = date.getFullYear();
+  
+    return `${months[monthIndex]} ${year} года`;
+  }
+

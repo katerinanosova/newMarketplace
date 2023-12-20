@@ -15,5 +15,4 @@ export const advId = createApi({
         }),
     })
 })
-
 export const {useGetAdvIDQuery} = advId
