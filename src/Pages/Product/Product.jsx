@@ -20,6 +20,7 @@ export const Product = ({}) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
+  const [show2, setShow2] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [timeResult, setTimeResult] = useState('00.00.00');
@@ -43,10 +44,15 @@ export const Product = ({}) => {
       setTimeResult(result);
       setUserId(Number(data.user.id - 1));
       console.log(data);
-      setShow(true)
+
     }
     },[isSuccess]);
 
+    useEffect(() => {
+       if(isSuccess && show2 ) {
+        setShow(true)
+      }
+      },[isSuccess, show2]);
 
     useEffect(() => {
       // const id = data.user.id
@@ -54,6 +60,7 @@ export const Product = ({}) => {
        if(isError && error.status == 401 ) {
         asyncUpgate()
       }
+      setShow2(true)
       },[isSuccess]);
 
 
@@ -63,36 +70,20 @@ export const Product = ({}) => {
     return;
   };
 
-  // 
-  // const [addNewProductModal, setAddNewProductModal] = useState(false);
-  
-  // const openModal = () => {
-  //   setAddNewProductModal(true);
-  // };
 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const fetchedDataUser = await getSeller();
+        console.log(fetchedDataUser);
         setDataUsers(fetchedDataUser);
       } catch (error) {
         console.error('Ушел на базу:', error);
       }
     };
-
     fetchData(); // Вызываем функцию fetchData при монтировании компонента
   }, []);
-
-  console.log(dataUsers);
-
-  //
-  // const [addNewProductModal, setAddNewProductModal] = useState(false);
-
-  // const openModal = () => {
-  //   setAddNewProductModal(true);
-  // };
-
   const [openReviews, setOpenReviews] = useState(false);
   const openReviewsModal = () => {
     setOpenReviews(true);
