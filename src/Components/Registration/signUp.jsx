@@ -122,3 +122,4 @@ export const SignUp = ({ setChoiceReg }) => {
     </S.Wrapper>
   );
 };
+
