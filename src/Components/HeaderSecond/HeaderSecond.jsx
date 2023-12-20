@@ -30,7 +30,6 @@ export const HeaderSecond = ({setNewProductModal}) => {
     navigate('/profile');
   };
 
-
   return (
     <S.Header>
       <S.HeaderNav>
@@ -42,7 +41,7 @@ export const HeaderSecond = ({setNewProductModal}) => {
         <S.HeaderBtnPutAd onClick={handleOpenModal}>
             Разместить объявление
         </S.HeaderBtnPutAd>
-        <S.HeaderButtonSecond onClick={() => {navigate('/profile')}}>Личный кабинет</S.HeaderButtonSecond>
+        <S.HeaderButtonSecond>Личный кабинет</S.HeaderButtonSecond>
       </S.HeaderNav>
       {isModalOpen && <NewProduct closeModal={handleCloseModal} />}
     </S.Header>
