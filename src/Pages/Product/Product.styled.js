@@ -322,6 +322,7 @@ export const ProductButton = styled.div`
   line-height: 22px;
   color: #ffffff;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   font-family: 'Roboto', sans-serif;
