@@ -23,3 +23,4 @@ export const uploadImage = async ({advID, formData}) => {
   };
   // 'content-type': 'multipart/form-data',
   // 'content-type': 'application/json',
+

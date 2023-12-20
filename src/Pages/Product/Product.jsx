@@ -11,24 +11,37 @@ import { NewProduct } from '../../Components/NewProductAdd/newProduct';
 import { Review } from '../../Components/reviews/review';
 import { EditorAdv } from '../../Components/EditorAdv/editor';
 import { useGetAdvIDQuery } from '../../Store/RTKQuery/getAdvId';
-import { getTime } from '../../helpers/time';
+import { getTime, formatDate } from '../../helpers/time';
 import { useGetCommentsQuery } from '../../Store/RTKQuery/getComments';
 import { updateToken } from '../../Api/tokenApi';
 import { getSeller } from '../../Api/sellerApi';
 
-export const Product = ({ }) => {
+export const Product = ({}) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [timeResult, setTimeResult] = useState('00.00.00');
+  const [userId, setUserId] = useState(null);
+  const [dataUsers, setDataUsers] = useState([]);
+  const [showFullPhone, setShowFullPhone] = useState(false);
+  console.log(userId);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const {data: dataComments=[]} = useGetCommentsQuery(id)
-  const {data =[], isError, error, isSuccess, refetch} = useGetAdvIDQuery(id);
-  let timeResult = '00.00.00'
+  const { data: dataComments = [] } = useGetCommentsQuery(id);
+  const {
+    data = [],
+    isError,
+    error,
+    isSuccess,
+    refetch,
+  } = useGetAdvIDQuery(id);
+
   useEffect(() => {
     if (isSuccess) {
-      timeResult = getTime(data.created_on)
+      const result = getTime(data.created_on);
+      setTimeResult(result);
+      setUserId(Number(data.user.id - 1));
       console.log(data);
       setShow(true)
     }
@@ -45,6 +58,14 @@ export const Product = ({ }) => {
       await refetch()
       return
     }
+  }, [isSuccess]);
+
+  const asyncUpgate = async () => {
+    await updateToken();
+    await refetch();
+    return;
+  };
+
   // 
   // const [addNewProductModal, setAddNewProductModal] = useState(false);
   
@@ -53,11 +74,32 @@ export const Product = ({ }) => {
   // };
 
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fetchedDataUser = await getSeller();
+        setDataUsers(fetchedDataUser);
+      } catch (error) {
+        console.error('Ушел на базу:', error);
+      }
+    };
+
+    fetchData(); // Вызываем функцию fetchData при монтировании компонента
+  }, []);
+
+  console.log(dataUsers);
+
+  //
+  // const [addNewProductModal, setAddNewProductModal] = useState(false);
+
+  // const openModal = () => {
+  //   setAddNewProductModal(true);
+  // };
+
   const [openReviews, setOpenReviews] = useState(false);
   const openReviewsModal = () => {
     setOpenReviews(true);
   };
-
 
   useEffect(() => {
     const handleResize = () => {
@@ -78,108 +120,142 @@ export const Product = ({ }) => {
     }
   };
 
-
   const [showAdvEdit, setShowAdvEdit] = useState(false);
   const openAdvEditor = () => {
     setShowAdvEdit(true);
-  }
+  };
   const handleCloseAllModals = () => {
     setOpenReviews(false);
     setShowAdvEdit(false);
   };
 
+
   const userLoggedIn = Boolean(data.user_id === window.localStorage.getItem('id'));
+  const handleImageClick = () => {
+    setIsImageExpanded(!isImageExpanded);
+  };
 
-
-  return (
-    show ?     <S.Wrapper>
-    <S.Container>
-      <HeaderSecond />
-      <main>
-        <St.ProductContainer>
-          <ReturnToMain />
-        </St.ProductContainer>
-        <St.ProductArticle>
-          <St.ProductArticleContent>
-            <St.ProductArticleLeft>
-              <St.ProductArticleFillImg>
-                <St.ProductArticleImage src={data.images.length > 0 ? `http://localhost:8090/${data.images[0].url}` : '/img/noFoto.jpeg'} alt='' />
-                <St.ProductImageBarDesktop>
-                {data.images.map((image) => (
-                 <St.ProductImageBarDiv key={image.id} src={`http://localhost:8090/${image.url}`} alt='img' />
-              ))}
-                </St.ProductImageBarDesktop>
-                <St.ProductImageBarMobile>
-                  <St.ProductImageBarMobileCircle />
-                  <St.ProductImageBarMobileCircle />
-                  <St.ProductImageBarMobileCircle />
-                  <St.ProductImageBarMobileCircle />
-                  <St.ProductImageBarMobileCircle />
-                </St.ProductImageBarMobile>
-              </St.ProductArticleFillImg>
-            </St.ProductArticleLeft>
-            <St.ProductArticleRight>
-              <St.ProductArticleRightBlock>
-                <St.ProductTitle>
-                  {data.title}
-                </St.ProductTitle>
-                <St.ProductInfo>
-                  <St.ProductDate>{timeResult}</St.ProductDate>
-                  <St.ProductCity>{Boolean(data.user.city) ? data.user.city : "что нам город? Перед нами весь мир...не указан короче"}</St.ProductCity>
-                  <St.ProductReviews onClick={openReviewsModal}>
-                    {dataComments.length === 0 ? `еще нет отзывов, но вы можете сделать первый` : `${dataComments.length} отзыва`}
-                  </St.ProductReviews>
-                </St.ProductInfo>
-                <St.ProductPrice>{data.price}</St.ProductPrice>
-                {userLoggedIn ? (
-                  <St.ProductButtonBox>
-                    <St.ProductButton onClick={openAdvEditor}>Редактировать</St.ProductButton>
-                    <St.ProductButton>Снять с публикации</St.ProductButton>
-                  </St.ProductButtonBox>
-                ) : (
-                  <St.ProductButton>
-                    Показать&nbsp;телефон&nbsp;
-                    <St.ProductButtonSpan>
-                      8&nbsp;905&nbsp;ХХХ&nbsp;ХХ&nbsp;ХХ
-                    </St.ProductButtonSpan>
-                  </St.ProductButton>
-                )}
-                <St.ProductAuthor>
-                  <St.ProductAuthorImage src='' alt='' />
-                  <St.ProductAuthorContent>
-                    <Link to='/seller-profile'>
-                      <St.ProductAuthorName>Кирилл</St.ProductAuthorName>
-                    </Link>
-                    <St.ProductAuthorAbout>
-                      Продает товары с августа 2021
-                    </St.ProductAuthorAbout>
-                  </St.ProductAuthorContent>
-                </St.ProductAuthor>
-              </St.ProductArticleRightBlock>
-            </St.ProductArticleRight>
-          </St.ProductArticleContent>
-        </St.ProductArticle>
-        <St.ProductDescription>
-          <St.ProductDescriptionTitle>
-            Описание товара
-          </St.ProductDescriptionTitle>
-          <St.ProductDescriptionContent>
-            <St.ProductDescriptionText>
-                  {data.description ? data.description : 'Продавец не описал товар'}
-            </St.ProductDescriptionText>
-          </St.ProductDescriptionContent>
-        </St.ProductDescription>
-        {/* {isModalOpen && <EditorAdv closeModal={handleCloseModal} />}
+  return show ? (
+    <S.Wrapper>
+      <S.Container>
+        {userLoggedIn ? <HeaderSecond /> : <Header />}
+        <S.Main>
+          <St.ProductContainer>
+            <ReturnToMain />
+          </St.ProductContainer>
+          <St.ProductArticle>
+            <St.ProductArticleContent>
+              <St.ProductArticleLeft>
+                <St.ProductArticleFillImg>
+                  <St.ProductArticleImage
+                    src={
+                      data.images.length > 0
+                        ? `http://localhost:8090/${data.images[0].url}`
+                        : '/img/noFoto.jpeg'
+                    }
+                    alt='Фото товара'
+                  />
+                  <St.ProductImageBarDesktop>
+                    {data.images.map((image) => (
+                      <St.ProductImageBarDiv
+                        key={image.id}
+                        src={`http://localhost:8090/${image.url}`}
+                        alt='Фото товара'
+                        onClick={handleImageClick}
+                      />
+                    ))}
+                  </St.ProductImageBarDesktop>
+                  <St.ProductImageBarMobile>
+                    <St.ProductImageBarMobileCircle />
+                    <St.ProductImageBarMobileCircle />
+                    <St.ProductImageBarMobileCircle />
+                    <St.ProductImageBarMobileCircle />
+                    <St.ProductImageBarMobileCircle />
+                  </St.ProductImageBarMobile>
+                </St.ProductArticleFillImg>
+              </St.ProductArticleLeft>
+              <St.ProductArticleRight>
+                <St.ProductArticleRightBlock>
+                  <St.ProductTitle>{data.title}</St.ProductTitle>
+                  <St.ProductInfo>
+                    <St.ProductDate>{timeResult}</St.ProductDate>
+                    <St.ProductCity>
+                      {Boolean(data.user.city)
+                        ? data.user.city
+                        : 'что нам город? Перед нами весь мир...не указан короче'}
+                    </St.ProductCity>
+                    <St.ProductReviews onClick={openReviewsModal}>
+                      {dataComments.length === 0
+                        ? `еще нет отзывов, но вы можете сделать первый`
+                        : `Отзывов: ${dataComments.length}`}
+                    </St.ProductReviews>
+                  </St.ProductInfo>
+                  <St.ProductPrice>{data.price} руб.</St.ProductPrice>
+                  {userLoggedIn ? (
+                    <St.ProductButtonBox>
+                      <St.ProductButton onClick={openAdvEditor}>
+                        Редактировать
+                      </St.ProductButton>
+                      <St.ProductButton>Снять с публикации</St.ProductButton>
+                    </St.ProductButtonBox>
+                  ) : (
+                    <St.ProductButton
+                      onClick={() => setShowFullPhone(!showFullPhone)}
+                      onMouseLeave={() => setShowFullPhone(false)}
+                    >
+                      Показать&nbsp;телефон&nbsp;
+                      <St.ProductButtonSpan>
+                        {dataUsers[userId].phone
+                          ? showFullPhone
+                            ? dataUsers[userId].phone
+                            : dataUsers[userId].phone.substring(0, 6) +
+                              'XXX XX XX'
+                          : 'номер не указан'}
+                      </St.ProductButtonSpan>
+                    </St.ProductButton>
+                  )}
+                  <St.ProductAuthor>
+                    <St.ProductAuthorImage
+                      src={`http://localhost:8090/${dataUsers[userId].avatar}`}
+                      alt={dataUsers[userId].name}
+                    />
+                    <St.ProductAuthorContent>
+                      <Link to='/seller-profile'>
+                        <St.ProductAuthorName>
+                          {dataUsers[userId].name}
+                        </St.ProductAuthorName>
+                      </Link>
+                      <St.ProductAuthorAbout>
+                        Продает товары с {formatDate(dataUsers[userId].sells_from)}
+                      </St.ProductAuthorAbout>
+                    </St.ProductAuthorContent>
+                  </St.ProductAuthor>
+                </St.ProductArticleRightBlock>
+              </St.ProductArticleRight>
+            </St.ProductArticleContent>
+          </St.ProductArticle>
+          <St.ProductDescription>
+            <St.ProductDescriptionTitle>
+              Описание товара
+            </St.ProductDescriptionTitle>
+            <St.ProductDescriptionContent>
+              <St.ProductDescriptionText>
+                {data.description
+                  ? data.description
+                  : 'Продавец не описал товар'}
+              </St.ProductDescriptionText>
+            </St.ProductDescriptionContent>
+          </St.ProductDescription>
+          {/* {isModalOpen && <EditorAdv closeModal={handleCloseModal} />}
         {isReviewModalOpen && <Review closeModal={handleCloseModal} />} */}
-        {openReviews ? 
-           <Review closeModal={handleCloseAllModals} /> : null}
-        {/* {newProductModal ? 
+          {openReviews ? <Review closeModal={handleCloseAllModals} /> : null}
+          {/* {newProductModal ? 
            <NewProduct setNewProductModal={setNewProductModal} /> : null} */}
-        {showAdvEdit ? 
-           <EditorAdv closeModal={handleCloseAllModals} /> : null}
-      </main>
-      <Footer />
-    </S.Container>
-  </S.Wrapper> : null
-  );
+          {showAdvEdit ? <EditorAdv closeModal={handleCloseAllModals} /> : null}
+        </S.Main>
+        <Footer />
+      </S.Container>
+    </S.Wrapper>
+  ) : null;
+
 };

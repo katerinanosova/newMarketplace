@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+export const Main = styled.main``;
+
 export const ProductContainer = styled.div`
   max-width: 1178px;
   margin: 0 auto;
@@ -104,7 +106,6 @@ export const ProductArticleFillImg = styled.div`
     @media screen and (max-width: 1000px) {
         max-width: 100%;
         width: 100%;
-        overflow: hidden;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -160,23 +161,35 @@ export const ProductImageBarDesktop = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: left;
-  overflow: hidden;
   margin-left: -5px;
-
+  position: relative;
+  height: 100px; 
+  display: flex;
   @media screen and (max-width: 1000px) {
     display: none;
   }
 `;
 
+export const RenderImg = styled.div`
+height: ${(props) => (props.$isExpanded ? '300px' : '88px')};
+
+`
+
 export const ProductImageBarDiv = styled.img`
   width: 88px;
-  min-width: 88px;
   height: 88px;
-  background-color: #f0f0f0;
-  border: 2px solid #f0f0f0;
-  margin: 0 5px;
-  display: block;
-  object-fit: cover;
+  min-width: 88px;
+    background-color: #f0f0f0;
+    border: 2px solid #f0f0f0;
+    margin: 0 5px;
+    display: block;
+    object-fit: cover;
+    transition: all 0.7s ease;
+    &:hover {
+      width: 200px;
+      height: 200px;
+      z-index: 1;
+    }
 `;
 
 export const ProductImageBarMobile = styled.div`
@@ -324,6 +337,7 @@ export const ProductButton = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   font-family: 'Roboto', sans-serif;
   a {
