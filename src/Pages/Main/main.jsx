@@ -29,7 +29,7 @@ export const Main = ({ products }) => {
     } else {
       setError(null);
     }
-  }, [isSuccess, searchAdv]);
+  }, [data, searchAdv]);
   return (
     <S.Wrapper>
       <S.Container>
@@ -55,4 +55,3 @@ export const Main = ({ products }) => {
     </S.Wrapper>
   );
 };
-
