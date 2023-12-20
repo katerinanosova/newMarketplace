@@ -40,7 +40,7 @@ export const ModalBtnSignupEnt = styled.div`
   background-color: #009ee4;
   border-radius: 6px;
   border: none;
-  margin-top: 30px;
+  margin-bottom: 15px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
