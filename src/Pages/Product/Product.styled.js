@@ -330,6 +330,7 @@ export const ProductButton = styled.div`
   line-height: 22px;
   color: #ffffff;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   flex-direction: column;
   align-items: center;

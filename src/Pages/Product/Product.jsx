@@ -58,6 +58,14 @@ export const Product = ({}) => {
     return;
   };
 
+  // 
+  // const [addNewProductModal, setAddNewProductModal] = useState(false);
+  
+  // const openModal = () => {
+  //   setAddNewProductModal(true);
+  // };
+
+
   useEffect(() => {
     if (isSuccess && showCheck) {
       setShow(true);
@@ -115,9 +123,6 @@ export const Product = ({}) => {
       setIsReviewModalOpen(true);
     }
   };
-
-  // заглушка на залогиненного юзера
-  const userLoggedIn = false;
 
   const [showAdvEdit, setShowAdvEdit] = useState(false);
   const openAdvEditor = () => {
@@ -249,4 +254,5 @@ export const Product = ({}) => {
       </S.Container>
     </S.Wrapper>
   ) : null;
+
 };

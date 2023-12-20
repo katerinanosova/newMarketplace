@@ -1,4 +1,3 @@
-
 import { createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 const DATA_TAG = { type: "Commets", id: "LIST" };
 export const comments = createApi({
@@ -20,5 +19,4 @@ export const comments = createApi({
         }),
     })
 })
-
 export const {useGetCommentsQuery} = comments
