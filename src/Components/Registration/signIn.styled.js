@@ -164,6 +164,7 @@ export const ModalBtnEnter = styled.button`
     border: none;
   }
 `;
+
 export const ModalBtnEnterLink = styled(Link)`
   width: 100%;
   height: 100%;

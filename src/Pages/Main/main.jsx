@@ -37,7 +37,8 @@ export const Main = ({ products }) => {
     } else {
       setError(null);
     }
-  }, [data, searchAdv]);
+  }, [isSuccess, searchAdv]);
+  
   return (
     <S.Wrapper>
       <S.Container>
