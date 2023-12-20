@@ -20,12 +20,15 @@ export const Product = ({}) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
+  const [showCheck, setShowCheck] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [timeResult, setTimeResult] = useState('00.00.00');
   const [userId, setUserId] = useState(null);
   const [dataUsers, setDataUsers] = useState([]);
   const [showFullPhone, setShowFullPhone] = useState(false);
+  const [selectedImage, setSelectedImage] = useState('/img/noFoto.jpeg');
+
   console.log(userId);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const { data: dataComments = [] } = useGetCommentsQuery(id);
@@ -42,21 +45,10 @@ export const Product = ({}) => {
       const result = getTime(data.created_on);
       setTimeResult(result);
       setUserId(Number(data.user.id - 1));
+      if (data.images && data.images.length > 0) {
+        setSelectedImage(`http://localhost:8090/${data.images[0].url}`);
+      }
       console.log(data);
-      setShow(true)
-    }
-    },[isSuccess]);
-    useEffect(() => {
-      // const id = data.user.id
-       getSeller()
-      },[isSuccess]);
-    if(isError && error.status == 401 ) {
-      asyncUpgate()
-    }
-    const asyncUpgate = async () => {
-      await updateToken()
-      await refetch()
-      return
     }
   }, [isSuccess]);
 
@@ -75,17 +67,29 @@ export const Product = ({}) => {
 
 
   useEffect(() => {
+    if (isSuccess && showCheck) {
+      setShow(true);
+    }
+  }, [isSuccess, showCheck]);
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const fetchedDataUser = await getSeller();
         setDataUsers(fetchedDataUser);
       } catch (error) {
         console.error('Ушел на базу:', error);
+      } finally {
+        setShowCheck(true);
       }
     };
 
-    fetchData(); // Вызываем функцию fetchData при монтировании компонента
+    fetchData();
   }, []);
+
+  const handleImageClick = (imageSrc) => {
+    setSelectedImage(imageSrc);
+  };
 
   console.log(dataUsers);
 
@@ -129,12 +133,6 @@ export const Product = ({}) => {
     setShowAdvEdit(false);
   };
 
-
-  const userLoggedIn = Boolean(data.user_id === window.localStorage.getItem('id'));
-  const handleImageClick = () => {
-    setIsImageExpanded(!isImageExpanded);
-  };
-
   return show ? (
     <S.Wrapper>
       <S.Container>
@@ -148,11 +146,7 @@ export const Product = ({}) => {
               <St.ProductArticleLeft>
                 <St.ProductArticleFillImg>
                   <St.ProductArticleImage
-                    src={
-                      data.images.length > 0
-                        ? `http://localhost:8090/${data.images[0].url}`
-                        : '/img/noFoto.jpeg'
-                    }
+                    src={selectedImage}
                     alt='Фото товара'
                   />
                   <St.ProductImageBarDesktop>
@@ -161,7 +155,9 @@ export const Product = ({}) => {
                         key={image.id}
                         src={`http://localhost:8090/${image.url}`}
                         alt='Фото товара'
-                        onClick={handleImageClick}
+                        onClick={() =>
+                          handleImageClick(`http://localhost:8090/${image.url}`)
+                        }
                       />
                     ))}
                   </St.ProductImageBarDesktop>
@@ -226,7 +222,8 @@ export const Product = ({}) => {
                         </St.ProductAuthorName>
                       </Link>
                       <St.ProductAuthorAbout>
-                        Продает товары с {formatDate(dataUsers[userId].sells_from)}
+                        Продает товары с{' '}
+                        {formatDate(dataUsers[userId].sells_from)}
                       </St.ProductAuthorAbout>
                     </St.ProductAuthorContent>
                   </St.ProductAuthor>
