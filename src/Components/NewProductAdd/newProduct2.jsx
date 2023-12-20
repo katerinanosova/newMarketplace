@@ -13,41 +13,29 @@ import { useAddAdsWithoutImgMutation, useAddImgsMutation } from '../../Store/RTK
 
 
 export const NewProduct = ({}) => {
-    const [images, setImages] = useState([null, null, null, null, null]);
-    const [imgShow, setImgShow] = useState([null, null, null, null, null]);
-
+    const [images, setImages] = useState([]);
     const [saveButtonActive, setSaveButtonActive] = useState(true);
     const [addAdsWithoutImg, {isSuccess: isSuccess2, isError, error}] = useAddAdsWithoutImgMutation();
     const [addImgs] = useAddImgsMutation();
     const photo = useSelector(state => state.photo)
+    const [imgShow, setImgShow] = useState([])
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('')
     const navigate = useNavigate();
-      const handleImageChange = (e, i) => {
+      const handleImageChange = (e) => {
         const file = e.target.files[0];
-
-        if (file) {
-          const reader = new FileReader();
-
-          reader.onload = () => {
-            setImgShow(prevState => {
-              const newState = [...prevState]
-              newState[i] = reader.result;
-
-              return newState;
-            });
-          };
-
-          reader.readAsDataURL(file);
-        }
-
-        if (images.length <= 5) {
-          setImages(prevState => {
-            const newState = [...prevState]
-            newState[i] = file;
-            return newState;
-          });
+        // if (file) {
+        //   const reader = new FileReader();
+        //   reader.onload = () => {
+        //     setSelectedImage(reader.result);
+        //   };
+        //   reader.readAsDataURL(file);
+        // }
+        console.log(file);
+        if (images.length < 5) {
+          setImages([...images, file]);
+          console.log(images);
         } else {
           alert('Можно загрузить не более пяти изображений.');
         }
@@ -106,19 +94,61 @@ export const NewProduct = ({}) => {
                             <S.FormNewArtBlock>
                                 <S.FormNewArtP>Фотографии товара<S.Span>не более 5 фотографий</S.Span></S.FormNewArtP>
                                 <S.FormNewArtBarImg>
-                                  {
-                                    imgShow.map((el, i) => el ? <img src={el} alt="image" key={`image-${i}`} /> : <S.FormNewArtImg key={`image-${i}`}>
-                                      <S.Img src={photo} alt=""/>
-                                      <S.FormNewArtImgCover
-                                        id="upload-photo"
-                                        type="file"
-                                        accept="image/*"
-                                        onChange={(e) => {
-                                          handleImageChange(e, i);
-                                        }}
-                                      ></S.FormNewArtImgCover>
-                                    </S.FormNewArtImg>)
-                                  }
+                                    <S.FormNewArtImg>
+                                        <S.Img src={photo} alt=""/>
+                                        <S.FormNewArtImgCover
+                                            id="upload-photo"
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={(e) => {
+                                                handleImageChange(e)
+                                            }}
+                                            ></S.FormNewArtImgCover>
+                                    </S.FormNewArtImg>
+                                    <S.FormNewArtImg>
+                                        <S.Img src="" alt=""/>
+                                        <S.FormNewArtImgCover
+                                            id="upload-photo"
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={(e) => {
+                                                handleImageChange(e)
+                                            }}
+                                            ></S.FormNewArtImgCover>
+                                    </S.FormNewArtImg>
+                                    <S.FormNewArtImg>
+                                        <S.Img src="" alt=""/>
+                                        <S.FormNewArtImgCover
+                                            id="upload-photo"
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={(e) => {
+                                                handleImageChange(e)
+                                            }}
+                                            ></S.FormNewArtImgCover>
+                                    </S.FormNewArtImg>
+                                    <S.FormNewArtImg>
+                                        <S.Img src="" alt=""/>
+                                        <S.FormNewArtImgCover
+                                            id="upload-photo"
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={(e) => {
+                                                handleImageChange(e)
+                                            }}
+                                            ></S.FormNewArtImgCover>
+                                    </S.FormNewArtImg>
+                                    <S.FormNewArtImg>
+                                        <S.Img src="" alt=""/>
+                                        <S.FormNewArtImgCover
+                                            id="upload-photo"
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={(e) => {
+                                                handleImageChange(e)
+                                            }}
+                                            ></S.FormNewArtImgCover>
+                                    </S.FormNewArtImg>
                                 </S.FormNewArtBarImg>
                             </S.FormNewArtBlock>
                             <S.FormNewArtBlockBlockPrice>
