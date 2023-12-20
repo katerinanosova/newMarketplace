@@ -53,6 +53,14 @@ export const Product = ({}) => {
     return;
   };
 
+  // 
+  // const [addNewProductModal, setAddNewProductModal] = useState(false);
+  
+  // const openModal = () => {
+  //   setAddNewProductModal(true);
+  // };
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -237,4 +245,5 @@ export const Product = ({}) => {
       </S.Container>
     </S.Wrapper>
   ) : null;
+
 };

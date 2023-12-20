@@ -27,3 +27,4 @@ export function formatDate(dateString) {
   
     return `${months[monthIndex]} ${year} года`;
   }
+

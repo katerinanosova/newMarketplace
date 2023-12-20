@@ -22,3 +22,4 @@ export const uploadImage = async ({advID, image}) => {
       throw new Error("Неизвестная ошибка, попробуйте позже");
     });
   };
+
