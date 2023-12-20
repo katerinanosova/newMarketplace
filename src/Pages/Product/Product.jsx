@@ -89,7 +89,6 @@ export const Product = ({ }) => {
   };
 
   const userLoggedIn = Boolean(data.user_id === window.localStorage.getItem('id'));
-  console.log(userLoggedIn);
 
 
   return (
