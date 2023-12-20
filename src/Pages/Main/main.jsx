@@ -10,7 +10,7 @@ import { saveProducts } from '../../Store/Slices/dataProductsSlice';
 import { HeaderSecond } from '../../Components/HeaderSecond/HeaderSecond';
 import { NewProduct } from '../../Components/NewProductAdd/newProduct';
 
-export const Main = ({ products }) => {
+export const Main = () => {
   // заглушка на залогиненного юзера
   const userLoggedIn = true;
 
