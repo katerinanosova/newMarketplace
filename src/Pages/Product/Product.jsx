@@ -46,19 +46,16 @@ export const Product = ({}) => {
       setShow(true)
     }
     },[isSuccess]);
+
+
     useEffect(() => {
       // const id = data.user.id
        getSeller()
+       if(isError && error.status == 401 ) {
+        asyncUpgate()
+      }
       },[isSuccess]);
-    if(isError && error.status == 401 ) {
-      asyncUpgate()
-    }
-    const asyncUpgate = async () => {
-      await updateToken()
-      await refetch()
-      return
-    }
-  }, [isSuccess]);
+
 
   const asyncUpgate = async () => {
     await updateToken();
