@@ -43,7 +43,20 @@ export const Product = ({}) => {
       setTimeResult(result);
       setUserId(Number(data.user.id - 1));
       console.log(data);
-      setShow(true);
+      setShow(true)
+    }
+    },[isSuccess]);
+    useEffect(() => {
+      // const id = data.user.id
+       getSeller()
+      },[isSuccess]);
+    if(isError && error.status == 401 ) {
+      asyncUpgate()
+    }
+    const asyncUpgate = async () => {
+      await updateToken()
+      await refetch()
+      return
     }
   }, [isSuccess]);
 
@@ -107,9 +120,6 @@ export const Product = ({}) => {
     }
   };
 
-  // заглушка на залогиненного юзера
-  const userLoggedIn = false;
-
   const [showAdvEdit, setShowAdvEdit] = useState(false);
   const openAdvEditor = () => {
     setShowAdvEdit(true);
@@ -119,6 +129,8 @@ export const Product = ({}) => {
     setShowAdvEdit(false);
   };
 
+
+  const userLoggedIn = Boolean(data.user_id === window.localStorage.getItem('id'));
   const handleImageClick = () => {
     setIsImageExpanded(!isImageExpanded);
   };

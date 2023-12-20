@@ -40,6 +40,7 @@ export const NewProduct = ({}) => {
 
       const handleImageChange = (e) => {
         const file = e.target.files[0];
+        console.log(file);
         if (images.length < 5) {
           setImages([...images, file]);
           console.log(images);
@@ -55,12 +56,11 @@ export const NewProduct = ({}) => {
             console.log(dataAdv);
             if(images.length > 0) {
                 const advID = dataAdv.id
-                console.log(advID);
                 images.forEach((image) => {
                     const formData = new FormData();
-                    formData.append(`file`, image);
-                    console.log(image);
-                    const response = uploadImage({advID, image})
+                    formData.append('file', image);
+                    console.log(formData);
+                    const response = uploadImage({advID, formData})
                     console.log(response);
                     // addImgs({access, advID, formData})
                     });
