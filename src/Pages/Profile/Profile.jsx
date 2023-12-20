@@ -12,7 +12,7 @@ import { uploadUserAvatar } from '../../Api/userApi';
 import { NewProduct } from '../../Components/NewProductAdd/newProduct';
 import { useGetAllMyAdsQuery } from '../../Store/RTKQuery/getMyAds';
 
-export const Profile = ({ products }) => {
+export const Profile = ({}) => {
   const [city, setCity] = useState('')
   const [avatar, setAvatar] = useState(null)
   const [userName, setUserName] = useState('')

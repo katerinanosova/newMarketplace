@@ -39,6 +39,9 @@ export const Product = ({}) => {
     isSuccess,
     refetch,
   } = useGetAdvIDQuery(id);
+  const userLoggedIn = getAccessTokenLocal();
+  // может просматривать незалогиненный
+  const userIsSeller = Boolean(String(data.user_id) === window.localStorage.getItem('id'));
 
   useEffect(() => {
     if (isSuccess) {
@@ -125,8 +128,9 @@ export const Product = ({}) => {
     setShowAdvEdit(false);
   };
 
-  const userLoggedIn = true
-  // Boolean(data.user_id === window.localStorage.getItem('id'));
+
+
+
   const handleImageClick = () => {
     setIsImageExpanded(!isImageExpanded);
   };
@@ -134,7 +138,7 @@ export const Product = ({}) => {
   return show ? (
     <S.Wrapper>
       <S.Container>
-        {userLoggedIn ? <HeaderSecond /> : <Header />}
+      {(userLoggedIn && (userLoggedIn !== 'undefined')) ? <HeaderSecond /> : <Header />}
         <S.Main>
           <St.ProductContainer>
             <ReturnToMain />
@@ -187,7 +191,7 @@ export const Product = ({}) => {
                     </St.ProductReviews>
                   </St.ProductInfo>
                   <St.ProductPrice>{data.price} руб.</St.ProductPrice>
-                  {userLoggedIn ? (
+                  {userIsSeller ? (
                     <St.ProductButtonBox>
                       <St.ProductButton onClick={openAdvEditor}>
                         Редактировать
