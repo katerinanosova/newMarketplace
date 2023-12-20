@@ -79,9 +79,6 @@ export const Product = ({ }) => {
   };
 
 
-  // заглушка на залогиненного юзера
-  const userLoggedIn = false;
-
   const [showAdvEdit, setShowAdvEdit] = useState(false);
   const openAdvEditor = () => {
     setShowAdvEdit(true);
@@ -91,11 +88,14 @@ export const Product = ({ }) => {
     setShowAdvEdit(false);
   };
 
+  const userLoggedIn = Boolean(data.user_id === window.localStorage.getItem('id'));
+  console.log(userLoggedIn);
+
 
   return (
     show ?     <S.Wrapper>
     <S.Container>
-      {userLoggedIn ? <HeaderSecond /> : <Header />}
+      <HeaderSecond />
       <main>
         <St.ProductContainer>
           <ReturnToMain />

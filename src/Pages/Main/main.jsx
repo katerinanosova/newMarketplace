@@ -19,8 +19,7 @@ export const Main = ({products}) => {
     console.log(data);
   }
 
-   // заглушка на залогиненного юзера
-  const userLoggedIn = true;
+  const userLoggedIn = window.localStorage.getItem('access');
 
   return (
     <S.Wrapper>
@@ -37,8 +36,6 @@ export const Main = ({products}) => {
             </S.MainContent>
           </S.MainContainer>
         </S.Main>
-        {/* {newProductModal ? 
-             <NewProduct setNewProductModal={setNewProductModal} /> : null} */}
         <Footer />
       </S.Container>
     </S.Wrapper>
