@@ -1,13 +1,18 @@
 import { useState } from 'react';
-import { handleEmail, handlePassword, handleSignIn, validateFormLog } from '../../helpers/sign';
+import {
+  handleEmail,
+  handlePassword,
+  handleSignIn,
+  validateFormLog,
+} from '../../helpers/sign';
 import * as S from './signIn.styled';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 export const SignIn = ({ setChoiceReg }) => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const navigate = useNavigate()
 
   return (
     <S.Wrapper>
@@ -26,29 +31,15 @@ export const SignIn = ({ setChoiceReg }) => {
             />
             <S.ModalInputPassword
               value={password}
-              onChange={(event) =>
-                handlePassword(setPassword, setError, event)
-              }
+              onChange={(event) => handlePassword(setPassword, setError, event)}
               type='password'
               placeholder='Пароль'
             />
             <S.ModalBtnEnter>
               <S.ModalBtnEnterLink
                 onClick={(event) => {
-                  if (
-                    validateFormLog(
-                      email,
-                      password,
-                      setError,
-                      event
-                    )
-                  ) {
-                    handleSignIn(
-                      email,
-                      password,
-                      setError,
-                      navigate
-                    );
+                  if (validateFormLog(email, password, setError, event)) {
+                    handleSignIn(email, password, setError, dispatch);
                   }
                 }}
               >

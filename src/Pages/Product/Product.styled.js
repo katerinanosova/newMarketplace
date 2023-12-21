@@ -170,6 +170,11 @@ export const ProductImageBarDesktop = styled.div`
   }
 `;
 
+export const RenderImg = styled.div`
+height: ${(props) => (props.$isExpanded ? '300px' : '88px')};
+
+`
+
 export const ProductImageBarDiv = styled.img`
   width: 88px;
   height: 88px;
@@ -330,6 +335,7 @@ export const ProductButton = styled.div`
   line-height: 22px;
   color: #ffffff;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   flex-direction: column;
   align-items: center;

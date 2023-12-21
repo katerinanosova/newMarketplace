@@ -164,9 +164,10 @@ export const ModalBtnEnter = styled.button`
     border: none;
   }
 `;
+
 export const ModalBtnEnterLink = styled(Link)`
   width: 100%;
-  height: 278px;
+  height: 100%;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -235,7 +236,7 @@ export const ErrorMessage = styled.div`
   justify-content: center;
   align-items: center;
   color: rgb(255, 128, 113);
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-weight: 400;
   position: absolute;
   top: 70px;

@@ -7,7 +7,6 @@ import { ReturnToMain } from '../../Components/ReturnToMain.js/ReturnToMain';
 import * as S from '../Main/main.styled';
 import * as St from './Product.styled';
 import { HeaderSecond } from '../../Components/HeaderSecond/HeaderSecond';
-import { NewProduct } from '../../Components/NewProductAdd/newProduct';
 import { Review } from '../../Components/reviews/review';
 import { EditorAdv } from '../../Components/EditorAdv/editor';
 import { useGetAdvIDQuery } from '../../Store/RTKQuery/getAdvId';
@@ -15,21 +14,22 @@ import { getTime, formatDate } from '../../helpers/time';
 import { useGetCommentsQuery } from '../../Store/RTKQuery/getComments';
 import { updateToken } from '../../Api/tokenApi';
 import { getSeller } from '../../Api/sellerApi';
+import { useDeleteAdvMutation } from '../../Store/RTKQuery/getMyAds';
+import { getAccessTokenLocal } from '../../helpers/token';
 
 export const Product = ({}) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
-  const [showCheck, setShowCheck] = useState(false);
+  const [show2, setShow2] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [deleteAdv] = useDeleteAdvMutation();
   const [timeResult, setTimeResult] = useState('00.00.00');
   const [userId, setUserId] = useState(null);
   const [dataUsers, setDataUsers] = useState([]);
   const [showFullPhone, setShowFullPhone] = useState(false);
   const [selectedImage, setSelectedImage] = useState('/img/noFoto.jpeg');
-
-  console.log(userId);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const { data: dataComments = [] } = useGetCommentsQuery(id);
   const {
@@ -39,6 +39,11 @@ export const Product = ({}) => {
     isSuccess,
     refetch,
   } = useGetAdvIDQuery(id);
+  const userLoggedIn = getAccessTokenLocal();
+  // может просматривать незалогиненный
+  const userIsSeller = Boolean(
+    String(data.user_id) === window.localStorage.getItem('id'),
+  );
 
   useEffect(() => {
     if (isSuccess) {
@@ -48,21 +53,32 @@ export const Product = ({}) => {
       if (data.images && data.images.length > 0) {
         setSelectedImage(`http://localhost:8090/${data.images[0].url}`);
       }
-      console.log(data);
     }
   }, [isSuccess]);
+
+  useEffect(() => {
+    if (isSuccess && show2) {
+      setShow(true);
+    }
+  }, [isSuccess, show2]);
+
+  useEffect(() => {
+    getSeller();
+    if (isError && error.status == 401) {
+      asyncUpgate();
+      getSeller();
+    }
+  }, [isSuccess]);
+
+  const handleImageClick = (imageSrc) => {
+    setSelectedImage(imageSrc);
+  };
 
   const asyncUpgate = async () => {
     await updateToken();
     await refetch();
     return;
   };
-
-  useEffect(() => {
-    if (isSuccess && showCheck) {
-      setShow(true);
-    }
-  }, [isSuccess, showCheck]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,25 +88,11 @@ export const Product = ({}) => {
       } catch (error) {
         console.error('Ушел на базу:', error);
       } finally {
-        setShowCheck(true);
+        setShow2(true);
       }
     };
-
     fetchData();
   }, []);
-
-  const handleImageClick = (imageSrc) => {
-    setSelectedImage(imageSrc);
-  };
-
-  console.log(dataUsers);
-
-  //
-  // const [addNewProductModal, setAddNewProductModal] = useState(false);
-
-  // const openModal = () => {
-  //   setAddNewProductModal(true);
-  // };
 
   const [openReviews, setOpenReviews] = useState(false);
   const openReviewsModal = () => {
@@ -115,10 +117,11 @@ export const Product = ({}) => {
       setIsReviewModalOpen(true);
     }
   };
-
-  // заглушка на залогиненного юзера
-  const userLoggedIn = false;
-
+  const deleteThisAdv = async () => {
+    const access = getAccessTokenLocal();
+    await deleteAdv({ access, id });
+    navigate(-1);
+  };
   const [showAdvEdit, setShowAdvEdit] = useState(false);
   const openAdvEditor = () => {
     setShowAdvEdit(true);
@@ -131,7 +134,11 @@ export const Product = ({}) => {
   return show ? (
     <S.Wrapper>
       <S.Container>
-        {userLoggedIn ? <HeaderSecond /> : <Header />}
+        {userLoggedIn && userLoggedIn !== 'undefined' ? (
+          <HeaderSecond />
+        ) : (
+          <Header />
+        )}
         <S.Main>
           <St.ProductContainer>
             <ReturnToMain />
@@ -182,12 +189,14 @@ export const Product = ({}) => {
                     </St.ProductReviews>
                   </St.ProductInfo>
                   <St.ProductPrice>{data.price} руб.</St.ProductPrice>
-                  {userLoggedIn ? (
+                  {userIsSeller ? (
                     <St.ProductButtonBox>
                       <St.ProductButton onClick={openAdvEditor}>
                         Редактировать
                       </St.ProductButton>
-                      <St.ProductButton>Снять с публикации</St.ProductButton>
+                      <St.ProductButton onClick={() => deleteThisAdv()}>
+                        Снять с публикации
+                      </St.ProductButton>
                     </St.ProductButtonBox>
                   ) : (
                     <St.ProductButton
@@ -211,9 +220,11 @@ export const Product = ({}) => {
                       alt={dataUsers[userId].name}
                     />
                     <St.ProductAuthorContent>
-                      <Link to='/seller-profile'>
+                      <Link to={`/seller-profile/${dataUsers[userId].id}`}>
                         <St.ProductAuthorName>
-                          {dataUsers[userId].name}
+                          {dataUsers[userId].name
+                            ? dataUsers[userId].name
+                            : 'Продавец решил остаться безымянным'}
                         </St.ProductAuthorName>
                       </Link>
                       <St.ProductAuthorAbout>
@@ -243,7 +254,9 @@ export const Product = ({}) => {
           {openReviews ? <Review closeModal={handleCloseAllModals} /> : null}
           {/* {newProductModal ? 
            <NewProduct setNewProductModal={setNewProductModal} /> : null} */}
-          {showAdvEdit ? <EditorAdv closeModal={handleCloseAllModals} /> : null}
+          {showAdvEdit ? (
+            <EditorAdv data={data} closeModal={handleCloseAllModals} />
+          ) : null}
         </S.Main>
         <Footer />
       </S.Container>

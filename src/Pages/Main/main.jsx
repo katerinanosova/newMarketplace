@@ -8,11 +8,11 @@ import * as S from './main.styled';
 import { useDispatch } from 'react-redux';
 import { saveProducts } from '../../Store/Slices/dataProductsSlice';
 import { HeaderSecond } from '../../Components/HeaderSecond/HeaderSecond';
-import { NewProduct } from '../../Components/NewProductAdd/newProduct';
+import { getAccessTokenLocal } from '../../helpers/token';
 
-export const Main = ({ products }) => {
-  // заглушка на залогиненного юзера
-  const userLoggedIn = true;
+export const Main = () => {
+  
+  const userLoggedIn = getAccessTokenLocal();
 
 
   const dispatch = useDispatch();
@@ -38,11 +38,10 @@ export const Main = ({ products }) => {
       setError(null);
     }
   }, [isSuccess, searchAdv]);
-  
   return (
     <S.Wrapper>
       <S.Container>
-        {userLoggedIn ? <HeaderSecond /> : <Header />}
+        {(userLoggedIn && (userLoggedIn !== 'undefined')) ? <HeaderSecond /> : <Header />}
         <S.Main>
           <Search setSearchAdv={setSearchAdv} />
           <S.MainContainer>
@@ -58,11 +57,8 @@ export const Main = ({ products }) => {
             )}
           </S.MainContainer>
         </S.Main>
-        {/* {newProductModal ? 
-             <NewProduct setNewProductModal={setNewProductModal} /> : null} */}
         <Footer />
       </S.Container>
     </S.Wrapper>
   );
 };
-
