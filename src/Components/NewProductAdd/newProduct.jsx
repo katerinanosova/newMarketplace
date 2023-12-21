@@ -22,7 +22,6 @@ export const NewProduct = ({}) => {
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [isFormValid, setIsFormValid] = useState(null);
-  const [errorForm, setErrorForm] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleImageChange = (e, i) => {
@@ -94,7 +93,6 @@ export const NewProduct = ({}) => {
       setIsFormValid(true);
     } else {
       setIsFormValid(false);
-      setErrorForm('Введите название и цену');
     }
   }, [title, price]);
 
