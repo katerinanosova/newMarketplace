@@ -46,9 +46,11 @@ export const MainH2 = styled.h2`
     font-size: 24px;
     line-height: 29px;
     color: #000000;
-    padding: 0 0 0 26px;
+    // padding: 0 0 0 26px;
     margin-bottom: 20px;
     position: relative;
+    display: flex;
+    gap: 30px;
   }
 `;
 
