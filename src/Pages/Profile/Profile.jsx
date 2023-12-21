@@ -8,8 +8,6 @@ import { getAccessTokenLocal } from '../../helpers/token';
 import { updateToken } from '../../Api/tokenApi';
 import { useEffect, useState } from 'react';
 import { handleAvatarClick, handleAvatarUpload, handleChangeMe, profileUserData, saveUserLocal } from '../../helpers/user';
-import { uploadUserAvatar } from '../../Api/userApi';
-import { NewProduct } from '../../Components/NewProductAdd/newProduct';
 import { useGetAllMyAdsQuery } from '../../Store/RTKQuery/getMyAds';
 
 export const Profile = ({}) => {
@@ -24,8 +22,6 @@ export const Profile = ({}) => {
   const {data =[], isError, error, isSuccess, refetch} = useGetMeQuery(access);
   const [changeMe, {isError: isErrorChangeMe, error: errorChangeMe}] = useChangeMeMutation()
   const {data: dataMyAds=[]} = useGetAllMyAdsQuery(access)
-  console.log(dataMyAds);
-  console.log(access);
   const asyncUpgate = async () => {
     await updateToken()
     await refetch()

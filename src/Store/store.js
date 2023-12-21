@@ -9,6 +9,7 @@ import { advId } from './RTKQuery/getAdvId';
 import { myAds } from './RTKQuery/getMyAds';
 import { comments } from './RTKQuery/getComments';
 import { users } from './RTKQuery/getUsers';
+import  UploadPhotoReducer from './Slices/uploadPhoto';
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
     [myAds.reducerPath]: myAds.reducer,
     [comments.reducerPath]: comments.reducer,
     [users.reducerPath]: users.reducer,
+    uploadPhoto: UploadPhotoReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false })

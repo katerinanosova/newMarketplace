@@ -38,7 +38,6 @@ export const Main = () => {
       setError(null);
     }
   }, [isSuccess, searchAdv]);
-  
   return (
     <S.Wrapper>
       <S.Container>

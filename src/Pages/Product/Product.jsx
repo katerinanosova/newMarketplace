@@ -7,7 +7,6 @@ import { ReturnToMain } from '../../Components/ReturnToMain.js/ReturnToMain';
 import * as S from '../Main/main.styled';
 import * as St from './Product.styled';
 import { HeaderSecond } from '../../Components/HeaderSecond/HeaderSecond';
-import { NewProduct } from '../../Components/NewProductAdd/newProduct';
 import { Review } from '../../Components/reviews/review';
 import { EditorAdv } from '../../Components/EditorAdv/editor';
 import { useGetAdvIDQuery } from '../../Store/RTKQuery/getAdvId';
@@ -58,7 +57,6 @@ export const Product = ({}) => {
       },[isSuccess, show2]);
 
     useEffect(() => {
-      // const id = data.user.id
        getSeller()
        if(isError && error.status == 401 ) {
         asyncUpgate()
@@ -80,7 +78,6 @@ export const Product = ({}) => {
     const fetchData = async () => {
       try {
         const fetchedDataUser = await getSeller();
-        console.log(fetchedDataUser);
         setDataUsers(fetchedDataUser);
       } catch (error) {
         console.error('Ушел на базу:', error);
@@ -117,7 +114,7 @@ export const Product = ({}) => {
   const deleteThisAdv = async () => {
     const access = getAccessTokenLocal()
     await deleteAdv({access, id })
-    navigate('/profile')
+    navigate(-1)
   }
   const [showAdvEdit, setShowAdvEdit] = useState(false);
   const openAdvEditor = () => {
@@ -127,9 +124,6 @@ export const Product = ({}) => {
     setOpenReviews(false);
     setShowAdvEdit(false);
   };
-
-
-
 
   const handleImageClick = () => {
     setIsImageExpanded(!isImageExpanded);
@@ -253,7 +247,7 @@ export const Product = ({}) => {
           {openReviews ? <Review closeModal={handleCloseAllModals} /> : null}
           {/* {newProductModal ? 
            <NewProduct setNewProductModal={setNewProductModal} /> : null} */}
-          {showAdvEdit ? <EditorAdv closeModal={handleCloseAllModals} /> : null}
+          {showAdvEdit ? <EditorAdv data={data} closeModal={handleCloseAllModals} /> : null}
         </S.Main>
         <Footer />
       </S.Container>

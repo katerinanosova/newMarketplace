@@ -4,10 +4,8 @@ import { Footer } from '../../Components/Footer/Footer';
 import { useState } from 'react';
 import { getAccessTokenLocal } from '../../helpers/token';
 import { useDispatch, useSelector } from 'react-redux';
-import { savePhoto } from '../../Store/Slices/photoSlice';
 import { useNavigate } from 'react-router-dom';
 import { updateToken } from '../../Api/tokenApi';
-import { uploadImage } from '../../Api/adsApi';
 import { useAddAdsWithoutImgMutation, useAddImgsMutation } from '../../Store/RTKQuery/getMyAds';
 
 
@@ -15,30 +13,25 @@ import { useAddAdsWithoutImgMutation, useAddImgsMutation } from '../../Store/RTK
 export const NewProduct = ({}) => {
     const [images, setImages] = useState([null, null, null, null, null]);
     const [imgShow, setImgShow] = useState([null, null, null, null, null]);
-
-    const [saveButtonActive, setSaveButtonActive] = useState(true);
-    const [addAdsWithoutImg, {isSuccess: isSuccess2, isError, error}] = useAddAdsWithoutImgMutation();
+    const [saveButtonActive] = useState(true);
+    const [addAdsWithoutImg] = useAddAdsWithoutImgMutation();
     const [addImgs] = useAddImgsMutation();
-    const photo = useSelector(state => state.photo)
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('')
     const navigate = useNavigate();
+    const dispatch = useDispatch();
       const handleImageChange = (e, i) => {
         const file = e.target.files[0];
-
         if (file) {
           const reader = new FileReader();
-
           reader.onload = () => {
             setImgShow(prevState => {
               const newState = [...prevState]
               newState[i] = reader.result;
-
               return newState;
             });
           };
-
           reader.readAsDataURL(file);
         }
 
@@ -63,10 +56,9 @@ export const NewProduct = ({}) => {
                     const formDataFile = new FormData();
                     formDataFile.append('file', image);
                     addImgs({access, advID, formDataFile})
-                    // const response = uploadImage({advID, formData})
-                    // addImgs({access, advID, formData})
                     });
             }
+            closeModal()
         } catch(error) {
             if(error.status === 401) {
                 await updateToken();
@@ -79,7 +71,14 @@ export const NewProduct = ({}) => {
       const closeModal = () => {
         navigate(-1);
       }
-
+const deleteImgFromState= (i) => {
+  console.log('object');
+  setImages(prevState => {
+    const newState = [...prevState]
+    newState[i] = null;
+    return newState;
+  })
+}
     return (
         <S.Wrapper>
             <HeaderSecond  />
@@ -107,8 +106,15 @@ export const NewProduct = ({}) => {
                                 <S.FormNewArtP>Фотографии товара<S.Span>не более 5 фотографий</S.Span></S.FormNewArtP>
                                 <S.FormNewArtBarImg>
                                   {
-                                    imgShow.map((el, i) => el ? <img src={el} alt="image" key={`image-${i}`} /> : <S.FormNewArtImg key={`image-${i}`}>
-                                      <S.Img src={photo} alt=""/>
+                                    imgShow.map((el, i) => el ? <S.Img
+                                     src={el}
+                                      alt="image"
+                                      key={`image-${i}`}
+                                      id="upload-photo"
+                                      type="file"
+                                      accept="image/*"
+                                      onClick={() =>  deleteImgFromState(i)}
+                                      /> : <S.FormNewArtImg key={`image-${i}`}>
                                       <S.FormNewArtImgCover
                                         id="upload-photo"
                                         type="file"

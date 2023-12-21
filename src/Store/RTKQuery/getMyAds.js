@@ -43,7 +43,8 @@ export const myAds = createApi({
                 Authorization: `bearer ${access}`,
             },
             body: formDataFile,
-        })
+        }),
+        invalidatesTags: [DATA_TAG]
     }),
       deleteAdv: build.mutation({
         query: ({access, id }) => ({
@@ -52,7 +53,8 @@ export const myAds = createApi({
             headers: {
                 Authorization: `bearer ${access}`,
             },
-        })
+        }),
+        invalidatesTags: [DATA_TAG]
     }),
     })
 })

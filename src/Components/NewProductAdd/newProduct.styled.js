@@ -413,8 +413,8 @@ export const FormNewArtImg = styled.div`
 `;
 export const Img = styled.img`
   display: block;
-  width: 100%;
-  height: auto;
+  width: 90px;
+  height: 90px;
   object-fit: cover;
   z-index: 2;
   @media screen and (max-width: 600px) {

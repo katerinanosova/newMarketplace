@@ -4,8 +4,12 @@ import { HeaderSecond } from '../HeaderSecond/HeaderSecond';
 import * as S from '../NewProductAdd/newProduct.styled';
 import { Footer } from '../Footer/Footer';
 
-export const EditorAdv = ({ closeModal }) => {
+export const EditorAdv = ({data, closeModal }) => {
+  console.log(data);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [title, setTitle] = useState(data.title);
+  const [description, setDescription] = useState(data.description)
+  const [price, setPrice] = useState(data.price)
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -35,7 +39,7 @@ export const EditorAdv = ({ closeModal }) => {
             <S.ModalFormNewArtFormNewArt>
               <S.FormNewArtBlock>
                 <S.LabelDescription htmlFor='text'>Название</S.LabelDescription>
-                <S.FormNewArtInput type='text' placeholder='Введите название' />
+                <S.FormNewArtInput type='text' placeholder='Введите название' value={title} onChange={(e) => setTitle(e.target.value)} />
               </S.FormNewArtBlock>
               <S.FormNewArtBlock>
                 <S.LabelDescription htmlFor='text'>Описание</S.LabelDescription>
@@ -43,7 +47,8 @@ export const EditorAdv = ({ closeModal }) => {
                   cols='auto'
                   rows='10'
                   placeholder='Введите описание'
-                  defaultValue='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+                  value={description}
+                  onChange={e => setDescription(e.target.value)}
                 />
               </S.FormNewArtBlock>
               <S.FormNewArtBlock>
@@ -75,7 +80,7 @@ export const EditorAdv = ({ closeModal }) => {
               </S.FormNewArtBlock>
               <S.FormNewArtBlockBlockPrice>
                 <S.LabelDescription htmlFor='price'>Цена</S.LabelDescription>
-                <S.FormNewArtInputPrice type='text' />
+                <S.FormNewArtInputPrice type='text' value={price} onChange={e => setPrice(e.target.value)} />
                 <S.FormNewArtInputPriceCover />
               </S.FormNewArtBlockBlockPrice>
               <S.FormNewArtBtnPubBtnHov02>Сохранить</S.FormNewArtBtnPubBtnHov02>
