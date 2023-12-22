@@ -131,6 +131,9 @@ const mainUpdaiteToken = async () => {
     }
   };
 
+  // заглушка на залогиненного юзера
+  // const userLoggedIn = false;
+
   const [showAdvEdit, setShowAdvEdit] = useState(false);
   const openAdvEditor = () => {
     setShowAdvEdit(true);
