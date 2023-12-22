@@ -163,7 +163,7 @@ export const ProductImageBarDesktop = styled.div`
   justify-content: left;
   margin-left: -5px;
   position: relative;
-  height: 100px;
+  height: 100px; 
   display: flex;
   @media screen and (max-width: 1000px) {
     display: none;
@@ -171,24 +171,25 @@ export const ProductImageBarDesktop = styled.div`
 `;
 
 export const RenderImg = styled.div`
-  height: ${(props) => (props.$isExpanded ? '300px' : '88px')};
-`;
+height: ${(props) => (props.$isExpanded ? '300px' : '88px')};
+
+`
 
 export const ProductImageBarDiv = styled.img`
   width: 88px;
   height: 88px;
   min-width: 88px;
-  background-color: #f0f0f0;
-  border: 2px solid #f0f0f0;
-  margin: 0 5px;
-  display: block;
-  object-fit: cover;
-  transition: all 0.7s ease;
-  &:hover {
-    width: 95px;
-    height: 95px;
-    z-index: 1;
-  }
+    background-color: #f0f0f0;
+    border: 2px solid #f0f0f0;
+    margin: 0 5px;
+    display: block;
+    object-fit: cover;
+    transition: all 0.7s ease;
+    &:hover {
+      width: 92px;
+      height: 92px;
+      z-index: 1;
+    }
 `;
 
 export const ProductImageBarMobile = styled.div`

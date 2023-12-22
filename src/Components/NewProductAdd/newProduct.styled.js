@@ -94,6 +94,7 @@ display: none;
   @media screen and (max-width: 600px) {
     display: flex;
     align-items: center;
+    cursor: pointer;
   }
 `
 
@@ -577,34 +578,17 @@ export const FormNewArtBtnPubBtnHov02 = styled.button`
   margin-top: 10px;
   width: 181px;
   height: 50px;
+  background: #d9d9d9;
   border: 1px solid #d9d9d9;
   border-radius: 6px;
   font-size: 16px;
   line-height: 24px;
   color: #ffffff;
-  
   background-color: ${props => (props.$isFormValid ? '#0080c1' : '#d9d9d9')};
- 
   @media screen and (max-width: 600px) {
     margin-top: 10px;
     width: 100%;
     height: 46px;
     flex-shrink: 0;
-  }
-`;
-
-export const ErrorMessage = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: rgb(255, 128, 113);
-  font-size: 1rem;
-  font-weight: 400;
-  text-align: center;
-  margin-top: 10px;
-  padding-right: 42px;
-  padding-left: 42px;
-  @media screen and (max-width: 768px) {
-    font-size: 0.6rem;
   }
 `;
