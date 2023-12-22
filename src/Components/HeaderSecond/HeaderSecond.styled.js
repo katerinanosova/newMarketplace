@@ -21,6 +21,7 @@ export const HeaderNav = styled.div`
   display: flex;
   align-items: center;
   justify-content: end;
+  
   @media screen and (max-width: 890px) {
     height: 55px;
     justify-content: space-between;
