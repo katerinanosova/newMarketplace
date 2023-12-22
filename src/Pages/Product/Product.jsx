@@ -77,7 +77,6 @@ export const Product = ({}) => {
 
       },[isSuccess]);
 
-
   const asyncUpgate = async () => {
     await updateToken();
     await refetch();
@@ -123,6 +122,9 @@ export const Product = ({}) => {
       setIsReviewModalOpen(true);
     }
   };
+
+  // заглушка на залогиненного юзера
+  const userLoggedIn = false;
 
   const [showAdvEdit, setShowAdvEdit] = useState(false);
   const openAdvEditor = () => {
