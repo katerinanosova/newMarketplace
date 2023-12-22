@@ -24,7 +24,7 @@ export const Product = ({}) => {
   const [show2, setShow2] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
-  const [deleteAdv] = useDeleteAdvMutation();
+  const [deleteAdv, {error: errorDelete, isError: isErrorDelete}] = useDeleteAdvMutation();
   const [timeResult, setTimeResult] = useState('00.00.00');
   const [userId, setUserId] = useState(null);
   const [dataUsers, setDataUsers] = useState([]);
@@ -41,6 +41,14 @@ export const Product = ({}) => {
   const userLoggedIn = getAccessTokenLocal();
   // может просматривать незалогиненный
   const userIsSeller = Boolean(String(data.user_id) === window.localStorage.getItem('id'));
+
+  const deleteThisAdv = async () => {
+    await updateToken()
+    const access = getAccessTokenLocal()
+    await deleteAdv({access, id })
+    navigate(-1)
+  }
+
 
   useEffect(() => {
     if (isSuccess) {
@@ -111,11 +119,7 @@ export const Product = ({}) => {
       setIsReviewModalOpen(true);
     }
   };
-  const deleteThisAdv = async () => {
-    const access = getAccessTokenLocal()
-    await deleteAdv({access, id })
-    navigate(-1)
-  }
+
   const [showAdvEdit, setShowAdvEdit] = useState(false);
   const openAdvEditor = () => {
     setShowAdvEdit(true);

@@ -1,4 +1,4 @@
-import { useGetAllAdsQuery } from '../../Store/RTKQuery/getAds';
+
 import { useState, useEffect } from 'react';
 import { Card } from '../../Components/Card/Card';
 import { Footer } from '../../Components/Footer/Footer';
@@ -7,6 +7,7 @@ import { Search } from '../../Components/Search/Search';
 import * as S from './main.styled';
 import { HeaderSecond } from '../../Components/HeaderSecond/HeaderSecond';
 import { getAccessTokenLocal } from '../../helpers/token';
+import { useGetAllAdsQuery } from '../../Store/RTKQuery/getMyAds';
 
 export const Main = () => {
   const userLoggedIn = getAccessTokenLocal();
@@ -14,9 +15,7 @@ export const Main = () => {
   const [searchAdv, setSearchAdv] = useState('');
   const [filteredData, setFilteredData] = useState([]);
   const [error, setError] = useState(null);
-  console.log(data);
   useEffect(() => {
-    console.log(data);
     const filtered = data.filter((product) =>
       product.title.toLowerCase().includes(searchAdv.toLowerCase()),
     );

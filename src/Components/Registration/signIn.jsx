@@ -37,7 +37,7 @@ export const SignIn = ({ setChoiceReg }) => {
             />
             <S.ModalBtnEnter>
               <S.ModalBtnEnterLink
-                onClick={(event) => {
+                onClick={() => {
                     handleSignIn(
                       email,
                       password,

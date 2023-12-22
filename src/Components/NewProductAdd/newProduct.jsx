@@ -7,10 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { updateToken } from '../../Api/tokenApi';
 import { useAddAdsWithoutImgMutation, useAddImgsMutation } from '../../Store/RTKQuery/getMyAds';
+import { deleteImgFromState, handleImageChange } from '../../helpers/delAndUpImg';
 
 
 
-export const NewProduct = ({}) => {
+
+export const NewProduct = () => {
     const [images, setImages] = useState([null, null, null, null, null]);
     const [imgShow, setImgShow] = useState([null, null, null, null, null]);
     const [saveButtonActive] = useState(true);
@@ -20,31 +22,7 @@ export const NewProduct = ({}) => {
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('')
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-      const handleImageChange = (e, i) => {
-        const file = e.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = () => {
-            setImgShow(prevState => {
-              const newState = [...prevState]
-              newState[i] = reader.result;
-              return newState;
-            });
-          };
-          reader.readAsDataURL(file);
-        }
 
-        if (images.length <= 5) {
-          setImages(prevState => {
-            const newState = [...prevState]
-            newState[i] = file;
-            return newState;
-          });
-        } else {
-          alert('Можно загрузить не более пяти изображений.');
-        }
-      };
 
       const handlePostNewAdv = async () => {
         const access = getAccessTokenLocal()
@@ -71,14 +49,6 @@ export const NewProduct = ({}) => {
       const closeModal = () => {
         navigate(-1);
       }
-const deleteImgFromState= (i) => {
-  console.log('object');
-  setImages(prevState => {
-    const newState = [...prevState]
-    newState[i] = null;
-    return newState;
-  })
-}
     return (
         <S.Wrapper>
             <HeaderSecond  />
@@ -106,21 +76,26 @@ const deleteImgFromState= (i) => {
                                 <S.FormNewArtP>Фотографии товара<S.Span>не более 5 фотографий</S.Span></S.FormNewArtP>
                                 <S.FormNewArtBarImg>
                                   {
-                                    imgShow.map((el, i) => el ? <S.Img
+                                    imgShow.map((el, i) => el ? 
+                                    <S.FormNewArtImg key={`image-${i}`}>
+                                    <S.Img
                                      src={el}
                                       alt="image"
                                       key={`image-${i}`}
                                       id="upload-photo"
                                       type="file"
                                       accept="image/*"
-                                      onClick={() =>  deleteImgFromState(i)}
-                                      /> : <S.FormNewArtImg key={`image-${i}`}>
+                                      onClick={() =>  deleteImgFromState(i, setImages, setImgShow)}
+                                      /> 
+                                      </S.FormNewArtImg>
+                                      :
+                                       <S.FormNewArtImg key={`image-${i}`}>
                                       <S.FormNewArtImgCover
                                         id="upload-photo"
                                         type="file"
                                         accept="image/*"
                                         onChange={(e) => {
-                                          handleImageChange(e, i);
+                                          handleImageChange(e, i, setImgShow, images, setImages);
                                         }}
                                       ></S.FormNewArtImgCover>
                                     </S.FormNewArtImg>)
