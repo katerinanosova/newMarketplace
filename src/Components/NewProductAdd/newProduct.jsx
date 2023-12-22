@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
+import * as S from './newProduct.styled';
 import { HeaderSecond } from '../../Components/HeaderSecond/HeaderSecond';
 import { Footer } from '../../Components/Footer/Footer';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getAccessTokenLocal } from '../../helpers/token';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -10,9 +10,12 @@ import {
   useAddAdsWithoutImgMutation,
   useAddImgsMutation,
 } from '../../Store/RTKQuery/getMyAds';
-import * as S from './newProduct.styled';
+import {
+  deleteImgFromState,
+  handleImageChange,
+} from '../../helpers/delAndUpImg';
 
-export const NewProduct = ({}) => {
+export const NewProduct = () => {
   const [images, setImages] = useState(Array(5).fill(null));
   const [imgShow, setImgShow] = useState(Array(5).fill(null));
   const [saveButtonActive] = useState(true);
@@ -23,31 +26,6 @@ export const NewProduct = ({}) => {
   const [price, setPrice] = useState('');
   const [isFormValid, setIsFormValid] = useState(null);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const handleImageChange = (e, i) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setImgShow((prevState) => {
-          const newState = [...prevState];
-          newState[i] = reader.result;
-          return newState;
-        });
-      };
-      reader.readAsDataURL(file);
-    }
-
-    if (images.length <= 5) {
-      setImages((prevState) => {
-        const newState = [...prevState];
-        newState[i] = file;
-        return newState;
-      });
-    } else {
-      alert('Можно загрузить не более пяти изображений.');
-    }
-  };
 
   const handlePostNewAdv = async () => {
     const access = getAccessTokenLocal();
@@ -79,14 +57,6 @@ export const NewProduct = ({}) => {
   const closeModal = () => {
     navigate(-1);
   };
-  const deleteImgFromState = (i) => {
-    console.log('object');
-    setImages((prevState) => {
-      const newState = [...prevState];
-      newState[i] = null;
-      return newState;
-    });
-  };
 
   useEffect(() => {
     if (title && price) {
@@ -95,7 +65,6 @@ export const NewProduct = ({}) => {
       setIsFormValid(false);
     }
   }, [title, price]);
-
   return (
     <S.Wrapper>
       <HeaderSecond />
@@ -145,15 +114,19 @@ export const NewProduct = ({}) => {
                 <S.FormNewArtBarImg>
                   {imgShow.map((el, i) =>
                     el ? (
-                      <S.Img
-                        src={el}
-                        alt='image'
-                        key={`image-${i}`}
-                        id='upload-photo'
-                        type='file'
-                        accept='image/*'
-                        onClick={() => deleteImgFromState(i)}
-                      />
+                      <S.FormNewArtImg key={`image-${i}`}>
+                        <S.Img
+                          src={el}
+                          alt='image'
+                          key={`image-${i}`}
+                          id='upload-photo'
+                          type='file'
+                          accept='image/*'
+                          onClick={() =>
+                            deleteImgFromState(i, setImages, setImgShow)
+                          }
+                        />
+                      </S.FormNewArtImg>
                     ) : (
                       <S.FormNewArtImg key={`image-${i}`}>
                         <S.FormNewArtImgCover
@@ -161,7 +134,13 @@ export const NewProduct = ({}) => {
                           type='file'
                           accept='image/*'
                           onChange={(e) => {
-                            handleImageChange(e, i);
+                            handleImageChange(
+                              e,
+                              i,
+                              setImgShow,
+                              images,
+                              setImages,
+                            );
                           }}
                         ></S.FormNewArtImgCover>
                       </S.FormNewArtImg>
@@ -183,8 +162,8 @@ export const NewProduct = ({}) => {
                 <S.FormNewArtInputPriceCover />
               </S.FormNewArtBlockBlockPrice>
               <S.FormNewArtBtnPubBtnHov02
-                disabled={!isFormValid}
-                onClick={handlePostNewAdv}
+                disabled={!saveButtonActive}
+                onClick={() => handlePostNewAdv()}
                 $isFormValid={isFormValid}
               >
                 Опубликовать

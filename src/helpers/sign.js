@@ -60,7 +60,7 @@ export const handleSignIn = async (email, password, setError, navigate) => {
     navigate('/profile')
   } catch (error) {
     console.error(error);
-    setError('Ммм... Кажется, такого пользователя нет');
+    setError('Неизвестная ошибка');
   }
 };
 

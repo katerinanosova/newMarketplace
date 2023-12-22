@@ -6,13 +6,13 @@ import {
   validateFormLog,
 } from '../../helpers/sign';
 import * as S from './signIn.styled';
-import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export const SignIn = ({ setChoiceReg }) => {
-  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   return (
     <S.Wrapper>
@@ -22,6 +22,13 @@ export const SignIn = ({ setChoiceReg }) => {
             <S.ModalLogo>
               <S.ModalLogoImg src='img/logo_modal.png' alt='' />
             </S.ModalLogo>
+            <S.ModalBtnClose
+              onClick={() => {
+                navigate('/');
+              }}
+            >
+              <S.ModalBtnCloseLine />
+            </S.ModalBtnClose>
             {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
             <S.ModalInputLogin
               value={email}
@@ -37,10 +44,9 @@ export const SignIn = ({ setChoiceReg }) => {
             />
             <S.ModalBtnEnter>
               <S.ModalBtnEnterLink
-                onClick={(event) => {
-                  if (validateFormLog(email, password, setError, event)) {
-                    handleSignIn(email, password, setError, dispatch);
-                  }
+                onClick={() => {
+                  if (validateFormLog(email, password, setError))
+                    handleSignIn(email, password, setError, navigate);
                 }}
               >
                 Войти

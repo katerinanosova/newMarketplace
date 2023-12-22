@@ -3,8 +3,9 @@ import { ReturnToMain } from '../../Components/ReturnToMain.js/ReturnToMain';
 import { Card } from '../../Components/Card/Card';
 import { Footer } from '../../Components/Footer/Footer';
 import * as S from './SellerProfile.styled';
+import * as St from '../../Components/NewProductAdd/newProduct.styled'
 import { Header } from '../../Components/Header/Header';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getAccessTokenLocal } from '../../helpers/token';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetAllAdsQuery } from '../../Store/RTKQuery/getAds';
@@ -16,6 +17,7 @@ import { useGetAllUsersQuery } from '../../Store/RTKQuery/getUsers';
 export const SellerProfile = () => {
   const userLoggedIn = getAccessTokenLocal();
   const params = useParams();
+  const navigate = useNavigate();
   const [showFullPhone, setShowFullPhone] = useState(false);
   const [seller, setSeller] = useState();
   const [sellerAds, setSellerAds] = useState();
@@ -49,7 +51,11 @@ export const SellerProfile = () => {
           <S.MainContainer>
             <S.MainCenterBlock>
               <ReturnToMain />
-              <S.MainH2>Профиль продавца</S.MainH2>
+              <S.MainH2>
+                <St.ModalBtnReturnMobile onClick={() => navigate(-1)} >
+                  <St.ModalBtnReturnImgMobile src="/img/return.png" />
+                </St.ModalBtnReturnMobile>
+                Профиль продавца</S.MainH2>
               <S.MainProfileSell>
                 <S.ProfileSellContent>
                   <S.ProfileSellSeller>
