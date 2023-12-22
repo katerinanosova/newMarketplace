@@ -21,10 +21,9 @@ export const HeaderNav = styled.div`
   display: flex;
   align-items: center;
   justify-content: end;
-  
   @media screen and (max-width: 890px) {
     height: 55px;
-    justify-content: space-between;
+    justify-content: start;
     padding: 0 20px;
   }
 `;
@@ -76,24 +75,3 @@ export const HeaderButtonSecond = styled(HeaderBtnPutAd)`
   height: 40px;
   margin-left: 10px;
 `;
-
-export const HeaderLogoutIcon = styled.img`
-width: 38px;
-height: 38px;
-cursor: pointer;
-margin-left: 20px;
-
-@media screen and (max-width: 600px) {
-  display: none;
-}
-`
-export const HeaderLogoutIconMobile = styled.img`
-  display: none;
-
-  @media screen and (max-width: 600px) {
-    display: block;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-  }
-`

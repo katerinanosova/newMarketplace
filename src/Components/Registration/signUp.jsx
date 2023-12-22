@@ -33,9 +33,6 @@ export const SignUp = ({ setChoiceReg }) => {
             <S.ModalLogo>
               <S.ModalLogoImg src='img/logo_modal.png' alt='' />
             </S.ModalLogo>
-            <S.ModalBtnClose onClick={() => {navigate('/')}}>
-              <S.ModalBtnCloseLine />
-            </S.ModalBtnClose>
             {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
             <S.ModalInputLogin
               value={email}
