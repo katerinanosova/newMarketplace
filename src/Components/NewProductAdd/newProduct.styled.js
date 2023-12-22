@@ -94,7 +94,6 @@ display: none;
   @media screen and (max-width: 600px) {
     display: flex;
     align-items: center;
-    cursor: pointer;
   }
 `
 

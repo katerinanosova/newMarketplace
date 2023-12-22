@@ -1,13 +1,13 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as S from './HeaderSecond.styled';
 import { useState, useEffect } from 'react';
-import { deleteUserLocal } from '../../helpers/user';
+import { NewProduct } from '../NewProductAdd/newProduct';
 
-export const HeaderSecond = () => {
+export const HeaderSecond = ({setNewProductModal}) => {
 
   const navigate = useNavigate();
 
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -22,34 +22,29 @@ export const HeaderSecond = () => {
     };
   }, []);
 
-  const logOut = () => {
-    deleteUserLocal();
-    if (window.location.pathname === '/') {
-      window.location.reload();
-    }
-    navigate('/');
-  }
+  const handleOpenModal = () => {
+    navigate('/new-product');
+  };
 
-
+  const handleCloseModal = () => {
+    navigate('/profile');
+  };
 
 
   return (
     <S.Header>
       <S.HeaderNav>
         <S.HeaderLogo>
-          <Link to='/'>
-          <S.LogoMobLink>
+          <S.LogoMobLink to='/' target='_blank'>
             <S.LogoMobImg src='/img/logo-mob.png' alt='logo' />
           </S.LogoMobLink>
-          </Link>
         </S.HeaderLogo>
-        <S.HeaderBtnPutAd onClick={() => {navigate('/new-product')}}>
+        <S.HeaderBtnPutAd onClick={handleOpenModal}>
             Разместить объявление
         </S.HeaderBtnPutAd>
         <S.HeaderButtonSecond onClick={() => {navigate('/profile')}}>Личный кабинет</S.HeaderButtonSecond>
-        <S.HeaderLogoutIcon src='/img/exit.png' onClick={logOut} />
-        <S.HeaderLogoutIconMobile src='/img/exit-mobile.png' onClick={logOut} />
       </S.HeaderNav>
+      {isModalOpen && <NewProduct closeModal={handleCloseModal} />}
     </S.Header>
   );
 };
