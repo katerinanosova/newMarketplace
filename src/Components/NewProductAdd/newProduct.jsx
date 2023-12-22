@@ -24,13 +24,13 @@ export const NewProduct = () => {
     const [isFormValid, setIsFormValid] = useState(null);
     const navigate = useNavigate();
 
-
       const handlePostNewAdv = async () => {
         const access = getAccessTokenLocal()
         try{
             const dataAdv = await addAdsWithoutImg({access, title, description, price}).unwrap()
             if(images.length > 0) {
                 const advID = dataAdv.id
+                console.log(advID);
                 images.forEach((image) => {
                     const formDataFile = new FormData();
                     formDataFile.append('file', image);

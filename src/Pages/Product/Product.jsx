@@ -85,7 +85,6 @@ const mainUpdaiteToken = async () => {
 
       },[isSuccess]);
 
-
   const asyncUpgate = async () => {
     await updateToken();
     await refetch();
@@ -131,6 +130,9 @@ const mainUpdaiteToken = async () => {
       setIsReviewModalOpen(true);
     }
   };
+
+  // заглушка на залогиненного юзера
+  const userLoggedIn = false;
 
   const [showAdvEdit, setShowAdvEdit] = useState(false);
   const openAdvEditor = () => {
