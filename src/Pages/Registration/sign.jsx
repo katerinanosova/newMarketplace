@@ -15,14 +15,16 @@ export const Sign = () => {
   }, []);
 
   return (
-    <S.Wrapper>
-      <S.Container>
+    // <S.Wrapper>
+    //   <S.Container>
+        <>
         <Header />
         {choiceReg ?
         <SignIn setChoiceReg={setChoiceReg} /> :
         <SignUp setChoiceReg={setChoiceReg} />}
         <Footer />
-      </S.Container>
-    </S.Wrapper>
+        </>
+    //   </S.Container>
+    // </S.Wrapper>
   )
 };
