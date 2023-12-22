@@ -11,7 +11,7 @@ export const ModalBlock = styled.div`
   position: absolute;
   z-index: 2;
   left: calc(50% - (366px / 2));
-  top: calc(50% - (647px / 2));
+  top: 200px;
   opacity: 1;
 
   @media screen and (max-width: 600px) {
