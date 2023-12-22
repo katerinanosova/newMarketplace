@@ -70,3 +70,4 @@ export const ModalBtnSignupEnt = styled.div`
     margin-top: 26px;
   }
 `;
+

@@ -266,3 +266,54 @@ export const PassErrorMessage = styled(ErrorMessage)`
     top: 115px;
   }
 `;
+
+export const ModalBtnClose = styled.button`
+  width: 23px;
+  height: 23px;
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  z-index: 3;
+  cursor: pointer;
+  background: #fff;
+  border: none;
+
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
+`;
+export const ModalBtnCloseLine = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  &::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 2px;
+    border-radius: 2px;
+    background-color: #d9d9d9;
+    top: 47%;
+    right: -4px;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 2px;
+    border-radius: 2px;
+    background-color: #d9d9d9;
+    top: 47%;
+    right: -4px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  &:hover::before {
+    background-color: #0080c1;
+  }
+  &:hover::after {
+    background-color: #0080c1;
+  }
+`;
