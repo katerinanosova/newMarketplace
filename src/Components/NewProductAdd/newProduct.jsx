@@ -22,9 +22,7 @@ export const NewProduct = () => {
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
     const [isFormValid, setIsFormValid] = useState(null);
-
     const navigate = useNavigate();
-
 
       const handlePostNewAdv = async () => {
         const access = getAccessTokenLocal()
@@ -32,6 +30,7 @@ export const NewProduct = () => {
             const dataAdv = await addAdsWithoutImg({access, title, description, price}).unwrap()
             if(images.length > 0) {
                 const advID = dataAdv.id
+                console.log(advID);
                 images.forEach((image) => {
                     const formDataFile = new FormData();
                     formDataFile.append('file', image);

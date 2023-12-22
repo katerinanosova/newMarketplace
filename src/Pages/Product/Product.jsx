@@ -16,6 +16,7 @@ import { updateToken } from '../../Api/tokenApi';
 import { getSeller } from '../../Api/sellerApi';
 import { useDeleteAdvMutation } from '../../Store/RTKQuery/getMyAds';
 import { getAccessTokenLocal } from '../../helpers/token';
+import { ArrayLeftSvg } from '../../helpers/ArrayLeftSvg/ArrayLeftSvg';
 
 export const Product = ({}) => {
   const { id } = useParams();
@@ -149,6 +150,9 @@ export const Product = ({}) => {
             <St.ProductArticleContent>
               <St.ProductArticleLeft>
                 <St.ProductArticleFillImg>
+                <Link to='/'>
+                    <ArrayLeftSvg/>
+                  </Link>
                   <St.ProductArticleImage
                     src={selectedImage}
                     alt='Фото товара'
@@ -166,11 +170,13 @@ export const Product = ({}) => {
                     ))}
                   </St.ProductImageBarDesktop>
                   <St.ProductImageBarMobile>
-                    <St.ProductImageBarMobileCircle />
-                    <St.ProductImageBarMobileCircle />
-                    <St.ProductImageBarMobileCircle />
-                    <St.ProductImageBarMobileCircle />
-                    <St.ProductImageBarMobileCircle />
+                    {data.images.map((image) => (
+                      <St.ProductImageBarMobileCircle 
+                        key={image.id}
+                        onClick={() => handleImageClick(`http://localhost:8090/${image.url}`)}
+                        $active={selectedImage === `http://localhost:8090/${image.url}`}
+                      />
+                    ))}
                   </St.ProductImageBarMobile>
                 </St.ProductArticleFillImg>
               </St.ProductArticleLeft>
@@ -259,5 +265,4 @@ export const Product = ({}) => {
       </S.Container>
     </S.Wrapper>
   ) : null;
-
 };
