@@ -36,15 +36,10 @@ export const SignIn = ({ setChoiceReg }) => {
               placeholder='Пароль'
             />
             <S.ModalBtnEnter>
-              <S.ModalBtnEnterLink
+            <S.ModalBtnEnterLink
                 onClick={() => {
-                    handleSignIn(
-                      email,
-                      password,
-                      setError,
-                      navigate
-                    );
-                  
+                  if (validateFormLog(email, password, setError))
+                    handleSignIn(email, password, setError, navigate);
                 }}
               >
                 Войти

@@ -584,9 +584,7 @@ export const FormNewArtBtnPubBtnHov02 = styled.button`
   font-size: 16px;
   line-height: 24px;
   color: #ffffff;
-  &:hover {
-    background-color: #0080c1;
-  }
+  background-color: ${props => (props.$isFormValid ? '#0080c1' : '#d9d9d9')};
   @media screen and (max-width: 600px) {
     margin-top: 10px;
     width: 100%;

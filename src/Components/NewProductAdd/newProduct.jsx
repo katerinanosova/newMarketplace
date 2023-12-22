@@ -1,7 +1,7 @@
 import * as S from './newProduct.styled';
 import { HeaderSecond } from '../../Components/HeaderSecond/HeaderSecond';
 import { Footer } from '../../Components/Footer/Footer';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getAccessTokenLocal } from '../../helpers/token';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -20,7 +20,9 @@ export const NewProduct = () => {
     const [addImgs] = useAddImgsMutation();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [price, setPrice] = useState('')
+    const [price, setPrice] = useState('');
+    const [isFormValid, setIsFormValid] = useState(null);
+
     const navigate = useNavigate();
 
 
@@ -49,6 +51,15 @@ export const NewProduct = () => {
       const closeModal = () => {
         navigate(-1);
       }
+
+      useEffect(() => {
+        if (title && price) {
+          setIsFormValid(true);
+        } else {
+          setIsFormValid(false);
+        }
+      }, [title, price]);
+
     return (
         <S.Wrapper>
             <HeaderSecond  />
@@ -103,11 +114,24 @@ export const NewProduct = () => {
                                 </S.FormNewArtBarImg>
                             </S.FormNewArtBlock>
                             <S.FormNewArtBlockBlockPrice>
-                                <S.Label htmlFor="price">Цена</S.Label>
-                                <S.FormNewArtInputPrice type="text" value={price} onChange={(e) => setPrice(e.target.value)}/>
-                                <S.FormNewArtInputPriceCover/>
+                                <S.Label htmlFor='price'>Цена</S.Label>
+                                <S.FormNewArtInputPrice
+                                type='text'
+                                value={price}
+                                onChange={(e) => {
+                                    if (/^\d+$/.test(e.target.value) || e.target.value === '') {
+                                    setPrice(e.target.value);
+                                    }
+                                }}
+                                />                                <S.FormNewArtInputPriceCover/>
                             </S.FormNewArtBlockBlockPrice>
-                            <S.FormNewArtBtnPubBtnHov02 disabled={!saveButtonActive} onClick={() => handlePostNewAdv()}>Опубликовать</S.FormNewArtBtnPubBtnHov02>
+                            <S.FormNewArtBtnPubBtnHov02 
+                                disabled={!saveButtonActive} 
+                                onClick={() => handlePostNewAdv()} 
+                                $isFormValid={isFormValid}
+                                >
+                                Опубликовать
+                                </S.FormNewArtBtnPubBtnHov02>
                         </S.ModalFormNewArtFormNewArt>
                     </S.ModalContent>
                 </S.ModalBlock>

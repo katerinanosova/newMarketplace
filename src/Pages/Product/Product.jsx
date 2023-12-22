@@ -31,6 +31,7 @@ export const Product = ({}) => {
   const [showFullPhone, setShowFullPhone] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const { data: dataComments = [] } = useGetCommentsQuery(id);
+  const [selectedImage, setSelectedImage] = useState('/img/noFoto.jpeg');
   const {
     data = [],
     isError,
@@ -55,6 +56,9 @@ export const Product = ({}) => {
       const result = getTime(data.created_on);
       setTimeResult(result);
       setUserId(Number(data.user.id - 1));
+      if (data.images && data.images.length > 0) {
+        setSelectedImage(`http://localhost:8090/${data.images[0].url}`);
+      }
     }
     },[isSuccess]);
 
@@ -129,8 +133,8 @@ export const Product = ({}) => {
     setShowAdvEdit(false);
   };
 
-  const handleImageClick = () => {
-    setIsImageExpanded(!isImageExpanded);
+  const handleImageClick = (imageSrc) => {
+    setSelectedImage(imageSrc);
   };
 
   return show ? (
@@ -146,11 +150,7 @@ export const Product = ({}) => {
               <St.ProductArticleLeft>
                 <St.ProductArticleFillImg>
                   <St.ProductArticleImage
-                    src={
-                      data.images.length > 0
-                        ? `http://localhost:8090/${data.images[0].url}`
-                        : '/img/noFoto.jpeg'
-                    }
+                    src={selectedImage}
                     alt='Фото товара'
                   />
                   <St.ProductImageBarDesktop>
@@ -159,7 +159,9 @@ export const Product = ({}) => {
                         key={image.id}
                         src={`http://localhost:8090/${image.url}`}
                         alt='Фото товара'
-                        onClick={handleImageClick}
+                        onClick={() =>
+                          handleImageClick(`http://localhost:8090/${image.url}`)
+                        }
                       />
                     ))}
                   </St.ProductImageBarDesktop>
