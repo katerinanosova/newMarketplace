@@ -3,10 +3,21 @@ import { Footer } from '../Footer/Footer';
 import * as S from '../NewProductAdd/newProduct.styled';
 import * as SU from './review.styled';
 import { getTime } from '../../helpers/time';
+import { useAddCommentMutation } from '../../Store/RTKQuery/getComments';
+import { useParams } from 'react-router-dom';
+import { getAccessTokenLocal } from '../../helpers/token';
+import { useState } from 'react';
 
 export const Review = ({ closeModal, dataComments }) => {
-    console.log(dataComments);
-  
+    
+    const params = useParams();
+    const [ comment, setComment ] = useState('');
+    const [addComment] = useAddCommentMutation();
+    const accessToken = getAccessTokenLocal();
+
+    const addNewComment = () => {
+        addComment({  idProduct: params.id, commentText: comment, access: accessToken })
+    }
 
   return (
     <S.Wrapper>
@@ -31,9 +42,10 @@ export const Review = ({ closeModal, dataComments }) => {
                     cols='auto'
                     rows='5'
                     placeholder='Введите описание'
+                    onChange={(e) => setComment(e.target.value) }
                   />
                 </S.FormNewArtBlock>
-                <S.FormNewArtBtnPubBtnHov02>
+                <S.FormNewArtBtnPubBtnHov02 onClick={addNewComment}>
                   Опубликовать
                 </S.FormNewArtBtnPubBtnHov02>
               </S.ModalFormNewArtFormNewArt>
