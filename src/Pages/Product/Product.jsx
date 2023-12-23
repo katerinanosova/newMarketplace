@@ -23,14 +23,11 @@ export const Product = ({}) => {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
-  const [deleteAdv, {error: errorDelete, isError: isErrorDelete}] = useDeleteAdvMutation();
+  const [deleteAdv, {error: errorDelete, isError: isErrorDelete, isSuccess: isSuccessDelete}] = useDeleteAdvMutation();
   const [timeResult, setTimeResult] = useState('00.00.00');
   const [userId, setUserId] = useState(null);
   const [dataUsers, setDataUsers] = useState([]);
   const [showFullPhone, setShowFullPhone] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const { data: dataComments = [] } = useGetCommentsQuery(id);
   const [selectedImage, setSelectedImage] = useState('/img/noFoto.jpeg');
   const {
@@ -45,23 +42,36 @@ export const Product = ({}) => {
   const userIsSeller = Boolean(String(data.user_id) === window.localStorage.getItem('id'));
 
   const deleteThisAdv = async () => {
-    await updateToken()
     const access = getAccessTokenLocal()
     await deleteAdv({access, id })
+    return
+  }
+const mainUpdaiteToken = async () => {
+        await updateToken();
+        deleteThisAdv();
+        return
+}
+  if(isErrorDelete && errorDelete.status === 401) {
+    mainUpdaiteToken()
+  }
+  if(isSuccessDelete) {
     navigate(-1)
   }
-
 
   useEffect(() => {
     if (isSuccess) {
       const result = getTime(data.created_on);
       setTimeResult(result);
-      setUserId(Number(data.user.id - 1));
-      if (data.images && data.images.length > 0) {
-        setSelectedImage(`http://localhost:8090/${data.images[0].url}`);
+      setUserId(Number(data.user.id) - 1);
+    }
+    if (data.images && data.images.length > 0) {
+      setSelectedImage(`http://localhost:8090/${data.images[0].url}`);
+    } else {
+      if (isSuccess) {
+        setSelectedImage('/img/noFoto.jpeg'); 
       }
     }
-    },[isSuccess]);
+  }, [isSuccess, data]);
 
     useEffect(() => {
        if(isSuccess && show2 ) {
@@ -78,14 +88,11 @@ export const Product = ({}) => {
 
       },[isSuccess]);
 
-
   const asyncUpgate = async () => {
     await updateToken();
     await refetch();
     return;
   };
-
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -105,25 +112,6 @@ export const Product = ({}) => {
   const openReviewsModal = () => {
     setOpenReviews(true);
   }
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  const handleOpenModal = () => {
-    if (windowWidth <= 600) {
-      setIsModalOpen(true);
-      setIsReviewModalOpen(true);
-    }
-  };
 
   const [showAdvEdit, setShowAdvEdit] = useState(false);
   const openAdvEditor = () => {

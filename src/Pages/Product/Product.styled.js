@@ -150,8 +150,8 @@ export const ProductImageBarDiv = styled.img`
   object-fit: cover;
   transition: all 0.7s ease;
   &:hover {
-    width: 92px;
-    height: 92px;
+    width: 150px;
+    height: 150px;
     z-index: 1;
   }
 `;
