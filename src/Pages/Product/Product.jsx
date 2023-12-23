@@ -45,11 +45,20 @@ export const Product = ({}) => {
   const userIsSeller = Boolean(String(data.user_id) === window.localStorage.getItem('id'));
 
   const deleteThisAdv = async () => {
-    await updateToken()
     const access = getAccessTokenLocal()
     await deleteAdv({access, id })
+    console.log('done');
     navigate(-1)
   }
+const mainUpdaiteToken = async () => {
+        await updateToken();
+        await deleteThisAdv();
+}
+  if(isErrorDelete && errorDelete.status === 401) {
+    console.log(errorDelete.status);
+    mainUpdaiteToken()
+  }
+
 
 
   useEffect(() => {
@@ -77,7 +86,6 @@ export const Product = ({}) => {
       }
 
       },[isSuccess]);
-
 
   const asyncUpgate = async () => {
     await updateToken();
@@ -265,4 +273,5 @@ export const Product = ({}) => {
       </S.Container>
     </S.Wrapper>
   ) : null;
+
 };
