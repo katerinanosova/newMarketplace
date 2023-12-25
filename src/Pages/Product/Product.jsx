@@ -242,15 +242,12 @@ const mainUpdaiteToken = async () => {
               </St.ProductDescriptionText>
             </St.ProductDescriptionContent>
           </St.ProductDescription>
-          {/* {isModalOpen && <EditorAdv closeModal={handleCloseModal} />}
-        {isReviewModalOpen && <Review closeModal={handleCloseModal} />} */}
-          {openReviews ? <Review closeModal={handleCloseAllModals} /> : null}
-          {/* {newProductModal ? 
-           <NewProduct setNewProductModal={setNewProductModal} /> : null} */}
+          {openReviews ? <Review closeModal={handleCloseAllModals} dataComments={dataComments} /> : null}
           {showAdvEdit ? <EditorAdv data={data} closeModal={handleCloseAllModals} /> : null}
         </S.Main>
         <Footer />
       </S.Container>
     </S.Wrapper>
   ) : null;
+
 };

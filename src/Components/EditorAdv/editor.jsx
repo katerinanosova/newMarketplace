@@ -34,8 +34,24 @@ export const EditorAdv = ({data, closeModal }) => {
     setIsFormValid(true);
   }, [title, price]);
 
+const mainUpdaiteToken = async () => {
+  await updateToken();
+  saveChanges();
+  return
+}
+if(isError && error.status === 401) {
+mainUpdaiteToken()
+}
+
+useEffect(() => {
+  if (title && price) {
+    setIsFormValid(true);
+  } else {
+    setIsFormValid(false);
+  }
+}, [title, price]);
+
 const saveChanges = async () => {
-  if (!isFormValid) return; // Досрочно выходим из функции, если сохранение не разрешено
   const access = getAccessTokenLocal();
   const id = data.id;
   await changeAdsText({access, id, title, description, price})
@@ -64,15 +80,6 @@ const mainUpdaiteToken = async () => {
 if(isError && error.status === 401) {
 mainUpdaiteToken()
 }
-
-useEffect(() => {
-  if (title && price) {
-    setIsFormValid(true);
-  } else {
-    setIsFormValid(false);
-  }
-}, [title, price]);
-
   return (
     <S.Wrapper>
       <S.ContainerBg>
