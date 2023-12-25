@@ -211,8 +211,10 @@ const mainUpdaiteToken = async () => {
                   )}
                   <St.ProductAuthor>
                     <St.ProductAuthorImage
-                      src={`http://localhost:8090/${dataUsers[userId].avatar}`}
-                      alt={dataUsers[userId].name}
+                      src={(dataUsers[userId].avatar === null)
+                        ? '/img/empty-profile.png'
+                        : `http://localhost:8090/${dataUsers[userId].avatar}`}
+                      alt=''
                     />
                     <St.ProductAuthorContent>
                       <Link to={`/seller-profile/${dataUsers[userId].id}`}>
