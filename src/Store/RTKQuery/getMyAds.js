@@ -18,6 +18,12 @@ export const myAds = createApi({
                 DATA_TAG,
             ],
         }),
+        getAllAds: build.query({
+            query: () => 'ads',
+            providesTags: (result = []) => [
+                DATA_TAG,
+            ],
+        }),
         addAdsWithoutImg: build.mutation({
           query: ({access, title, description, price}) => ({
               url: `adstext`,
@@ -59,4 +65,4 @@ export const myAds = createApi({
     })
 })
 
-export const {useGetAllMyAdsQuery, useAddAdsWithoutImgMutation, useAddImgsMutation, useDeleteAdvMutation} = myAds
+export const {useGetAllMyAdsQuery, useAddAdsWithoutImgMutation, useAddImgsMutation, useDeleteAdvMutation, useGetAllAdsQuery} = myAds

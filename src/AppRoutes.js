@@ -1,12 +1,15 @@
 import { Route, Routes } from 'react-router-dom';
+import { useState } from 'react';
 import { Main } from './Pages/Main/main';
 import { Profile } from './Pages/Profile/Profile';
 import { SellerProfile } from './Pages/SellerProfile/SellerProfile';
 import { Sign } from './Pages/Registration/sign';
 import { Product } from './Pages/Product/Product';
+import { Review } from './Components/reviews/review';
 import { NewProduct } from './Components/NewProductAdd/newProduct';
+import { EditorAdv } from './Components/EditorAdv/editor';
 import { NotFound } from './Pages/NotFound/NotFound';
-import { ProtectedRoute } from './ProtectedRoutes'
+import { ProtectedRoute } from './ProtectedRoutes';
 
 const products = [
   {
@@ -40,6 +43,8 @@ const products = [
 ];
 
 export const AppRoutes = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
 
   return (
     <Routes>
