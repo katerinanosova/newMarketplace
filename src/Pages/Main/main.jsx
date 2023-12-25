@@ -8,10 +8,11 @@ import * as S from './main.styled';
 import { HeaderSecond } from '../../Components/HeaderSecond/HeaderSecond';
 import { getAccessTokenLocal } from '../../helpers/token';
 import { useGetAllAdsQuery } from '../../Store/RTKQuery/getMyAds';
+import { Loader } from '../../Components/Loader/Loader';
 
 export const Main = () => {
   const userLoggedIn = getAccessTokenLocal();
-  const { data = [], isSuccess } = useGetAllAdsQuery();
+  const { data = [], isSuccess, isLoading } = useGetAllAdsQuery();
   const [searchAdv, setSearchAdv] = useState('');
   const [filteredData, setFilteredData] = useState([]);
   const [error, setError] = useState(null);
@@ -36,15 +37,14 @@ export const Main = () => {
           <Search setSearchAdv={setSearchAdv} />
           <S.MainContainer>
             <S.MainH2>Объявления</S.MainH2>
-            {error ? (
-              <S.Error>{error}</S.Error>
-            ) : (
-              <S.MainContent>
-                {filteredData.map((product) => (
-                  <Card key={product.id} product={product} />
-                ))}
-              </S.MainContent>
-            )}
+            {isLoading 
+            ? <Loader /> 
+            : error ? <S.Error>{error}</S.Error> : <S.MainContent>
+            {filteredData.map((product) => (
+              <Card key={product.id} product={product} />
+            ))}
+          </S.MainContent>}
+
           </S.MainContainer>
         </S.Main>
         <Footer />
