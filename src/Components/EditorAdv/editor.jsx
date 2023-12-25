@@ -17,8 +17,10 @@ export const EditorAdv = ({data, closeModal }) => {
   const [description, setDescription] = useState(data.description)
   const [price, setPrice] = useState(data.price)
   const [deleteImg] = useDeleteImgMutation();
-  const [changeAdsText, { isError, error}] = useChangeAdsTextMutation()
-  const [addChangeImgs] = useAddChangeImgsMutation()
+  const [changeAdsText, { isError, error}] = useChangeAdsTextMutation();
+  const [addChangeImgs] = useAddChangeImgsMutation();
+  const [isFormValid, setIsFormValid] = useState(false);
+
   useEffect(() => {
     if(imgShow.length < 5) {
       const numberLength = 5 - imgShow.length;
@@ -28,6 +30,26 @@ export const EditorAdv = ({data, closeModal }) => {
     }
   },[])
 
+  useEffect(() => {
+    setIsFormValid(true);
+  }, [title, price]);
+
+const mainUpdaiteToken = async () => {
+  await updateToken();
+  saveChanges();
+  return
+}
+if(isError && error.status === 401) {
+mainUpdaiteToken()
+}
+
+useEffect(() => {
+  if (title && price) {
+    setIsFormValid(true);
+  } else {
+    setIsFormValid(false);
+  }
+}, [title, price]);
 
 const saveChanges = async () => {
   const access = getAccessTokenLocal();
@@ -98,7 +120,6 @@ mainUpdaiteToken()
                     src={`http://localhost:8090/${el.url}`}
                     alt="image"
                     key={`image-${i}`}
-                    id="upload-photo"
                     type="file"
                     accept="image/*"
                     onClick={() =>  deleteImgFromStateAndServer(i, setImages, setImgShow, setImgDelete, el)}
@@ -109,7 +130,6 @@ mainUpdaiteToken()
                         src={el}
                         alt="image"
                         key={`image-${i}`}
-                        id="upload-photo"
                         type="file"
                         accept="image/*"
                         onClick={() =>  deleteImgFromState(i, setImages, setImgShow)}
@@ -117,7 +137,6 @@ mainUpdaiteToken()
                     : 
                     <S.FormNewArtImg key={`image-${i}`}>
                     <S.FormNewArtImgCover
-                      id="upload-photo"
                       type="file"
                       accept="image/*"
                       onChange={(e) => {
@@ -130,10 +149,18 @@ mainUpdaiteToken()
               </S.FormNewArtBlock>
               <S.FormNewArtBlockBlockPrice>
                 <S.LabelDescription htmlFor='price'>Цена</S.LabelDescription>
-                <S.FormNewArtInputPrice type='text' value={price} onChange={e => setPrice(e.target.value)} />
-                <S.FormNewArtInputPriceCover />
+                <S.FormNewArtInputPrice type='text' value={price} 
+                onChange={(e) => {
+                  if (/^\d+$/.test(e.target.value) || e.target.value === '') {
+                    setPrice(e.target.value);
+                  }
+              }}/>
               </S.FormNewArtBlockBlockPrice>
-              <S.FormNewArtBtnPubBtnHov02 onClick={() => saveChanges()}>Сохранить</S.FormNewArtBtnPubBtnHov02>
+              <S.FormNewArtBtnPubBtnHov02 
+              onClick={() => saveChanges()}
+              disabled={!isFormValid}
+              $isFormValid={isFormValid}
+              >Сохранить</S.FormNewArtBtnPubBtnHov02>
             </S.ModalFormNewArtFormNewArt>
           </S.ModalContent>
         </S.ModalBlock>
