@@ -35,7 +35,6 @@ export const SellerProfile = () => {
   useEffect(() => {
     if (getUsersSuccess) {
       setSeller(allUsers?.filter((user) => user.id === Number(params.id))[0]);
-      console.log(seller);
     }
     
   }, [allUsers]);
@@ -76,14 +75,15 @@ export const SellerProfile = () => {
                       </S.SellerImg>
                     </S.SellerLeft>
                     <S.SellerRight>
+                      {isLoading ? <S.SellerTitleLoading /> : 
                       <S.SellerTitle>
-                        {isLoading ? <S.SellerTitleLoading /> : seller?.name ? seller?.name : 'Хз как зовут продавца'}
-                      </S.SellerTitle>
+                        {seller?.name ? seller?.name : 'Хз как зовут продавца'}
+                      </S.SellerTitle>}
                       <S.SellerCity>{seller?.city}</S.SellerCity>
+                      {isLoading ? <S.SellerInfLoading /> :
                       <S.SellerInf>
-                        {isLoading ? <S.SellerInfLoading /> : 
-                        `Продает товары с ${formatDate(seller?.sells_from)}`}
-                      </S.SellerInf>
+                        {`Продает товары с ${formatDate(seller?.sells_from)}`}
+                      </S.SellerInf> }
 
                       <S.SellerImgMobBlock>
                         <S.SellerImgMob>
