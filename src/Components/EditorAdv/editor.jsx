@@ -12,12 +12,12 @@ import { updateToken } from '../../Api/tokenApi';
 export const EditorAdv = ({data, closeModal }) => {
   const [images, setImages] = useState([null, null, null, null, null]);
   const [imgShow, setImgShow] = useState(data.images);
-  const [imgDelete, setImgDelete] = useState([null, null, null, null, null]);
+  const [imgDelete, setImgDelete] = useState([]);
   const [title, setTitle] = useState(data.title);
   const [description, setDescription] = useState(data.description)
   const [price, setPrice] = useState(data.price)
   const [deleteImg] = useDeleteImgMutation();
-  const [changeAdsText, { isError, error}] = useChangeAdsTextMutation();
+  const [changeAdsText] = useChangeAdsTextMutation();
   const [addChangeImgs] = useAddChangeImgsMutation();
   const [isFormValid, setIsFormValid] = useState(false);
 
@@ -34,15 +34,6 @@ export const EditorAdv = ({data, closeModal }) => {
     setIsFormValid(true);
   }, [title, price]);
 
-const mainUpdaiteToken = async () => {
-  await updateToken();
-  saveChanges();
-  return
-}
-if(isError && error.status === 401) {
-mainUpdaiteToken()
-}
-
 useEffect(() => {
   if (title && price) {
     setIsFormValid(true);
@@ -54,32 +45,55 @@ useEffect(() => {
 const saveChanges = async () => {
   const access = getAccessTokenLocal();
   const id = data.id;
-  await changeAdsText({access, id, title, description, price})
-  if(imgDelete.length > 0){
-    imgDelete.forEach((urlImg) => {
-      if(urlImg !== null){
-        console.log('del');
-        deleteImg({access, id, urlImg});
-      }
-    })
+  try{
+    await changeAdsText({access, id, title, description, price})
+    deleteImgFromServer()
+  } catch (error) {
+    if(error.status === 401) {
+      await updateToken();
+      saveChanges()
+      return
   }
-  if(images.length > 0) {
-    images.forEach((image) => {
-        const formDataFile = new FormData();
-        formDataFile.append('file', image);
-        addChangeImgs({access, id, formDataFile})
-        });
-}
-closeModal();
+  }
 };
-const mainUpdaiteToken = async () => {
-  await updateToken();
-  saveChanges();
-  return
+  const deleteImgFromServer = async () => {
+    const access = getAccessTokenLocal();
+    const id = data.id;
+      try{
+        if(imgDelete.length > 0){
+        imgDelete.forEach((urlImg) => {
+          if(urlImg !== null){
+            deleteImg({access, id, urlImg});
+          }
+        })
+        }
+        saveNewImgToServer()
+      } catch (error) {
+        if(error.status === 401) {
+          await updateToken();
+          deleteImgFromServer()
+      }}}
+
+const saveNewImgToServer = async () => {
+  const id = data.id;
+  const access = getAccessTokenLocal();
+  try {
+    if(images.length > 0) {
+      images.forEach((image) => {
+          const formDataFile = new FormData();
+          formDataFile.append('file', image);
+          addChangeImgs({access, id, formDataFile})
+          });
+  }
+  closeModal();
+  } catch (error) {
+    if(error.status === 401) {
+      await updateToken();
+      saveNewImgToServer()
+  }
+  }
 }
-if(isError && error.status === 401) {
-mainUpdaiteToken()
-}
+
   return (
     <S.Wrapper>
       <S.ContainerBg>
