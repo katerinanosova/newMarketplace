@@ -84,6 +84,7 @@ export const Review = ({ closeModal, dataComments }) => {
                   />
                 </S.FormNewArtBlock>
                 <S.FormNewArtBtnPubBtnHov02
+                  disabled={!isFormValid}
                   $isFormValid={isFormValid}
                   onClick={addNewComment}
                 >
