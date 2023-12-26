@@ -13,6 +13,7 @@ import { saveProducts } from '../../Store/Slices/dataProductsSlice';
 import { formatDate } from '../../helpers/time';
 import { useEffect, useState } from 'react';
 import { useGetAllUsersQuery } from '../../Store/RTKQuery/getUsers';
+import { CardLoader } from '../../Components/Loader/CardLoader';
 
 export const SellerProfile = () => {
   const userLoggedIn = getAccessTokenLocal();
@@ -21,7 +22,7 @@ export const SellerProfile = () => {
   const [showFullPhone, setShowFullPhone] = useState(false);
   const [seller, setSeller] = useState();
   const [sellerAds, setSellerAds] = useState();
-  const { data = [], isSuccess } = useGetAllAdsQuery();
+  const { data = [], isSuccess, isLoading: adsLoading } = useGetAllAdsQuery();
   const { data: allUsers = [], isSuccess: getUsersSuccess, isLoading } = useGetAllUsersQuery();
 
   useEffect(() => {
@@ -119,14 +120,14 @@ export const SellerProfile = () => {
               </S.MainProfileSell>
               <S.MainTitle>Товары продавца</S.MainTitle>
             </S.MainCenterBlock>
-
+            {adsLoading ? <CardLoader /> :
             <S.MainContent>
               <S.ContentCards>
                 {sellerAds?.map((product) => (
                   <Card key={product.id} product={product} />
                 ))}
               </S.ContentCards>
-            </S.MainContent>
+            </S.MainContent>}
           </S.MainContainer>
         </S.Main>
         <Footer />
