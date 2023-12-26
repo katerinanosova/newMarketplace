@@ -33,7 +33,7 @@ export const Profile = ({}) => {
     return
   }
 useEffect(() => {
-if(isErrorChangeMe && errorChangeMe.status === 401){
+if(isErrorChangeMe){
   const accessToken = getAccessTokenLocal();
   const refreshToken = getRefreshTokenLocal();
   refreshAllTokens({ access: accessToken, refresh: refreshToken })
@@ -42,9 +42,11 @@ if(isErrorChangeMe && errorChangeMe.status === 401){
 useEffect(() => {
   if(isSuccessRefresh){
     saveTokenUserLocal(dataRefresh);
+    const access = getAccessTokenLocal()
     handleChangeMe(access, userName, surname, phone, city, changeMe)
+    refetch()
   }
-})
+},[isSuccessRefresh])
   useEffect(() => {
     if(isSuccess) {
       saveUserLocal(data.email, data.name, data.id)
