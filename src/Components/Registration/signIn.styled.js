@@ -63,7 +63,7 @@ export const ModalLogo = styled.div`
   @media screen and (max-width: 600px) {
     width: 120px;
     height: 18px;
-    margin-bottom: 30px;
+    margin-bottom: 120px;
     background-color: transparent;
   }
 `;
@@ -241,26 +241,23 @@ export const ModalBtnSignupLink = styled(Link)`
 
 export const ErrorMessage = styled.div`
   display: flex;
-  width: 100%;
   justify-content: center;
   align-items: center;
   color: rgb(255, 128, 113);
-  font-size: 1rem;
+  font-size: .8rem;
   font-weight: 400;
   position: absolute;
   top: 70px;
-  left: 5px;
   text-align: center;
   margin-top: 10px;
 `;
 
 export const PassErrorMessage = styled(ErrorMessage)`
-  font-size: 0.8rem;
+  font-size: .8rem;
   padding-right: 42px;
   padding-left: 42px;
   top: 130px;
   @media screen and (max-width: 600px) {
-    font-size: 0.6rem;
     padding-right: 22px;
     padding-left: 22px;
     top: 115px;
