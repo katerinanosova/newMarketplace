@@ -1,4 +1,4 @@
-import { loginUser, registerUser, singIn } from '../Api/userApi';
+import { loginUser, registerUser } from '../Api/userApi';
 import { saveTokenUserLocal } from './token';
 
 export const handleEmail = (setEmail, setError, event) => {
