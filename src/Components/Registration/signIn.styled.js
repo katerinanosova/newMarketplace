@@ -84,13 +84,13 @@ export const ModalInputLogin = styled.input`
   padding: 8px 1px;
   margin-bottom: 30px;
   outline: none;
-  &::-webkit-input-placeholder {
+  &::placeholder {
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
     line-height: 24px;
     letter-spacing: -0.05px;
-    color: #d0cece;
+    color: #666;
   }
   @media screen and (max-width: 600px) {
     width: 100%;
@@ -98,12 +98,12 @@ export const ModalInputLogin = styled.input`
     border: 1px solid #d0cece;
     padding: 9px 17px;
     border-radius: 30px;
-    &::-webkit-input-placeholder {
+    &::placeholder {
       font-style: normal;
       font-weight: 400;
       font-size: 14px;
       line-height: 21px;
-      color: #b3b3b3;
+      color: #666;
     }
     margin-bottom: 14px;
   }
@@ -121,13 +121,13 @@ export const ModalInputPassword = styled.input`
   border-bottom: 1px solid #d0cece;
   padding: 8px 1px;
   outline: none;
-  &::-webkit-input-placeholder {
+  &::placeholder {
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
     line-height: 24px;
     letter-spacing: -0.05px;
-    color: #d0cece;
+    color: #666;
   }
   @media screen and (max-width: 600px) {
     width: 100%;
@@ -135,12 +135,12 @@ export const ModalInputPassword = styled.input`
     border: 1px solid #d0cece;
     padding: 9px 17px;
     border-radius: 30px;
-    &::-webkit-input-placeholder {
+    &::placeholder {
       font-style: normal;
       font-weight: 400;
       font-size: 14px;
       line-height: 21px;
-      color: #b3b3b3;
+      color: #666;
     }
   }
 `;
