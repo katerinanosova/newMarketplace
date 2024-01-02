@@ -1,47 +1,54 @@
 
-import { useGetAllAdsQuery } from '../../Store/RTKQuery/getAds';
+import { useState, useEffect } from 'react';
 import { Card } from '../../Components/Card/Card';
 import { Footer } from '../../Components/Footer/Footer';
 import { Header } from '../../Components/Header/Header';
 import { Search } from '../../Components/Search/Search';
 import * as S from './main.styled';
-import { useDispatch } from 'react-redux';
-import { saveProducts } from '../../Store/Slices/dataProductsSlice';
 import { HeaderSecond } from '../../Components/HeaderSecond/HeaderSecond';
-import { NewProduct } from '../../Components/NewProductAdd/newProduct';
+import { getAccessTokenLocal } from '../../helpers/token';
+import { useGetAllAdsQuery } from '../../Store/RTKQuery/getMyAds';
+import { Loader } from '../../Components/Loader/Loader';
+import { CardLoader } from '../../Components/Loader/CardLoader';
 
-export const Main = ({products}) => {
+export const Main = () => {
+  const userLoggedIn = getAccessTokenLocal();
+  const { data = [], isSuccess, isLoading } = useGetAllAdsQuery();
+  const [searchAdv, setSearchAdv] = useState('');
+  const [filteredData, setFilteredData] = useState([]);
+  const [error, setError] = useState(null);
   
-  const dispatch = useDispatch();
-  const {data =[], isSuccess} = useGetAllAdsQuery();
-  if(isSuccess) {
-    dispatch(saveProducts({data}))
-    console.log(data);
-  }
+  useEffect(() => {
+    const filtered = data.filter((product) =>
+      product.title.toLowerCase().includes(searchAdv.toLowerCase()),
+    );
+    setFilteredData(filtered);
 
-   // заглушка на залогиненного юзера
-  const userLoggedIn = true;
-
+    if (filtered.length === 0) {
+      setError('Объявление с указанным заголовком не найдено');
+    } else {
+      setError(null);
+    }
+  }, [isSuccess, searchAdv]);
+  
   return (
     <S.Wrapper>
       <S.Container>
-      {userLoggedIn ? <HeaderSecond /> : <Header />}
+        {(userLoggedIn && (userLoggedIn !== 'undefined')) ? <HeaderSecond /> : <Header />}
         <S.Main>
-          <Search />
+          <Search setSearchAdv={setSearchAdv} />
           <S.MainContainer>
             <S.MainH2>Объявления</S.MainH2>
-            <S.MainContent>
-              {data.map((product) => (
-                <Card key={product.id} product={product} />
-              ))}
-            </S.MainContent>
+            {isLoading ? <CardLoader /> : error ? <S.Error>{error}</S.Error> : <S.MainContent>
+            {filteredData.map((product) => (
+              <Card key={product.id} product={product} />
+            ))}
+          </S.MainContent>}
+             
           </S.MainContainer>
         </S.Main>
-        {/* {newProductModal ? 
-             <NewProduct setNewProductModal={setNewProductModal} /> : null} */}
         <Footer />
       </S.Container>
     </S.Wrapper>
   );
 };
-

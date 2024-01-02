@@ -11,11 +11,16 @@ export const ModalBlock = styled.div`
   position: absolute;
   z-index: 2;
   left: calc(50% - (366px / 2));
-  top: calc(50% - (647px / 2));
+  top: 200px;
   opacity: 1;
-  @media screen and (max-width: 768px) {
-    left: calc(50% - (320px / 2));
-    top: 55px;
+
+  @media screen and (max-width: 600px) {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 54px;
+    opacity: 1;
+    width: 100vw;
   }
 `;
 export const ModalFormLogin = styled.div`
@@ -27,38 +32,39 @@ export const ModalFormLogin = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 43px 42px 47px;
-  @media screen and (max-width: 768px) {
-    width: 320px;
-    height: auto;
+
+  @media screen and (max-width: 600px) {
+    width: 100vw;
+    height: 100%;
     border-radius: 0px;
     padding: 40px 20px;
   }
 `;
 export const ModalBtnSignupEnt = styled.div`
   width: 278px;
-  height: 62px;
+  height: 52px;
   background-color: #009ee4;
   border-radius: 6px;
   border: none;
-  margin-top: 30px;
-  display: -webkit-box;
-  display: -ms-flexbox;
+  margin-bottom: 10px;
   display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
   justify-content: center;
+  flex-shrink: 0;
+
   &:hover {
     background-color: #0080c1;
   }
   &:active {
     background-color: #0080c1;
   }
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
+    width: 100%;
+    min-width: 200px;
     height: 46px;
     border: none;
-    margin-top: 26px;
+    margin-top: 15px;
+    margin-bottom: 0;
   }
 `;
+

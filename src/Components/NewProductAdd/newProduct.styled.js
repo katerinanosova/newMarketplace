@@ -94,6 +94,7 @@ display: none;
   @media screen and (max-width: 600px) {
     display: flex;
     align-items: center;
+    cursor: pointer;
   }
 `
 
@@ -413,8 +414,8 @@ export const FormNewArtImg = styled.div`
 `;
 export const Img = styled.img`
   display: block;
-  width: 100%;
-  height: auto;
+  width: 90px;
+  height: 90px;
   object-fit: cover;
   z-index: 2;
   @media screen and (max-width: 600px) {
@@ -425,10 +426,8 @@ export const Img = styled.img`
   }
 `;
 export const FormNewArtImgCover = styled.input`
-&::-webkit-file-upload-button {
-  visibility: hidden;
-}
-cursor: pointer;
+
+  cursor: pointer;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -436,6 +435,8 @@ cursor: pointer;
   left: 0;
   background-color: #f0f0f0;
   z-index: -1;
+
+
   &::before {
     content: '';
     position: absolute;
@@ -457,7 +458,12 @@ cursor: pointer;
     top: 50%;
     right: calc(50% - (30px / 2));
   }
+
+  &::file-selector-button {
+  visibility: hidden;
+  }
 `;
+
 export const FormNewArtBlockBlockPrice = styled.div`
   width: 100%;
   display: flex;
@@ -583,9 +589,7 @@ export const FormNewArtBtnPubBtnHov02 = styled.button`
   font-size: 16px;
   line-height: 24px;
   color: #ffffff;
-  &:hover {
-    background-color: #0080c1;
-  }
+  background-color: ${props => (props.$isFormValid ? '#0080c1' : '#d9d9d9')};
   @media screen and (max-width: 600px) {
     margin-top: 10px;
     width: 100%;

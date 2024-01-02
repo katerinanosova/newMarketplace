@@ -1,4 +1,4 @@
-import { loginUser, registerUser, singIn } from '../Api/userApi';
+import { loginUser, registerUser } from '../Api/userApi';
 import { saveTokenUserLocal } from './token';
 
 export const handleEmail = (setEmail, setError, event) => {
@@ -60,7 +60,7 @@ export const handleSignIn = async (email, password, setError, navigate) => {
     navigate('/profile')
   } catch (error) {
     console.error(error);
-    setError('Неизвестная ошибка');
+    setError(`${error.message}. Проверьте вводимые данные`);
   }
 };
 
@@ -68,17 +68,17 @@ export const saveAndRegisterUser = async (
   email,
   password,
   name,
-  role,
   surname,
   city,
   setError,
   navigate,
 ) => {
   try {
-    await registerUser(email, password, name, role, surname, city);
+    await registerUser(email, password, name, surname, city);
     handleSignIn(email, password, setError, navigate)
   } catch (error) {
     console.error(error);
+    console.log(error.message);
     setError('Неизвестная ошибка');
   }
 };

@@ -16,7 +16,7 @@ export const Container = styled.div`
   background-color: #ffffff;
 `;
 
-export const Main = styled.main``
+export const Main = styled.main``;
 
 export const MainContainer = styled.div`
   max-width: 1178px;
@@ -37,11 +37,6 @@ export const MainH2 = styled.h2`
   color: #000000;
   margin-bottom: 30px;
 
-  &:hover::before {
-    border-top: 2px solid #0080c1;
-    border-left: 2px solid #0080c1;
-  }
-
   @media screen and (max-width: 600px) {
     font-size: 24px;
     line-height: 29px;
@@ -50,20 +45,6 @@ export const MainH2 = styled.h2`
     text-align: center;
     position: relative;
 
-    &::before {
-      content: '';
-      display: block;
-      width: 12px;
-      height: 12px;
-      background-color: transparent;
-      border-top: 2px solid #000000;
-      border-left: 2px solid #000000;
-      transform: rotate(-45deg);
-      position: absolute;
-      top: 9px;
-      left: 13px;
-      cursor: pointer;
-    }
   }
 `;
 
@@ -96,4 +77,16 @@ export const MainContent = styled.div`
     column-gap: 10px;
     row-gap: 10px;
   }
+`;
+
+export const Error = styled.div`
+  height: 52px;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 26px;
+  color: #009ee4;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;

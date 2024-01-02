@@ -1,14 +1,12 @@
 
-import { saveTokenUserAfterSignIn } from "../Store/Slices/userSlice";
-import { getAccessTokenLocal, getRefreshTokenLocal, getTypeTokenLocal } from "../helpers/token";
+import { getAccessTokenLocal } from "../helpers/token";
 import { updateToken } from "./tokenApi";
-export const host = "http://127.0.0.1:8090";
+import { host } from './host'
 
   export const registerUser = async ( 
     email,
     password,
     name,
-    role,
     surname,
     city,) => {
     
@@ -18,7 +16,7 @@ export const host = "http://127.0.0.1:8090";
         email: email,
         password: password,
         name: name,
-        role: role,
+        role: 'user',
         city: city,
         surname: surname,
       }),
